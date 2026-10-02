@@ -1,0 +1,10 @@
+crawl4ai
+asyncio
+
+pathlib
+
+langchain
+langchain-text-splitter
+
+markdown_it
+urllib

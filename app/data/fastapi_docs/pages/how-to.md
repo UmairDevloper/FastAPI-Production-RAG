@@ -1,0 +1,10 @@
+# How To - Recipes - FastAPI
+
+Source: https://fastapi.tiangolo.com/how-to/
+
+# How To - Recipes[¶](https://fastapi.tiangolo.com/how-to/#how-to-recipes "Permanent link")
+Here you will see different recipes or "how to" guides for **several topics**.
+Most of these ideas would be more or less **independent** , and in most cases you should only need to study them if they apply directly to **your project**.
+If something seems interesting and useful to your project, go ahead and check it, but otherwise, you might probably just skip them.
+Tip
+If you want to **learn FastAPI** in a structured way (recommended), go and read the [Tutorial - User Guide](https://fastapi.tiangolo.com/tutorial/) chapter by chapter instead.
