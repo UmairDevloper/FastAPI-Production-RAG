@@ -724,7 +724,9 @@ Now, run your app:
 
 ```
 uv run fastapi dev
-fast →
+
+fast →u
+
 
 ```
 

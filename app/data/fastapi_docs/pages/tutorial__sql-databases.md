@@ -27,7 +27,7 @@ Add `sqlmodel` to your project:
 ```
 uv add sqlmodel
 
-fast →u
+fast →uv ad
 
 
 ```
@@ -1646,7 +1646,7 @@ You can run the app:
 ```
 uv run fastapi dev
 
-fast →
+fast →uv ru
 
 
 ```
@@ -4155,7 +4155,7 @@ You can run the app again:
 ```
 uv run fastapi dev
 
-fast →
+fast →uv ru
 
 
 ```

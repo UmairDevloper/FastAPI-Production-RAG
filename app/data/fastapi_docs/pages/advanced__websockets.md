@@ -10,7 +10,7 @@ Add `websockets` (a Python library that makes it easy to use the "WebSocket" pro
 ```
 uv add websockets
 
-fast →uv ad
+fast →uv a
 
 
 ```
@@ -210,9 +210,7 @@ Put your code in a file `main.py` and then run your application:
 
 ```
 uv run fastapi dev
-
 fast →
-
 
 ```
 
@@ -441,9 +439,7 @@ Run your application:
 
 ```
 uv run fastapi dev
-
 fast →
-
 
 ```
 

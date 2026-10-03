@@ -319,6 +319,8 @@ def main() -> None:
     print(f"Chars min/avg/max:   {min(sizes)} / {sum(sizes) // len(sizes)} / {max(sizes)}")
     print(f"Output: {OUTPUT_PATH}")
 
+    
+
 
 if __name__ == "__main__":
     main()

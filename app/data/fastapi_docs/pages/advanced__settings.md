@@ -21,7 +21,7 @@ Add the `pydantic-settings` package to your project:
 ```
 uv add pydantic-settings
 
-fast →uv a
+fast →uv add py
 
 
 ```
@@ -31,7 +31,7 @@ It also comes included when you install the `all` extras with:
 ```
 uv add "fastapi[all]"
 
-fast →uv a
+fast →uv add "f
 
 
 ```
@@ -107,7 +107,7 @@ Next, you would run the server passing the configurations as environment variabl
 ```
 ADMIN_EMAIL="deadpool@example.com" APP_NAME="ChimichangApp" uv run fastapi run main.py
 
-fast →ADMI
+fast →ADMIN_EMA
 
 
 ```
@@ -118,7 +118,7 @@ $Env:ADMIN_EMAIL = "deadpool@example.com"
 $Env:APP_NAME = "ChimichangApp"
 uv run fastapi run main.py
 
-fast →$Env:ADMIN_EMAIL = "d
+fast →$Env:ADMIN_EMAI
 
 
 ```

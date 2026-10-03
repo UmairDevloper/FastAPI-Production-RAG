@@ -13,7 +13,7 @@ To run any of the examples, copy the code to a file `main.py`, and start `fastap
 ```
 <font color="#4E9A06">uv run fastapi</font> dev
 
-fast →uv r
+fast →uv run fast
 
 
 ```
@@ -29,7 +29,9 @@ Install [`uv`](https://docs.astral.sh/uv/getting-started/installation/), then cr
 uv init awesome-project --bare
 cd awesome-project
 uv add "fastapi[standard]"
+
 fast →
+
 
 ```
 

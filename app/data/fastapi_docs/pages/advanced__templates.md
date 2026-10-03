@@ -12,7 +12,7 @@ Add `jinja2` to your project:
 ```
 uv add jinja2
 
-fast →uv add jinja2
+fast →uv add jinj
 
 
 ```

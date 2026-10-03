@@ -17,9 +17,7 @@ Install FastAPI with the `standard` extras, which include the packages for sendi
 
 ```
 uv add "fastapi[standard]"
-
-fast →uv
-
+fast →
 
 ```
 
@@ -61,9 +59,7 @@ Start the app in the same terminal:
 
 ```
 uv run fastapi run
-
-fast →uv
-
+fast →
 
 ```
 

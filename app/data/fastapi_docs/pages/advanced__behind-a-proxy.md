@@ -24,7 +24,7 @@ If your **server** is behind a trusted **proxy** and only the proxy talks to it,
 ```
 uv run fastapi run --forwarded-allow-ips="*"
 
-fast →uv
+fast →
 
 
 ```
@@ -122,7 +122,7 @@ To achieve this, you can use the command line option `--root-path` like:
 ```
 uv run fastapi run main.py --forwarded-allow-ips="*" --root-path /api/v1
 
-fast →uv
+fast →
 
 
 ```
@@ -153,7 +153,7 @@ Then, if you start Uvicorn with:
 ```
 uv run fastapi run main.py --forwarded-allow-ips="*" --root-path /api/v1
 
-fast →uv
+fast →
 
 
 ```
@@ -255,7 +255,7 @@ Now start Traefik:
 ```
 ./traefik --configFile=traefik.toml
 
-fast →./
+fast →
 
 
 ```
@@ -265,7 +265,7 @@ And now start your app, using the `--root-path` option:
 ```
 uv run fastapi run main.py --forwarded-allow-ips="*" --root-path /api/v1
 
-fast →uv
+fast →
 
 
 ```

@@ -8,3 +8,8 @@ langchain-text-splitter
 
 markdown_it
 urllib
+
+logfire[system-metrics]
+
+sentence-transformers
+qdrant-client

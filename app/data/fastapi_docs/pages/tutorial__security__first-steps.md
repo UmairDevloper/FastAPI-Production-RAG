@@ -68,9 +68,7 @@ Run the example with:
 
 ```
 uv run fastapi dev
-
-fast →u
-
+fast →
 
 ```
 

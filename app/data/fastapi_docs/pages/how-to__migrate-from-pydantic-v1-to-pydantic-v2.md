@@ -74,45 +74,7 @@ Warning
 Have in mind that as the Pydantic team no longer supports Pydantic v1 in recent versions of Python, starting from Python 3.14, using `pydantic.v1` is also not supported in Python 3.14 and above.
 ### Pydantic v1 and v2 on the same app[¶](https://fastapi.tiangolo.com/how-to/migrate-from-pydantic-v1-to-pydantic-v2/#pydantic-v1-and-v2-on-the-same-app "Permanent link")
 It's **not supported** by Pydantic to have a model of Pydantic v2 with its own fields defined as Pydantic v1 models or vice versa.
-
-```
-graph TB
-    subgraph "❌ Not Supported"
-        direction TB
-        subgraph V2["Pydantic v2 Model"]
-            V1Field["Pydantic v1 Model"]
-        end
-        subgraph V1["Pydantic v1 Model"]
-            V2Field["Pydantic v2 Model"]
-        end
-    end
-
-    style V2 fill:#f9fff3
-    style V1 fill:#fff6f0
-    style V1Field fill:#fff6f0
-    style V2Field fill:#f9fff3
-```
-
 ...but you can have separate models, some using Pydantic v1 and others using Pydantic v2, in the same app.
-
-```
-graph TB
-    subgraph "✅ Supported"
-        direction TB
-        subgraph V2["Pydantic v2 Model"]
-            V2Field["Pydantic v2 Model"]
-        end
-        subgraph V1["Pydantic v1 Model"]
-            V1Field["Pydantic v1 Model"]
-        end
-    end
-
-    style V2 fill:#f9fff3
-    style V1 fill:#fff6f0
-    style V1Field fill:#fff6f0
-    style V2Field fill:#f9fff3
-```
-
 In some cases, it's even possible to have both Pydantic v1 and v2 models in the same **path operation** in your FastAPI app:
 [Python 3.10+](https://fastapi.tiangolo.com/how-to/migrate-from-pydantic-v1-to-pydantic-v2/#__tabbed_3_1)
 

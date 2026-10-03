@@ -95,7 +95,7 @@ Now, run the `fastapi` command:
 ```
 uv run fastapi dev
 
-fast →
+fast →uv 
 
 
 ```

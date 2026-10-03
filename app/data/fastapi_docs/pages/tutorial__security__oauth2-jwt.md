@@ -26,7 +26,9 @@ Add `pyjwt` to your project:
 
 ```
 uv add pyjwt
-fast →
+
+fast →u
+
 
 ```
 
@@ -48,7 +50,9 @@ Add `pwdlib` with Argon2 to your project:
 
 ```
 uv add "pwdlib[argon2]"
-fast →
+
+fast →u
+
 
 ```
 
@@ -385,7 +389,9 @@ To generate a secure random secret key use the command:
 
 ```
 openssl rand -hex 32
-fast →
+
+fast →o
+
 
 ```
 

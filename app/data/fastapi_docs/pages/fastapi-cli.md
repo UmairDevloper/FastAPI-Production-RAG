@@ -10,7 +10,7 @@ To run your FastAPI app for development, you can use the `fastapi dev` command:
 ```
 <font color="#4E9A06">fastapi</font> dev
 
-fast →fa
+fast →fasta
 
 
 ```

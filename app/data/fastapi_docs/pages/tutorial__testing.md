@@ -388,7 +388,9 @@ Add it to your project:
 
 ```
 uv add pytest
+
 fast →
+
 
 ```
 
@@ -397,7 +399,9 @@ Run the tests with:
 
 ```
 uv run pytest
+
 fast →
+
 
 ```
 

@@ -9,7 +9,7 @@ In short, use `fastapi run` to serve your FastAPI application:
 ```
 <font color="#4E9A06">fastapi</font> run <u style="text-decoration-style:solid">main.py</u>
 
-fast →fa
+fast →fastapi ru
 
 
 ```
@@ -41,7 +41,7 @@ For example, to install Uvicorn:
 ```
 uv add "uvicorn[standard]"
 
-fast →u
+fast →
 
 
 ```
@@ -57,7 +57,7 @@ If you installed an ASGI server manually, you would normally need to pass an imp
 ```
 uv run uvicorn main:app --host 0.0.0.0 --port 80
 
-fast →u
+fast →
 
 
 ```

@@ -8,7 +8,7 @@ You can deploy your FastAPI app to [FastAPI Cloud](https://fastapicloud.com) wit
 ```
 uv run fastapi deploy
 
-fast →uv run 
+fast →uv 
 
 
 ```

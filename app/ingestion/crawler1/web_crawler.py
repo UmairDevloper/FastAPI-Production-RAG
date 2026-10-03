@@ -154,7 +154,6 @@ def get_urls_from_sitemap(sitemap_url: str = SITEMAP_URL) -> list[str]:
     # Keep English pages only; dict.fromkeys removes duplicates, keeps order
     return list(dict.fromkeys(u for u in urls if is_english_doc(u)))
 
-
 def save_page(page: dict, jsonl_file) -> None:
     """
     Save one crawled page to disk in two formats.
@@ -182,7 +181,7 @@ def save_page(page: dict, jsonl_file) -> None:
 # Core crawling logic
 # ---------------------------------------------------------------------------
 
-async def crawl_fastapi_docs() -> int:
+async def crawl_fastapi_docs() -> dict:
     """
     Crawl every English FastAPI docs page and store the results on disk.
 
@@ -193,7 +192,7 @@ async def crawl_fastapi_docs() -> int:
         4. Skip failed or empty pages; save the rest with ``save_page``.
 
     Returns:
-        The number of pages successfully saved.
+        Counts for the run: {"urls_in_sitemap", "saved", "empty", "failed"}.
     """
     # --- 1. Prepare output folders -----------------------------------------
     PAGES_DIR.mkdir(parents=True, exist_ok=True)
@@ -260,7 +259,7 @@ async def crawl_fastapi_docs() -> int:
 
     print(f"\nDone. saved={saved} empty={empty} failed={failed}")
     print(f"Output folder: {OUTPUT_DIR}")
-    return saved
+    return {"urls_in_sitemap": len(urls), "saved": saved, "empty": empty, "failed": failed}
 
 
 # ---------------------------------------------------------------------------

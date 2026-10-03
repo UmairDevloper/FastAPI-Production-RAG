@@ -26,9 +26,7 @@ If you use the `fastapi` command:
 
 ```
 <font color="#4E9A06">fastapi</font> run --workers 4 <u style="text-decoration-style:solid">main.py</u>
-
 fast →
-
 
 ```
 
@@ -37,7 +35,7 @@ If you prefer to use the `uvicorn` command directly:
 ```
 uv run uvicorn main:app --host 0.0.0.0 --port 8080 --workers 4
 
-fast →uv
+fast →uv 
 
 
 ```

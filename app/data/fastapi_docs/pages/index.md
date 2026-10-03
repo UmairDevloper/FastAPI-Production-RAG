@@ -73,7 +73,7 @@ First, [install `uv`](https://docs.astral.sh/uv/getting-started/installation/), 
 ```
 uv add "fastapi[standard]"
 
-fast →uv
+fast →
 
 
 ```
@@ -129,7 +129,7 @@ Run the server with:
 ```
 uv run fastapi dev
 
-fast →uv
+fast →
 
 
 ```
@@ -328,7 +328,7 @@ You can optionally deploy your FastAPI app to [FastAPI Cloud](https://fastapiclo
 ```
 uv run fastapi deploy
 
-fast →uv
+fast →
 
 
 ```
