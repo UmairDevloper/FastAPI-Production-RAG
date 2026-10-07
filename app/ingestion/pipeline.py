@@ -61,6 +61,7 @@ from app.ingestion.embedding4.models_config import configure_logfire
 
 
 
+
 log = logging.getLogger("pipeline")
 
 # The stages, in the order they run

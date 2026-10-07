@@ -157,108 +157,434 @@ def load_chunks(path: Path = CHUNKS_PATH) -> list[dict]:
 # Indexing
 # ---------------------------------------------------------------------------
 
-def build_collection(client: QdrantClient, active: ActiveModel, chunks: list[dict]) -> None:
+def ensure_collection(
+    client: QdrantClient,
+    active: ActiveModel,
+) -> str:
     """
-    Embed ALL chunks with one model and store them in that model's collection.
+    Create the model's Qdrant collection if it does not already exist.
 
-    Steps:
-        1. Recreate the model's collection (vector size comes from the health check).
-        2. For each batch: embed it (with retries), then upsert it (with retries).
+    IMPORTANT:
+        We do NOT delete an existing collection.
 
-    The text embedded is ``contextual_text`` (chunk + heading breadcrumb). The
-    payload keeps ``text`` and all metadata for display and filtering.
+    This makes indexing resumable. If the process stops after 1,000/2,200
+    chunks, restarting the command will keep those 1,000 chunks and continue
+    with the remaining chunks.
 
-    Args:
-        client: Qdrant client.
-        active: The healthy model received from ``models.py``.
-        chunks: All chunks to embed.
-
-    Raises:
-        ModelFailure: If the embedding model fails during any batch.
-        Exception: Qdrant errors after all retries (they do not switch models).
+    Returns:
+        The collection name.
     """
     name = collection_name(active.name)
-    log.info("Building collection '%s' with model '%s'", name, active.name)
 
     if client.collection_exists(name):
-        client.delete_collection(name)
+        log.info(
+            "Collection '%s' already exists. Resuming indexing.",
+            name,
+        )
+        return name
+
+    log.info(
+        "Creating new collection '%s' with model '%s' (dim=%d)",
+        name,
+        active.name,
+        active.dim,
+    )
+
     client.create_collection(
         collection_name=name,
-        vectors_config=VectorParams(size=active.dim, distance=Distance.COSINE),
+        vectors_config=VectorParams(
+            size=active.dim,
+            distance=Distance.COSINE,
+        ),
     )
-    # Index for fast filtering by category (tutorial, advanced, reference, ...)
-    client.create_payload_index(name, field_name="category", field_schema=PayloadSchemaType.KEYWORD)
+
+    # Index for fast filtering by category.
+    client.create_payload_index(
+        name,
+        field_name="category",
+        field_schema=PayloadSchemaType.KEYWORD,
+    )
+
+    return name
+
+
+def get_existing_point_ids(
+    client: QdrantClient,
+    collection_name_: str,
+    chunks: list[dict],
+) -> set[str]:
+    """
+    Find which deterministic point IDs already exist in Qdrant.
+
+    Because point_id() is deterministic, the same chunk always gets
+    the same Qdrant ID.
+
+    This is what makes the indexing process resumable.
+
+    Args:
+        client:
+            Qdrant client.
+        collection_name_:
+            Existing Qdrant collection.
+        chunks:
+            Chunks we are about to process.
+
+    Returns:
+        Set of point IDs that already exist in Qdrant.
+    """
+    ids = [
+        point_id(chunk["chunk_id"])
+        for chunk in chunks
+    ]
+
+    if not ids:
+        return set()
+
+    existing_ids: set[str] = set()
+
+    # Retrieve in smaller groups so we don't create a huge request.
+    retrieve_batch_size = 256
+
+    for start in range(0, len(ids), retrieve_batch_size):
+        batch_ids = ids[start:start + retrieve_batch_size]
+
+        points = with_retries(
+            lambda batch_ids=batch_ids: client.retrieve(
+                collection_name=collection_name_,
+                ids=batch_ids,
+                with_payload=False,
+                with_vectors=False,
+            ),
+            "Checking existing Qdrant points",
+        )
+
+        existing_ids.update(
+            str(point.id)
+            for point in points
+        )
+
+    return existing_ids
+
+
+def build_collection(
+    client: QdrantClient,
+    active: ActiveModel,
+    chunks: list[dict],
+) -> None:
+    """
+    Resumably embed chunks with one model and store them in Qdrant.
+
+    Pipeline:
+
+        chunks
+           ↓
+        stable point IDs
+           ↓
+        check Qdrant
+           ↓
+        already exists? ── YES ──> skip
+           │
+           NO
+           ↓
+        embed batch
+           ↓
+        upsert batch
+           ↓
+        next batch
+
+    Important:
+        The collection is NOT deleted when this function starts.
+
+    If the process stops at 1,280 / 2,200 chunks, restarting will skip
+    the 1,280 existing points and continue with the remaining chunks.
+
+    Raises:
+        ModelFailure:
+            If the embedding model fails after retries.
+
+        Exception:
+            If Qdrant fails after retries.
+    """
+
+    name = ensure_collection(client, active)
 
     total = len(chunks)
-    for start in range(0, total, UPSERT_BATCH):
-        batch = chunks[start:start + UPSERT_BATCH]
 
-        # 1) Embedding: retried; if it still fails, the MODEL is the problem
+    # ---------------------------------------------------------------
+    # STEP 1: Find already-indexed chunks
+    # ---------------------------------------------------------------
+
+    log.info(
+        "[%s] Checking which of %d chunks are already indexed...",
+        active.name,
+        total,
+    )
+
+    existing_ids = get_existing_point_ids(
+        client,
+        name,
+        chunks,
+    )
+
+    log.info(
+        "[%s] Found %d/%d chunks already indexed.",
+        active.name,
+        len(existing_ids),
+        total,
+    )
+
+    # ---------------------------------------------------------------
+    # STEP 2: Remove already-indexed chunks from the work list
+    # ---------------------------------------------------------------
+
+    pending_chunks = [
+        chunk
+        for chunk in chunks
+        if point_id(chunk["chunk_id"]) not in existing_ids
+    ]
+
+    pending_total = len(pending_chunks)
+
+    if pending_total == 0:
+        log.info(
+            "[%s] All %d chunks are already indexed. Nothing to do.",
+            active.name,
+            total,
+        )
+        return
+
+    log.info(
+        "[%s] %d chunks remaining.",
+        active.name,
+        pending_total,
+    )
+
+    # ---------------------------------------------------------------
+    # STEP 3: Embed + upload only missing chunks
+    # ---------------------------------------------------------------
+
+    for start in range(0, pending_total, UPSERT_BATCH):
+
+        batch = pending_chunks[
+            start:start + UPSERT_BATCH
+        ]
+
+        end = start + len(batch)
+
+        log.info(
+            "[%s] Processing pending chunks %d-%d/%d...",
+            active.name,
+            start + 1,
+            end,
+            pending_total,
+        )
+
+        # -----------------------------------------------------------
+        # 3A. Embedding
+        # -----------------------------------------------------------
+
         try:
             vectors = with_retries(
-                lambda: active.embed([c["contextual_text"] for c in batch]),
-                f"Embedding batch {start}-{start + len(batch)} with '{active.name}'",
+                lambda: active.embed(
+                    [
+                        c["contextual_text"]
+                        for c in batch
+                    ]
+                ),
+                (
+                    f"Embedding batch "
+                    f"{start}-{end} with '{active.name}'"
+                ),
             )
+
         except Exception as exc:
-            raise ModelFailure(f"'{active.name}' failed while embedding: {exc}") from exc
+            # This is considered an embedding-model failure.
+            raise ModelFailure(
+                f"'{active.name}' failed while embedding: {exc}"
+            ) from exc
+
+        # -----------------------------------------------------------
+        # 3B. Validate embedding result
+        # -----------------------------------------------------------
+
+        if len(vectors) != len(batch):
+            raise ModelFailure(
+                f"Embedding model '{active.name}' returned "
+                f"{len(vectors)} vectors for {len(batch)} chunks."
+            )
+
+        for i, vector in enumerate(vectors):
+            if len(vector) != active.dim:
+                raise ModelFailure(
+                    f"Model '{active.name}' returned vector dimension "
+                    f"{len(vector)} for chunk "
+                    f"'{batch[i]['chunk_id']}', expected {active.dim}."
+                )
+
+        # -----------------------------------------------------------
+        # 3C. Build Qdrant points
+        # -----------------------------------------------------------
 
         points = [
             PointStruct(
                 id=point_id(c["chunk_id"]),
                 vector=v,
-                payload={k: val for k, val in c.items() if k != "contextual_text"},
+                payload={
+                    k: val
+                    for k, val in c.items()
+                    if k != "contextual_text"
+                },
             )
             for c, v in zip(batch, vectors)
         ]
 
-        # 2) Qdrant: retried; if it still fails, the error is raised (no model switch)
-        with_retries(lambda: client.upsert(collection_name=name, points=points), "Qdrant upsert")
-        log.info("[%s] %d/%d chunks stored", active.name, min(start + UPSERT_BATCH, total), total)
+        # -----------------------------------------------------------
+        # 3D. Upload to Qdrant
+        # -----------------------------------------------------------
+
+        # If the network dies here:
+        #
+        # - Qdrant may have received some/all points.
+        # - The client may not receive the response.
+        # - The process can stop.
+        #
+        # On the next run, get_existing_point_ids() will discover
+        # whatever Qdrant successfully stored.
+        #
+        # Therefore we don't need to re-embed those chunks.
+
+        with_retries(
+            lambda: client.upsert(
+                collection_name=name,
+                points=points,
+            ),
+            "Qdrant upsert",
+        )
+
+        log.info(
+            "[%s] Stored %d/%d remaining chunks.",
+            active.name,
+            min(end, pending_total),
+            pending_total,
+        )
+
+    log.info(
+        "[%s] Indexing complete. %d total chunks available.",
+        active.name,
+        total,
+    )
 
 
 def index_chunks() -> str:
     """
-    Run the embedding stage with automatic failover between models.
+    Run the embedding stage with automatic model failover.
 
-    Loop: ask ``select_model`` for a healthy model (skipping the ones that
-    already failed), embed everything with it, and on ``ModelFailure`` drop the
-    partial collection and try the next model. Each attempt is one Logfire
-    span that records the model, its role, the start time and the duration.
+    Resumability:
+        If the process stops because of a network/Qdrant error,
+        the existing collection is preserved.
+
+        Running the command again will:
+            1. Find the existing collection.
+            2. Check which point IDs already exist.
+            3. Skip completed chunks.
+            4. Embed only missing chunks.
+
+    Model failover:
+        If the embedding model itself fails, its partial collection is
+        deleted because vectors from different embedding models must
+        never be mixed.
 
     Returns:
-        The name of the model that completed the run.
-
-    Raises:
-        RuntimeError: If every model failed.
+        Name of the model that completed the indexing.
     """
+
     client = get_client()
     chunks = load_chunks()
-    log.info("Loaded %d chunks. Models in order: %s", len(chunks), [m["name"] for m in MODELS])
+
+    log.info(
+        "Loaded %d chunks. Models in order: %s",
+        len(chunks),
+        [m["name"] for m in MODELS],
+    )
 
     failed: set[str] = set()
-    while True:
-        active = select_model(exclude=failed)   # raises RuntimeError when none is left
-        try:
-            with logfire.span(
-                "embed with {model}", model=active.name, role=active.role, chunk_count=len(chunks)
-            ):
-                build_collection(client, active, chunks)
-            log.info("Done: all chunks embedded with '%s'.", active.name)
-            return active.name
-        except ModelFailure as exc:
-            failed.add(active.name)
-            log.error("%s. Switching to the next model.", exc)
-            logfire.warn(
-                "model {failed_model} failed while embedding, switching to the next model",
-                failed_model=active.name, reason=str(exc),
-            )
-            # Remove the partial collection so only complete ones exist
-            partial = collection_name(active.name)
-            if client.collection_exists(partial):
-                client.delete_collection(partial)
-        finally:
-            unload_model(active.cfg)   # free memory before the next model loads
 
+    while True:
+
+        active = select_model(
+            exclude=failed
+        )
+
+        try:
+
+            with logfire.span(
+                "embed with {model}",
+                model=active.name,
+                role=active.role,
+                chunk_count=len(chunks),
+            ):
+
+                build_collection(
+                    client,
+                    active,
+                    chunks,
+                )
+
+            log.info(
+                "Done: all chunks embedded with '%s'.",
+                active.name,
+            )
+
+            return active.name
+
+        except ModelFailure as exc:
+
+            # -------------------------------------------------------
+            # MODEL FAILURE
+            # -------------------------------------------------------
+            #
+            # The model itself is broken.
+            #
+            # We cannot continue using the partial collection because
+            # switching models would create incompatible vectors.
+            #
+
+            failed.add(active.name)
+
+            log.error(
+                "%s. Switching to the next model.",
+                exc,
+            )
+
+            logfire.warn(
+                "model {failed_model} failed while embedding, "
+                "switching to the next model",
+                failed_model=active.name,
+                reason=str(exc),
+            )
+
+            partial = collection_name(
+                active.name
+            )
+
+            if client.collection_exists(partial):
+
+                log.warning(
+                    "Deleting incomplete collection '%s' "
+                    "because the embedding model failed.",
+                    partial,
+                )
+
+                client.delete_collection(
+                    partial
+                )
+
+        finally:
+
+            # Always release the model from memory.
+            unload_model(
+                active.cfg
+            )
 
 # ---------------------------------------------------------------------------
 # Search
