@@ -1,0 +1,322 @@
+[
+  {
+    "query": "How do I read JSON data sent by the client in a POST request?",
+    "strategy_mode": "direct",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.16666666666666666,
+      "ndcg@10": 0.09791292534996782
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.16666666666666666,
+      "ndcg@10": 0.09791292534996782
+    },
+    "baseline_latency_ms": 3397.62,
+    "transformation_latency_ms": 0.0,
+    "transformed_retrieval_latency_ms": 1226.27,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I read JSON data sent by the client in a POST request?"
+    ]
+  },
+  {
+    "query": "How can I make a query parameter optional with a default value?",
+    "strategy_mode": "direct",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.6625602459390023
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.6625602459390023
+    },
+    "baseline_latency_ms": 1168.85,
+    "transformation_latency_ms": 0.0,
+    "transformed_retrieval_latency_ms": 1173.94,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How can I make a query parameter optional with a default value?"
+    ]
+  },
+  {
+    "query": "How do I limit the maximum length of a query string?",
+    "strategy_mode": "direct",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.647939623894138
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.647939623894138
+    },
+    "baseline_latency_ms": 1150.31,
+    "transformation_latency_ms": 0.0,
+    "transformed_retrieval_latency_ms": 1159.57,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I limit the maximum length of a query string?"
+    ]
+  },
+  {
+    "query": "How do I declare a path parameter with a type like int?",
+    "strategy_mode": "direct",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.3903800499921017
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.3903800499921017
+    },
+    "baseline_latency_ms": 1190.55,
+    "transformation_latency_ms": 0.0,
+    "transformed_retrieval_latency_ms": 1184.19,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I declare a path parameter with a type like int?"
+    ]
+  },
+  {
+    "query": "How do I share logic between several endpoints?",
+    "strategy_mode": "direct",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 0.0,
+      "hit@20": 0.0,
+      "mrr@20": 0.0,
+      "ndcg@10": 0.0
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 0.0,
+      "hit@20": 0.0,
+      "mrr@20": 0.0,
+      "ndcg@10": 0.0
+    },
+    "baseline_latency_ms": 1086.47,
+    "transformation_latency_ms": 0.0,
+    "transformed_retrieval_latency_ms": 1075.35,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I share logic between several endpoints?"
+    ]
+  },
+  {
+    "query": "How do I return an error with a specific status code to the client?",
+    "strategy_mode": "direct",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.16666666666666666,
+      "ndcg@10": 0.08372491399919348
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.16666666666666666,
+      "ndcg@10": 0.08372491399919348
+    },
+    "baseline_latency_ms": 1236.76,
+    "transformation_latency_ms": 0.0,
+    "transformed_retrieval_latency_ms": 1366.66,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I return an error with a specific status code to the client?"
+    ]
+  },
+  {
+    "query": "How do I allow requests from another website's frontend?",
+    "strategy_mode": "direct",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.5616927747727312
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.5616927747727312
+    },
+    "baseline_latency_ms": 1161.6,
+    "transformation_latency_ms": 0.0,
+    "transformed_retrieval_latency_ms": 1158.89,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I allow requests from another website's frontend?"
+    ]
+  },
+  {
+    "query": "How do I run a task after sending the response, like sending an email?",
+    "strategy_mode": "direct",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.25,
+      "ndcg@10": 0.3708968600712502
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.25,
+      "ndcg@10": 0.3708968600712502
+    },
+    "baseline_latency_ms": 1289.65,
+    "transformation_latency_ms": 0.0,
+    "transformed_retrieval_latency_ms": 1292.7,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I run a task after sending the response, like sending an email?"
+    ]
+  },
+  {
+    "query": "How do I split a large app into multiple files?",
+    "strategy_mode": "direct",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.13886244387355454
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.13886244387355454
+    },
+    "baseline_latency_ms": 1172.68,
+    "transformation_latency_ms": 0.0,
+    "transformed_retrieval_latency_ms": 1165.31,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I split a large app into multiple files?"
+    ]
+  },
+  {
+    "query": "How do I write automated tests for my API?",
+    "strategy_mode": "direct",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.1,
+      "ndcg@10": 0.11284514134893527
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.1,
+      "ndcg@10": 0.11284514134893527
+    },
+    "baseline_latency_ms": 1158.16,
+    "transformation_latency_ms": 0.0,
+    "transformed_retrieval_latency_ms": 1131.22,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I write automated tests for my API?"
+    ]
+  }
+]

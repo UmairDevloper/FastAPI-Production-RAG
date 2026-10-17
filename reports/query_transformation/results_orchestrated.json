@@ -1,0 +1,2276 @@
+[
+  {
+    "query": "How do I read JSON data sent by the client in a POST request?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.16666666666666666,
+      "ndcg@10": 0.09791292534996782
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.16666666666666666,
+      "ndcg@10": 0.09791292534996782
+    },
+    "baseline_latency_ms": 4479.97,
+    "transformation_latency_ms": 4534.87,
+    "transformed_retrieval_latency_ms": 3490.71,
+    "error": null,
+    "orchestration_latency_ms": 8026.57,
+    "orchestration_diagnostics": {
+      "original_query": "How do I read JSON data sent by the client in a POST request?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 4534.87,
+      "retrieval_latency_ms": 3490.71,
+      "fusion_latency_ms": 0.05,
+      "total_latency_ms": 8026.54
+    },
+    "fusion_latency_ms": 0.05
+  },
+  {
+    "query": "How can I make a query parameter optional with a default value?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.6625602459390023
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.6625602459390023
+    },
+    "baseline_latency_ms": 2556.69,
+    "transformation_latency_ms": 1295.05,
+    "transformed_retrieval_latency_ms": 2446.55,
+    "error": null,
+    "orchestration_latency_ms": 3742.37,
+    "orchestration_diagnostics": {
+      "original_query": "How can I make a query parameter optional with a default value?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1295.05,
+      "retrieval_latency_ms": 2446.55,
+      "fusion_latency_ms": 0.04,
+      "total_latency_ms": 3742.34
+    },
+    "fusion_latency_ms": 0.04
+  },
+  {
+    "query": "How do I limit the maximum length of a query string?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.647939623894138
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.647939623894138
+    },
+    "baseline_latency_ms": 2351.4,
+    "transformation_latency_ms": 1140.3,
+    "transformed_retrieval_latency_ms": 2323.87,
+    "error": null,
+    "orchestration_latency_ms": 3465.02,
+    "orchestration_diagnostics": {
+      "original_query": "How do I limit the maximum length of a query string?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1140.3,
+      "retrieval_latency_ms": 2323.87,
+      "fusion_latency_ms": 0.07,
+      "total_latency_ms": 3465.0
+    },
+    "fusion_latency_ms": 0.07
+  },
+  {
+    "query": "How do I declare a path parameter with a type like int?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.3903800499921017
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.3903800499921017
+    },
+    "baseline_latency_ms": 2257.77,
+    "transformation_latency_ms": 1697.13,
+    "transformed_retrieval_latency_ms": 2456.48,
+    "error": null,
+    "orchestration_latency_ms": 4154.62,
+    "orchestration_diagnostics": {
+      "original_query": "How do I declare a path parameter with a type like int?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1697.13,
+      "retrieval_latency_ms": 2456.48,
+      "fusion_latency_ms": 0.05,
+      "total_latency_ms": 4154.59
+    },
+    "fusion_latency_ms": 0.05
+  },
+  {
+    "query": "How do I share logic between several endpoints?",
+    "strategy_mode": "orchestrated",
+    "strategy": "multi_query",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 0.0,
+      "hit@20": 0.0,
+      "mrr@20": 0.0,
+      "ndcg@10": 0.0
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 0.0,
+      "hit@20": 0.0,
+      "mrr@20": 0.0,
+      "ndcg@10": 0.0
+    },
+    "baseline_latency_ms": 2072.68,
+    "transformation_latency_ms": 4642.96,
+    "transformed_retrieval_latency_ms": 7879.31,
+    "error": null,
+    "orchestration_latency_ms": 12524.05,
+    "orchestration_diagnostics": {
+      "original_query": "How do I share logic between several endpoints?",
+      "candidate_count": 68,
+      "strategy": "multi_query",
+      "query_count": 4,
+      "successful_queries": 4,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20,
+        20,
+        20,
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 4642.96,
+      "retrieval_latency_ms": 7879.31,
+      "fusion_latency_ms": 1.14,
+      "total_latency_ms": 12524.03
+    },
+    "fusion_latency_ms": 1.14
+  },
+  {
+    "query": "How do I return an error with a specific status code to the client?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.16666666666666666,
+      "ndcg@10": 0.08372491399919348
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.16666666666666666,
+      "ndcg@10": 0.08372491399919348
+    },
+    "baseline_latency_ms": 2646.26,
+    "transformation_latency_ms": 1656.76,
+    "transformed_retrieval_latency_ms": 2570.27,
+    "error": null,
+    "orchestration_latency_ms": 4227.8,
+    "orchestration_diagnostics": {
+      "original_query": "How do I return an error with a specific status code to the client?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1656.76,
+      "retrieval_latency_ms": 2570.27,
+      "fusion_latency_ms": 0.07,
+      "total_latency_ms": 4227.78
+    },
+    "fusion_latency_ms": 0.07
+  },
+  {
+    "query": "How do I allow requests from another website's frontend?",
+    "strategy_mode": "orchestrated",
+    "strategy": "multi_query",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.5616927747727312
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.419665006636777
+    },
+    "baseline_latency_ms": 2183.57,
+    "transformation_latency_ms": 1887.83,
+    "transformed_retrieval_latency_ms": 8104.51,
+    "error": null,
+    "orchestration_latency_ms": 9993.77,
+    "orchestration_diagnostics": {
+      "original_query": "How do I allow requests from another website's frontend?",
+      "candidate_count": 57,
+      "strategy": "multi_query",
+      "query_count": 4,
+      "successful_queries": 4,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20,
+        20,
+        20,
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1887.83,
+      "retrieval_latency_ms": 8104.51,
+      "fusion_latency_ms": 0.83,
+      "total_latency_ms": 9993.75
+    },
+    "fusion_latency_ms": 0.83
+  },
+  {
+    "query": "How do I run a task after sending the response, like sending an email?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.25,
+      "ndcg@10": 0.3708968600712502
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.25,
+      "ndcg@10": 0.3708968600712502
+    },
+    "baseline_latency_ms": 2633.59,
+    "transformation_latency_ms": 1755.08,
+    "transformed_retrieval_latency_ms": 2523.99,
+    "error": null,
+    "orchestration_latency_ms": 4279.9,
+    "orchestration_diagnostics": {
+      "original_query": "How do I run a task after sending the response, like sending an email?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1755.08,
+      "retrieval_latency_ms": 2523.99,
+      "fusion_latency_ms": 0.04,
+      "total_latency_ms": 4279.88
+    },
+    "fusion_latency_ms": 0.04
+  },
+  {
+    "query": "How do I split a large app into multiple files?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.13886244387355454
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.13886244387355454
+    },
+    "baseline_latency_ms": 2153.06,
+    "transformation_latency_ms": 1765.51,
+    "transformed_retrieval_latency_ms": 2315.71,
+    "error": null,
+    "orchestration_latency_ms": 4082.06,
+    "orchestration_diagnostics": {
+      "original_query": "How do I split a large app into multiple files?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1765.51,
+      "retrieval_latency_ms": 2315.71,
+      "fusion_latency_ms": 0.05,
+      "total_latency_ms": 4082.04
+    },
+    "fusion_latency_ms": 0.05
+  },
+  {
+    "query": "How do I write automated tests for my API?",
+    "strategy_mode": "orchestrated",
+    "strategy": "multi_query",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.1,
+      "ndcg@10": 0.11284514134893527
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.3638184934971571
+    },
+    "baseline_latency_ms": 2060.39,
+    "transformation_latency_ms": 1995.07,
+    "transformed_retrieval_latency_ms": 8382.29,
+    "error": null,
+    "orchestration_latency_ms": 10379.08,
+    "orchestration_diagnostics": {
+      "original_query": "How do I write automated tests for my API?",
+      "candidate_count": 50,
+      "strategy": "multi_query",
+      "query_count": 4,
+      "successful_queries": 4,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20,
+        20,
+        20,
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1995.07,
+      "retrieval_latency_ms": 8382.29,
+      "fusion_latency_ms": 1.13,
+      "total_latency_ms": 10379.06
+    },
+    "fusion_latency_ms": 1.13
+  },
+  {
+    "query": "How do I connect FastAPI to a relational database?",
+    "strategy_mode": "orchestrated",
+    "strategy": "multi_query",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.4631896595828492
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.5321408435198608
+    },
+    "baseline_latency_ms": 2232.08,
+    "transformation_latency_ms": 2660.89,
+    "transformed_retrieval_latency_ms": 7773.98,
+    "error": null,
+    "orchestration_latency_ms": 10436.3,
+    "orchestration_diagnostics": {
+      "original_query": "How do I connect FastAPI to a relational database?",
+      "candidate_count": 35,
+      "strategy": "multi_query",
+      "query_count": 4,
+      "successful_queries": 4,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20,
+        20,
+        20,
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 2660.89,
+      "retrieval_latency_ms": 7773.98,
+      "fusion_latency_ms": 0.71,
+      "total_latency_ms": 10436.27
+    },
+    "fusion_latency_ms": 0.71
+  },
+  {
+    "query": "How do I accept file uploads?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.7682269253321374
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.7682269253321374
+    },
+    "baseline_latency_ms": 2031.58,
+    "transformation_latency_ms": 1762.4,
+    "transformed_retrieval_latency_ms": 2033.52,
+    "error": null,
+    "orchestration_latency_ms": 3796.68,
+    "orchestration_diagnostics": {
+      "original_query": "How do I accept file uploads?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1762.4,
+      "retrieval_latency_ms": 2033.52,
+      "fusion_latency_ms": 0.06,
+      "total_latency_ms": 3796.66
+    },
+    "fusion_latency_ms": 0.06
+  },
+  {
+    "query": "How do I serve static files such as images or CSS?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.8065735963827293
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.8065735963827293
+    },
+    "baseline_latency_ms": 2245.16,
+    "transformation_latency_ms": 1444.67,
+    "transformed_retrieval_latency_ms": 2328.81,
+    "error": null,
+    "orchestration_latency_ms": 3774.35,
+    "orchestration_diagnostics": {
+      "original_query": "How do I serve static files such as images or CSS?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1444.67,
+      "retrieval_latency_ms": 2328.81,
+      "fusion_latency_ms": 0.04,
+      "total_latency_ms": 3774.32
+    },
+    "fusion_latency_ms": 0.04
+  },
+  {
+    "query": "How can I hide a field like the password from the response?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.2489083270225946
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.2489083270225946
+    },
+    "baseline_latency_ms": 2364.98,
+    "transformation_latency_ms": 1238.7,
+    "transformed_retrieval_latency_ms": 2394.02,
+    "error": null,
+    "orchestration_latency_ms": 3633.46,
+    "orchestration_diagnostics": {
+      "original_query": "How can I hide a field like the password from the response?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1238.7,
+      "retrieval_latency_ms": 2394.02,
+      "fusion_latency_ms": 0.04,
+      "total_latency_ms": 3633.43
+    },
+    "fusion_latency_ms": 0.04
+  },
+  {
+    "query": "How do I set the HTTP status code for a successful creation?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.4525081529734507
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.4525081529734507
+    },
+    "baseline_latency_ms": 2213.9,
+    "transformation_latency_ms": 818.89,
+    "transformed_retrieval_latency_ms": 2643.28,
+    "error": null,
+    "orchestration_latency_ms": 3463.74,
+    "orchestration_diagnostics": {
+      "original_query": "How do I set the HTTP status code for a successful creation?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 818.89,
+      "retrieval_latency_ms": 2643.28,
+      "fusion_latency_ms": 0.04,
+      "total_latency_ms": 3463.72
+    },
+    "fusion_latency_ms": 0.04
+  },
+  {
+    "query": "How do I read fields from an HTML form?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.8104089071229301
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.8104089071229301
+    },
+    "baseline_latency_ms": 2455.29,
+    "transformation_latency_ms": 1565.2,
+    "transformed_retrieval_latency_ms": 2267.38,
+    "error": null,
+    "orchestration_latency_ms": 3833.24,
+    "orchestration_diagnostics": {
+      "original_query": "How do I read fields from an HTML form?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1565.2,
+      "retrieval_latency_ms": 2267.38,
+      "fusion_latency_ms": 0.04,
+      "total_latency_ms": 3833.22
+    },
+    "fusion_latency_ms": 0.04
+  },
+  {
+    "query": "How do I read cookies sent by the browser?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.6005491084563833
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.6005491084563833
+    },
+    "baseline_latency_ms": 2411.0,
+    "transformation_latency_ms": 1967.62,
+    "transformed_retrieval_latency_ms": 2636.72,
+    "error": null,
+    "orchestration_latency_ms": 4605.02,
+    "orchestration_diagnostics": {
+      "original_query": "How do I read cookies sent by the browser?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1967.62,
+      "retrieval_latency_ms": 2636.72,
+      "fusion_latency_ms": 0.03,
+      "total_latency_ms": 4605.0
+    },
+    "fusion_latency_ms": 0.03
+  },
+  {
+    "query": "How do I read a custom request header?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.25,
+      "ndcg@10": 0.14606834984270645
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.25,
+      "ndcg@10": 0.14606834984270645
+    },
+    "baseline_latency_ms": 2760.52,
+    "transformation_latency_ms": 1752.72,
+    "transformed_retrieval_latency_ms": 2139.78,
+    "error": null,
+    "orchestration_latency_ms": 3893.13,
+    "orchestration_diagnostics": {
+      "original_query": "How do I read a custom request header?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1752.72,
+      "retrieval_latency_ms": 2139.78,
+      "fusion_latency_ms": 0.05,
+      "total_latency_ms": 3893.11
+    },
+    "fusion_latency_ms": 0.05
+  },
+  {
+    "query": "How do I protect endpoints with a username and password flow?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.43231813227099475
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.43231813227099475
+    },
+    "baseline_latency_ms": 2231.05,
+    "transformation_latency_ms": 1262.8,
+    "transformed_retrieval_latency_ms": 2333.56,
+    "error": null,
+    "orchestration_latency_ms": 3597.06,
+    "orchestration_diagnostics": {
+      "original_query": "How do I protect endpoints with a username and password flow?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1262.8,
+      "retrieval_latency_ms": 2333.56,
+      "fusion_latency_ms": 0.07,
+      "total_latency_ms": 3597.03
+    },
+    "fusion_latency_ms": 0.07
+  },
+  {
+    "query": "How do I create and verify JWT access tokens?",
+    "strategy_mode": "orchestrated",
+    "strategy": "multi_query",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.7967610662472991
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.7849818707050382
+    },
+    "baseline_latency_ms": 2065.08,
+    "transformation_latency_ms": 2933.09,
+    "transformed_retrieval_latency_ms": 9125.48,
+    "error": null,
+    "orchestration_latency_ms": 12060.11,
+    "orchestration_diagnostics": {
+      "original_query": "How do I create and verify JWT access tokens?",
+      "candidate_count": 37,
+      "strategy": "multi_query",
+      "query_count": 4,
+      "successful_queries": 4,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20,
+        20,
+        20,
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 2933.09,
+      "retrieval_latency_ms": 9125.48,
+      "fusion_latency_ms": 0.78,
+      "total_latency_ms": 12060.09
+    },
+    "fusion_latency_ms": 0.78
+  },
+  {
+    "query": "How do I get the current logged in user inside an endpoint?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.16666666666666666,
+      "ndcg@10": 0.10778915452451095
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.16666666666666666,
+      "ndcg@10": 0.10778915452451095
+    },
+    "baseline_latency_ms": 2711.46,
+    "transformation_latency_ms": 1533.15,
+    "transformed_retrieval_latency_ms": 2775.79,
+    "error": null,
+    "orchestration_latency_ms": 4309.95,
+    "orchestration_diagnostics": {
+      "original_query": "How do I get the current logged in user inside an endpoint?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1533.15,
+      "retrieval_latency_ms": 2775.79,
+      "fusion_latency_ms": 0.05,
+      "total_latency_ms": 4309.93
+    },
+    "fusion_latency_ms": 0.05
+  },
+  {
+    "query": "How do I run code when the application starts and stops?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.6012628110727576
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.6012628110727576
+    },
+    "baseline_latency_ms": 2993.07,
+    "transformation_latency_ms": 1392.88,
+    "transformed_retrieval_latency_ms": 2414.88,
+    "error": null,
+    "orchestration_latency_ms": 3808.53,
+    "orchestration_diagnostics": {
+      "original_query": "How do I run code when the application starts and stops?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1392.88,
+      "retrieval_latency_ms": 2414.88,
+      "fusion_latency_ms": 0.05,
+      "total_latency_ms": 3808.51
+    },
+    "fusion_latency_ms": 0.05
+  },
+  {
+    "query": "How do I build a WebSocket endpoint?",
+    "strategy_mode": "orchestrated",
+    "strategy": "multi_query",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.7975167679274937
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.5875502863571089
+    },
+    "baseline_latency_ms": 2030.66,
+    "transformation_latency_ms": 2220.1,
+    "transformed_retrieval_latency_ms": 7734.89,
+    "error": null,
+    "orchestration_latency_ms": 9956.13,
+    "orchestration_diagnostics": {
+      "original_query": "How do I build a WebSocket endpoint?",
+      "candidate_count": 29,
+      "strategy": "multi_query",
+      "query_count": 4,
+      "successful_queries": 4,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20,
+        20,
+        20,
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 2220.1,
+      "retrieval_latency_ms": 7734.89,
+      "fusion_latency_ms": 0.55,
+      "total_latency_ms": 9956.12
+    },
+    "fusion_latency_ms": 0.55
+  },
+  {
+    "query": "How do I return HTML instead of JSON?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.1111111111111111,
+      "ndcg@10": 0.10209739512291163
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.1111111111111111,
+      "ndcg@10": 0.10209739512291163
+    },
+    "baseline_latency_ms": 2306.94,
+    "transformation_latency_ms": 2299.04,
+    "transformed_retrieval_latency_ms": 2318.82,
+    "error": null,
+    "orchestration_latency_ms": 4618.64,
+    "orchestration_diagnostics": {
+      "original_query": "How do I return HTML instead of JSON?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 2299.04,
+      "retrieval_latency_ms": 2318.82,
+      "fusion_latency_ms": 0.07,
+      "total_latency_ms": 4618.62
+    },
+    "fusion_latency_ms": 0.07
+  },
+  {
+    "query": "How do I load configuration from environment variables?",
+    "strategy_mode": "orchestrated",
+    "strategy": "multi_query",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.8521705090845474
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.6207622843987102
+    },
+    "baseline_latency_ms": 2156.61,
+    "transformation_latency_ms": 2361.08,
+    "transformed_retrieval_latency_ms": 9124.18,
+    "error": null,
+    "orchestration_latency_ms": 11487.42,
+    "orchestration_diagnostics": {
+      "original_query": "How do I load configuration from environment variables?",
+      "candidate_count": 48,
+      "strategy": "multi_query",
+      "query_count": 4,
+      "successful_queries": 4,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20,
+        20,
+        20,
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 2361.08,
+      "retrieval_latency_ms": 9124.18,
+      "fusion_latency_ms": 1.49,
+      "total_latency_ms": 11487.4
+    },
+    "fusion_latency_ms": 1.49
+  },
+  {
+    "query": "How do I package my app in a Docker container?",
+    "strategy_mode": "orchestrated",
+    "strategy": "hyde",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.41748832019487603
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.7641675933748661
+    },
+    "baseline_latency_ms": 2239.41,
+    "transformation_latency_ms": 3594.3,
+    "transformed_retrieval_latency_ms": 28783.25,
+    "error": null,
+    "orchestration_latency_ms": 32378.22,
+    "orchestration_diagnostics": {
+      "original_query": "How do I package my app in a Docker container?",
+      "candidate_count": 20,
+      "strategy": "hyde",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 3594.3,
+      "retrieval_latency_ms": 28783.25,
+      "fusion_latency_ms": 0.06,
+      "total_latency_ms": 32378.19
+    },
+    "fusion_latency_ms": 0.06
+  },
+  {
+    "query": "When should I use async def instead of def?",
+    "strategy_mode": "orchestrated",
+    "strategy": "multi_query",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.9888009031441519
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.8816172070446371
+    },
+    "baseline_latency_ms": 2224.3,
+    "transformation_latency_ms": 2164.68,
+    "transformed_retrieval_latency_ms": 8314.58,
+    "error": null,
+    "orchestration_latency_ms": 10480.75,
+    "orchestration_diagnostics": {
+      "original_query": "When should I use async def instead of def?",
+      "candidate_count": 33,
+      "strategy": "multi_query",
+      "query_count": 4,
+      "successful_queries": 4,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20,
+        20,
+        20,
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 2164.68,
+      "retrieval_latency_ms": 8314.58,
+      "fusion_latency_ms": 0.65,
+      "total_latency_ms": 10480.73
+    },
+    "fusion_latency_ms": 0.65
+  },
+  {
+    "query": "How do I add custom code that runs for every request?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.5580107938044674
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.5580107938044674
+    },
+    "baseline_latency_ms": 2627.04,
+    "transformation_latency_ms": 1724.85,
+    "transformed_retrieval_latency_ms": 2571.89,
+    "error": null,
+    "orchestration_latency_ms": 4297.61,
+    "orchestration_diagnostics": {
+      "original_query": "How do I add custom code that runs for every request?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1724.85,
+      "retrieval_latency_ms": 2571.89,
+      "fusion_latency_ms": 0.04,
+      "total_latency_ms": 4297.59
+    },
+    "fusion_latency_ms": 0.04
+  },
+  {
+    "query": "How do I run cleanup code after a dependency finishes?",
+    "strategy_mode": "orchestrated",
+    "strategy": "hyde",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.55206785919664
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.4789015552876929
+    },
+    "baseline_latency_ms": 2555.34,
+    "transformation_latency_ms": 5139.34,
+    "transformed_retrieval_latency_ms": 19761.48,
+    "error": null,
+    "orchestration_latency_ms": 24901.73,
+    "orchestration_diagnostics": {
+      "original_query": "How do I run cleanup code after a dependency finishes?",
+      "candidate_count": 20,
+      "strategy": "hyde",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 5139.34,
+      "retrieval_latency_ms": 19761.48,
+      "fusion_latency_ms": 0.06,
+      "total_latency_ms": 24901.71
+    },
+    "fusion_latency_ms": 0.06
+  },
+  {
+    "query": "How do I set a title and version for the generated API docs?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.36159016140841066
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.36159016140841066
+    },
+    "baseline_latency_ms": 2666.34,
+    "transformation_latency_ms": 1218.5,
+    "transformed_retrieval_latency_ms": 2546.09,
+    "error": null,
+    "orchestration_latency_ms": 3765.3,
+    "orchestration_diagnostics": {
+      "original_query": "How do I set a title and version for the generated API docs?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1218.5,
+      "retrieval_latency_ms": 2546.09,
+      "fusion_latency_ms": 0.04,
+      "total_latency_ms": 3765.28
+    },
+    "fusion_latency_ms": 0.04
+  },
+  {
+    "query": "How do I declare a nested Pydantic model inside a request body?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.34954491927658526
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.34954491927658526
+    },
+    "baseline_latency_ms": 2553.38,
+    "transformation_latency_ms": 1815.81,
+    "transformed_retrieval_latency_ms": 2494.13,
+    "error": null,
+    "orchestration_latency_ms": 4310.72,
+    "orchestration_diagnostics": {
+      "original_query": "How do I declare a nested Pydantic model inside a request body?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1815.81,
+      "retrieval_latency_ms": 2494.13,
+      "fusion_latency_ms": 0.04,
+      "total_latency_ms": 4310.7
+    },
+    "fusion_latency_ms": 0.04
+  },
+  {
+    "query": "How do I add validation rules like a minimum value to a model field?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 0.0,
+      "hit@20": 0.0,
+      "mrr@20": 0.0,
+      "ndcg@10": 0.0
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 0.0,
+      "hit@20": 0.0,
+      "mrr@20": 0.0,
+      "ndcg@10": 0.0
+    },
+    "baseline_latency_ms": 2540.75,
+    "transformation_latency_ms": 1346.85,
+    "transformed_retrieval_latency_ms": 2514.54,
+    "error": null,
+    "orchestration_latency_ms": 3862.17,
+    "orchestration_diagnostics": {
+      "original_query": "How do I add validation rules like a minimum value to a model field?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1346.85,
+      "retrieval_latency_ms": 2514.54,
+      "fusion_latency_ms": 0.06,
+      "total_latency_ms": 3862.14
+    },
+    "fusion_latency_ms": 0.06
+  },
+  {
+    "query": "What does Depends do?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.32730659600126993
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.32730659600126993
+    },
+    "baseline_latency_ms": 1867.48,
+    "transformation_latency_ms": 1346.58,
+    "transformed_retrieval_latency_ms": 1932.7,
+    "error": null,
+    "orchestration_latency_ms": 3280.01,
+    "orchestration_diagnostics": {
+      "original_query": "What does Depends do?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1346.58,
+      "retrieval_latency_ms": 1932.7,
+      "fusion_latency_ms": 0.07,
+      "total_latency_ms": 3279.99
+    },
+    "fusion_latency_ms": 0.07
+  },
+  {
+    "query": "How do I raise HTTPException with custom headers?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.5316182403381249
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.5316182403381249
+    },
+    "baseline_latency_ms": 2079.08,
+    "transformation_latency_ms": 584.47,
+    "transformed_retrieval_latency_ms": 2244.11,
+    "error": null,
+    "orchestration_latency_ms": 2829.35,
+    "orchestration_diagnostics": {
+      "original_query": "How do I raise HTTPException with custom headers?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 584.47,
+      "retrieval_latency_ms": 2244.11,
+      "fusion_latency_ms": 0.04,
+      "total_latency_ms": 2829.32
+    },
+    "fusion_latency_ms": 0.04
+  },
+  {
+    "query": "CORSMiddleware allow_origins configuration",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.38685280723454163
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.38685280723454163
+    },
+    "baseline_latency_ms": 2069.88,
+    "transformation_latency_ms": 836.15,
+    "transformed_retrieval_latency_ms": 2515.94,
+    "error": null,
+    "orchestration_latency_ms": 3353.69,
+    "orchestration_diagnostics": {
+      "original_query": "CORSMiddleware allow_origins configuration",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 836.15,
+      "retrieval_latency_ms": 2515.94,
+      "fusion_latency_ms": 0.05,
+      "total_latency_ms": 3353.67
+    },
+    "fusion_latency_ms": 0.05
+  },
+  {
+    "query": "What is dependency_overrides used for?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.3333333333333333,
+      "ndcg@10": 0.5833416105149332
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.3333333333333333,
+      "ndcg@10": 0.5833416105149332
+    },
+    "baseline_latency_ms": 2245.38,
+    "transformation_latency_ms": 1016.3,
+    "transformed_retrieval_latency_ms": 2248.26,
+    "error": null,
+    "orchestration_latency_ms": 3265.47,
+    "orchestration_diagnostics": {
+      "original_query": "What is dependency_overrides used for?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1016.3,
+      "retrieval_latency_ms": 2248.26,
+      "fusion_latency_ms": 0.07,
+      "total_latency_ms": 3265.45
+    },
+    "fusion_latency_ms": 0.07
+  },
+  {
+    "query": "How does response_model_exclude_unset work?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.9325210919548239
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.9325210919548239
+    },
+    "baseline_latency_ms": 2055.69,
+    "transformation_latency_ms": 856.21,
+    "transformed_retrieval_latency_ms": 2095.13,
+    "error": null,
+    "orchestration_latency_ms": 2952.17,
+    "orchestration_diagnostics": {
+      "original_query": "How does response_model_exclude_unset work?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 856.21,
+      "retrieval_latency_ms": 2095.13,
+      "fusion_latency_ms": 0.06,
+      "total_latency_ms": 2952.15
+    },
+    "fusion_latency_ms": 0.06
+  },
+  {
+    "query": "How do I use OAuth2PasswordRequestForm?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.13886244387355454
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.13886244387355454
+    },
+    "baseline_latency_ms": 2161.73,
+    "transformation_latency_ms": 1957.3,
+    "transformed_retrieval_latency_ms": 2337.81,
+    "error": null,
+    "orchestration_latency_ms": 4295.87,
+    "orchestration_diagnostics": {
+      "original_query": "How do I use OAuth2PasswordRequestForm?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1957.3,
+      "retrieval_latency_ms": 2337.81,
+      "fusion_latency_ms": 0.06,
+      "total_latency_ms": 4295.85
+    },
+    "fusion_latency_ms": 0.06
+  },
+  {
+    "query": "How do I pass lifespan to FastAPI?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.3333333333333333,
+      "ndcg@10": 0.12647135138382856
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.3333333333333333,
+      "ndcg@10": 0.12647135138382856
+    },
+    "baseline_latency_ms": 2099.29,
+    "transformation_latency_ms": 987.59,
+    "transformed_retrieval_latency_ms": 2237.69,
+    "error": null,
+    "orchestration_latency_ms": 3226.71,
+    "orchestration_diagnostics": {
+      "original_query": "How do I pass lifespan to FastAPI?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 987.59,
+      "retrieval_latency_ms": 2237.69,
+      "fusion_latency_ms": 0.07,
+      "total_latency_ms": 3226.69
+    },
+    "fusion_latency_ms": 0.07
+  },
+  {
+    "query": "How do I use include_router with a prefix?",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.25,
+      "ndcg@10": 0.1731866333482261
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.25,
+      "ndcg@10": 0.1731866333482261
+    },
+    "baseline_latency_ms": 2139.57,
+    "transformation_latency_ms": 1549.65,
+    "transformed_retrieval_latency_ms": 2343.55,
+    "error": null,
+    "orchestration_latency_ms": 3893.96,
+    "orchestration_diagnostics": {
+      "original_query": "How do I use include_router with a prefix?",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1549.65,
+      "retrieval_latency_ms": 2343.55,
+      "fusion_latency_ms": 0.04,
+      "total_latency_ms": 3893.94
+    },
+    "fusion_latency_ms": 0.04
+  },
+  {
+    "query": "status.HTTP_201_CREATED",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 0.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.09090909090909091,
+      "ndcg@10": 0.0
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 0.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.09090909090909091,
+      "ndcg@10": 0.0
+    },
+    "baseline_latency_ms": 2005.18,
+    "transformation_latency_ms": 1383.55,
+    "transformed_retrieval_latency_ms": 2167.65,
+    "error": null,
+    "orchestration_latency_ms": 3551.96,
+    "orchestration_diagnostics": {
+      "original_query": "status.HTTP_201_CREATED",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1383.55,
+      "retrieval_latency_ms": 2167.65,
+      "fusion_latency_ms": 0.06,
+      "total_latency_ms": 3551.94
+    },
+    "fusion_latency_ms": 0.06
+  },
+  {
+    "query": "RequestValidationError exception handler",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.8789901909062586
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.8789901909062586
+    },
+    "baseline_latency_ms": 1793.24,
+    "transformation_latency_ms": 3218.27,
+    "transformed_retrieval_latency_ms": 1905.38,
+    "error": null,
+    "orchestration_latency_ms": 5124.31,
+    "orchestration_diagnostics": {
+      "original_query": "RequestValidationError exception handler",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 3218.27,
+      "retrieval_latency_ms": 1905.38,
+      "fusion_latency_ms": 0.05,
+      "total_latency_ms": 5124.29
+    },
+    "fusion_latency_ms": 0.05
+  },
+  {
+    "query": "Annotated[str, Query(max_length=50)]",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.5435228269698196
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.5435228269698196
+    },
+    "baseline_latency_ms": 2207.75,
+    "transformation_latency_ms": 1098.0,
+    "transformed_retrieval_latency_ms": 2365.04,
+    "error": null,
+    "orchestration_latency_ms": 3463.68,
+    "orchestration_diagnostics": {
+      "original_query": "Annotated[str, Query(max_length=50)]",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1098.0,
+      "retrieval_latency_ms": 2365.04,
+      "fusion_latency_ms": 0.04,
+      "total_latency_ms": 3463.66
+    },
+    "fusion_latency_ms": 0.04
+  },
+  {
+    "query": "Path(gt=0, le=1000)",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.7613569414627896
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.7613569414627896
+    },
+    "baseline_latency_ms": 2315.02,
+    "transformation_latency_ms": 937.05,
+    "transformed_retrieval_latency_ms": 2319.91,
+    "error": null,
+    "orchestration_latency_ms": 3257.77,
+    "orchestration_diagnostics": {
+      "original_query": "Path(gt=0, le=1000)",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 937.05,
+      "retrieval_latency_ms": 2319.91,
+      "fusion_latency_ms": 0.06,
+      "total_latency_ms": 3257.74
+    },
+    "fusion_latency_ms": 0.06
+  },
+  {
+    "query": "CORSMiddleware allow_credentials",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.8175295903539445
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.8175295903539445
+    },
+    "baseline_latency_ms": 1968.52,
+    "transformation_latency_ms": 923.94,
+    "transformed_retrieval_latency_ms": 2036.97,
+    "error": null,
+    "orchestration_latency_ms": 2962.05,
+    "orchestration_diagnostics": {
+      "original_query": "CORSMiddleware allow_credentials",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 923.94,
+      "retrieval_latency_ms": 2036.97,
+      "fusion_latency_ms": 0.06,
+      "total_latency_ms": 2962.03
+    },
+    "fusion_latency_ms": 0.06
+  },
+  {
+    "query": "@app.on_event(\"startup\")",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.6131471927654584
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.6131471927654584
+    },
+    "baseline_latency_ms": 1945.58,
+    "transformation_latency_ms": 2053.91,
+    "transformed_retrieval_latency_ms": 1950.92,
+    "error": null,
+    "orchestration_latency_ms": 4005.59,
+    "orchestration_diagnostics": {
+      "original_query": "@app.on_event(\"startup\")",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 2053.91,
+      "retrieval_latency_ms": 1950.92,
+      "fusion_latency_ms": 0.04,
+      "total_latency_ms": 4005.57
+    },
+    "fusion_latency_ms": 0.04
+  },
+  {
+    "query": "HTTPBasic HTTPBasicCredentials",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.25,
+      "ndcg@10": 0.14606834984270645
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.25,
+      "ndcg@10": 0.14606834984270645
+    },
+    "baseline_latency_ms": 2153.28,
+    "transformation_latency_ms": 1627.02,
+    "transformed_retrieval_latency_ms": 1996.65,
+    "error": null,
+    "orchestration_latency_ms": 3624.37,
+    "orchestration_diagnostics": {
+      "original_query": "HTTPBasic HTTPBasicCredentials",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1627.02,
+      "retrieval_latency_ms": 1996.65,
+      "fusion_latency_ms": 0.04,
+      "total_latency_ms": 3624.34
+    },
+    "fusion_latency_ms": 0.04
+  },
+  {
+    "query": "OAuth2PasswordBearer(tokenUrl=\"token\")",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.16666666666666666,
+      "ndcg@10": 0.227804435066758
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.16666666666666666,
+      "ndcg@10": 0.227804435066758
+    },
+    "baseline_latency_ms": 2182.09,
+    "transformation_latency_ms": 920.91,
+    "transformed_retrieval_latency_ms": 2457.52,
+    "error": null,
+    "orchestration_latency_ms": 3379.34,
+    "orchestration_diagnostics": {
+      "original_query": "OAuth2PasswordBearer(tokenUrl=\"token\")",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 920.91,
+      "retrieval_latency_ms": 2457.52,
+      "fusion_latency_ms": 0.07,
+      "total_latency_ms": 3379.31
+    },
+    "fusion_latency_ms": 0.07
+  },
+  {
+    "query": "SECRET_KEY ALGORITHM ACCESS_TOKEN_EXPIRE_MINUTES",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 0.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.05555555555555555,
+      "ndcg@10": 0.0
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 0.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.05555555555555555,
+      "ndcg@10": 0.0
+    },
+    "baseline_latency_ms": 2148.44,
+    "transformation_latency_ms": 839.82,
+    "transformed_retrieval_latency_ms": 2229.39,
+    "error": null,
+    "orchestration_latency_ms": 3069.96,
+    "orchestration_diagnostics": {
+      "original_query": "SECRET_KEY ALGORITHM ACCESS_TOKEN_EXPIRE_MINUTES",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 839.82,
+      "retrieval_latency_ms": 2229.39,
+      "fusion_latency_ms": 0.04,
+      "total_latency_ms": 3069.95
+    },
+    "fusion_latency_ms": 0.04
+  },
+  {
+    "query": "response_model_exclude_none",
+    "strategy_mode": "orchestrated",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 1.0
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 1.0
+    },
+    "baseline_latency_ms": 1918.36,
+    "transformation_latency_ms": 1262.53,
+    "transformed_retrieval_latency_ms": 1938.13,
+    "error": null,
+    "orchestration_latency_ms": 3201.32,
+    "orchestration_diagnostics": {
+      "original_query": "response_model_exclude_none",
+      "candidate_count": 20,
+      "strategy": "direct",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "retrieved_per_query": [
+        20
+      ],
+      "errors": [],
+      "transformation_latency_ms": 1262.53,
+      "retrieval_latency_ms": 1938.13,
+      "fusion_latency_ms": 0.04,
+      "total_latency_ms": 3201.3
+    },
+    "fusion_latency_ms": 0.04
+  }
+]

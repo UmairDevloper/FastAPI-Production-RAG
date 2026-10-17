@@ -1,0 +1,261 @@
+{
+  "suite": "pipeline",
+  "created_at": "2026-10-17T12:25:11.235476+00:00",
+  "requested_cases": 3,
+  "completed_cases": 3,
+  "error_cases": 0,
+  "mean_required_fact_coverage": 1.0,
+  "citation_integrity_pass_rate": 0.6667,
+  "retrieval_evaluation": {
+    "labeled_cases": 3,
+    "evaluated_cases": 3,
+    "skipped_or_unavailable_cases": 0,
+    "unlabeled_cases": 0,
+    "mean_metrics": {
+      "hit_at_1": 0.6667,
+      "hit_at_3": 1.0,
+      "hit_at_5": 1.0,
+      "hit_at_10": 1.0,
+      "hit_at_20": 1.0,
+      "mrr": 0.8333,
+      "ndcg_at_10": 0.8571
+    }
+  },
+  "context_retention_evaluation": {
+    "evaluated_cases": 3,
+    "mean_metrics": {
+      "relevant_retrieved_count": 1.3333,
+      "relevant_in_context_count": 1.3333,
+      "retrieval_recall": 1.0,
+      "context_recall": 1.0,
+      "retention_of_retrieved_relevant": 1.0
+    }
+  },
+  "results": [
+    {
+      "case_id": "fastapi-001",
+      "question": "How do I add HTTP middleware in FastAPI?",
+      "status": "completed",
+      "answer": "To add an **HTTP middleware** to a FastAPI application you can use either of the two supported patterns:\n\n| Pattern | How it works | Example |\n|---------|--------------|---------|\n| **Decorator** | Use `@app.middleware(\"http\")` on an async function. The function receives the incoming `Request` and a `call_next` callable that forwards the request to the next stage (the path operation). After `call_next` returns a `Response`, you can modify it before returning. | ```python\\nimport time\\nfrom fastapi import FastAPI, Request\\n\\napp = FastAPI()\\n\\n@app.middleware(\\\"http\\\")\\nasync def add_process_time_header(request: Request, call_next):\\n    start_time = time.perf_counter()\\n    response = await call_next(request)\\n    process_time = time.perf_counter() - start_time\\n    response.headers[\\\"X-Process-Time\\\"] = str(process_time)\\n    return response\\n``` [chunk_id:6bcf3c711186-0001] |\n| **Class‑based** | Use `app.add_middleware()` with a middleware class that follows the ASGI spec (e.g., `HTTPSRedirectMiddleware`, `CORSMiddleware`, or any third‑party ASGI middleware). The class is instantiated with the app and any configuration arguments. | ```python\\nfrom fastapi import FastAPI\\nfrom fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware\\n\\napp = FastAPI()\\napp.add_middleware(HTTPSRedirectMiddleware)\\n``` [chunk_id:58f3bb62cec2-0002] |\n\n### Key points\n\n* The decorator form is convenient for simple, custom logic that you write directly in your code.  \n* The `add_middleware()` form is preferred when you want to use a middleware class (built‑in or third‑party) that expects the app as its first argument.  \n* Both approaches run for every request before it reaches a path operation and after the response is generated, allowing you to inspect or modify the request/response.  \n* If you need to expose custom headers to browsers, remember to add them to the CORS `expose_headers` list (see Starlette’s CORS docs).  \n\nThese patterns",
+      "expected_abstention": false,
+      "actual_abstention": false,
+      "required_fact_coverage": {
+        "applicable": true,
+        "coverage": 1.0,
+        "matched_facts": [
+          "@app.middleware",
+          "call_next"
+        ],
+        "missing_facts": []
+      },
+      "citation_integrity": {
+        "citation_count": 2,
+        "valid_citation_count": 2,
+        "invalid_citation_ids": [],
+        "citations_present": true,
+        "citations_complete": true,
+        "all_citations_valid": true
+      },
+      "abstention": {
+        "applicable": false,
+        "expected_abstention": false,
+        "actually_abstained": false,
+        "abstention_matches": true,
+        "no_citations_when_abstaining": true,
+        "passed": true
+      },
+      "evidence_ids": [
+        "chunk_id:6bcf3c711186-0001",
+        "chunk_id:6bcf3c711186-0002",
+        "chunk_id:6bcf3c711186-0000",
+        "chunk_id:58f3bb62cec2-0002",
+        "chunk_id:2b32c4549e5c-0090",
+        "chunk_id:58f3bb62cec2-0000",
+        "chunk_id:3854a0fd846b-0007",
+        "chunk_id:2b32c4549e5c-0008"
+      ],
+      "cited_evidence_ids": [
+        "chunk_id:6bcf3c711186-0001",
+        "chunk_id:58f3bb62cec2-0002"
+      ],
+      "retrieval_strategy": "direct",
+      "latency_ms": {
+        "security": 0.02,
+        "nemo_security": 5662.26,
+        "retrieval": 2339.83,
+        "reranking": 5789.92,
+        "context_assembly": 0.11,
+        "generation": 64279.52,
+        "total": 78071.86,
+        "evaluation_total": 78071.9
+      },
+      "error": null,
+      "retrieval_evaluation_status": "evaluated",
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "hit_at_10": 1.0,
+        "hit_at_20": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_10": 1.0
+      },
+      "context_metrics": {
+        "relevant_retrieved_count": 1,
+        "relevant_in_context_count": 1,
+        "retrieval_recall": 1.0,
+        "context_recall": 1.0,
+        "retention_of_retrieved_relevant": 1.0
+      }
+    },
+    {
+      "case_id": "fastapi-002",
+      "question": "How do I enable CORS in FastAPI?",
+      "status": "completed",
+      "answer": "To enable Cross‑Origin Resource Sharing (CORS) in a FastAPI application you add the built‑in **`CORSMiddleware`** to your app and configure the origins, methods, headers, and credentials you want to allow.\n\n```python\nfrom fastapi import FastAPI\nfrom fastapi.middleware.cors import CORSMiddleware\n\napp = FastAPI()\n\n# 1. List the origins that should be allowed to make cross‑origin requests\norigins = [\n    \"http://localhost.tiangolo.com\",\n    \"https://localhost.tiangolo.com\",\n    \"http://localhost\",\n    \"http://localhost:8080\",\n]\n\n# 2. Add the middleware to the FastAPI app\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=origins,          # or [\"*\"] to allow any origin\n    allow_credentials=True,         # allow cookies / auth headers\n    allow_methods=[\"*\"],            # or [\"GET\", \"POST\", ...]\n    allow_headers=[\"*\"],            # or a specific list of headers\n)\n\n@app.get(\"/\")\nasync def main():\n    return {\"message\": \"Hello World\"}\n```\n\n**What the middleware does**\n\n* `allow_origins` – list of origins that may access the API.  \n* `allow_methods` – HTTP methods that are permitted (default is `[\"GET\"]`).  \n* `allow_headers` – request headers that are allowed (default is `[]`).  \n* `allow_credentials` – whether cookies or auth headers can be sent.  \n* `expose_headers`, `max_age`, `allow_origin_regex`, etc. can also be set if needed.\n\nThe default configuration of `CORSMiddleware` is restrictive, so you must explicitly enable the origins, methods, or headers you need. The arguments and their defaults are described in the FastAPI reference for `CORSMiddleware`【chunk_id:4f1cea92",
+      "expected_abstention": false,
+      "actual_abstention": false,
+      "required_fact_coverage": {
+        "applicable": true,
+        "coverage": 1.0,
+        "matched_facts": [
+          "CORSMiddleware",
+          "allow_origins"
+        ],
+        "missing_facts": []
+      },
+      "citation_integrity": {
+        "citation_count": 0,
+        "valid_citation_count": 0,
+        "invalid_citation_ids": [],
+        "citations_present": false,
+        "citations_complete": false,
+        "all_citations_valid": false
+      },
+      "abstention": {
+        "applicable": false,
+        "expected_abstention": false,
+        "actually_abstained": false,
+        "abstention_matches": true,
+        "no_citations_when_abstaining": true,
+        "passed": true
+      },
+      "evidence_ids": [
+        "chunk_id:4f1cea92e7bc-0003",
+        "chunk_id:fce749101453-0012",
+        "chunk_id:2b32c4549e5c-0038",
+        "chunk_id:fce749101453-0005",
+        "chunk_id:fce749101453-0001",
+        "chunk_id:4f1cea92e7bc-0004",
+        "chunk_id:6bcf3c711186-0001",
+        "chunk_id:fce749101453-0002"
+      ],
+      "cited_evidence_ids": [],
+      "retrieval_strategy": "direct",
+      "latency_ms": {
+        "security": 0.01,
+        "nemo_security": 576.85,
+        "retrieval": 3832.81,
+        "reranking": 2168.44,
+        "context_assembly": 0.1,
+        "generation": 63143.38,
+        "total": 69721.78,
+        "evaluation_total": 69721.81
+      },
+      "error": null,
+      "retrieval_evaluation_status": "evaluated",
+      "retrieval_metrics": {
+        "hit_at_1": 0.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "hit_at_10": 1.0,
+        "hit_at_20": 1.0,
+        "mrr": 0.5,
+        "ndcg_at_10": 0.5714285040141098
+      },
+      "context_metrics": {
+        "relevant_retrieved_count": 2,
+        "relevant_in_context_count": 2,
+        "retrieval_recall": 1.0,
+        "context_recall": 1.0,
+        "retention_of_retrieved_relevant": 1.0
+      }
+    },
+    {
+      "case_id": "fastapi-003",
+      "question": "How do I redirect HTTP requests to HTTPS?",
+      "status": "completed",
+      "answer": "To force every incoming request to use HTTPS in a FastAPI app you can add the built‑in **HTTPSRedirectMiddleware**.  \nThis middleware checks the scheme of each request and, if it is `http` (or `ws`), automatically issues a redirect to the same URL with the `https` scheme.\n\n```python\nfrom fastapi import FastAPI\nfrom fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware\n\napp = FastAPI()\n\n# Add the middleware before any routes\napp.add_middleware(HTTPSRedirectMiddleware)\n\n@app.get(\"/\")\nasync def main():\n    return {\"message\": \"Hello World\"}\n```\n\nWhen a client requests `http://your‑host/`, the middleware will respond with a 307 redirect to `https://your‑host/` [chunk_id:58f3bb62cec2-0002].\n\nIf your FastAPI app is behind a TLS‑termination proxy (e.g., Traefik, Nginx, Caddy), the proxy handles the HTTPS handshake and forwards plain HTTP to the app. In that case you must also trust the proxy’s forwarded headers so that FastAPI can correctly build the redirect URL.  \nUse the FastAPI CLI option `--forwarded-allow-ips` (or configure the server accordingly) to trust the proxy’s `X-Forwarded-Proto`, `X-Forwarded-Host`, etc. This ensures the redirect points to the correct public HTTPS URL [chunk_id:345e418cc696-0002][chunk_id:7b67c8f557da-0013].\n\nIn summary:\n1. Add `HTTPSRedirectMiddleware` to your FastAPI app.  \n2. If behind a proxy, enable forwarded‑header trust so the middleware can generate the proper HTTPS redirect.",
+      "expected_abstention": false,
+      "actual_abstention": false,
+      "required_fact_coverage": {
+        "applicable": true,
+        "coverage": 1.0,
+        "matched_facts": [
+          "HTTPSRedirectMiddleware"
+        ],
+        "missing_facts": []
+      },
+      "citation_integrity": {
+        "citation_count": 3,
+        "valid_citation_count": 3,
+        "invalid_citation_ids": [],
+        "citations_present": true,
+        "citations_complete": true,
+        "all_citations_valid": true
+      },
+      "abstention": {
+        "applicable": false,
+        "expected_abstention": false,
+        "actually_abstained": false,
+        "abstention_matches": true,
+        "no_citations_when_abstaining": true,
+        "passed": true
+      },
+      "evidence_ids": [
+        "chunk_id:58f3bb62cec2-0002",
+        "chunk_id:345e418cc696-0002",
+        "chunk_id:7b67c8f557da-0013",
+        "chunk_id:7b67c8f557da-0002",
+        "chunk_id:891f7e3e2ffb-0011",
+        "chunk_id:7b67c8f557da-0008",
+        "chunk_id:7b67c8f557da-0009",
+        "chunk_id:345e418cc696-0000"
+      ],
+      "cited_evidence_ids": [
+        "chunk_id:58f3bb62cec2-0002",
+        "chunk_id:345e418cc696-0002",
+        "chunk_id:7b67c8f557da-0013"
+      ],
+      "retrieval_strategy": "direct",
+      "latency_ms": {
+        "security": 0.01,
+        "nemo_security": 568.38,
+        "retrieval": 3812.1,
+        "reranking": 1915.03,
+        "context_assembly": 0.11,
+        "generation": 63413.78,
+        "total": 69709.8,
+        "evaluation_total": 69709.83
+      },
+      "error": null,
+      "retrieval_evaluation_status": "evaluated",
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "hit_at_10": 1.0,
+        "hit_at_20": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_10": 1.0
+      },
+      "context_metrics": {
+        "relevant_retrieved_count": 1,
+        "relevant_in_context_count": 1,
+        "retrieval_recall": 1.0,
+        "context_recall": 1.0,
+        "retention_of_retrieved_relevant": 1.0
+      }
+    }
+  ]
+}

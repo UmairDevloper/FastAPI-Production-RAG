@@ -1,0 +1,302 @@
+[
+  {
+    "query": "How do I read JSON data sent by the client in a POST request?",
+    "strategy_mode": "decompose",
+    "strategy": "decompose",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.16666666666666666,
+      "ndcg@10": 0.09791292534996782
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 0.0,
+      "hit@20": 0.0,
+      "mrr@20": 0.0,
+      "ndcg@10": 0.0
+    },
+    "baseline_latency_ms": 2347.64,
+    "transformation_latency_ms": 2628.81,
+    "transformed_retrieval_latency_ms": 1096.88,
+    "error": null,
+    "retrieval_queries": [
+      "Reading JSON data from a POST request in FastAPI"
+    ]
+  },
+  {
+    "query": "How can I make a query parameter optional with a default value?",
+    "strategy_mode": "decompose",
+    "strategy": "decompose",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.6625602459390023
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.32124463208930537
+    },
+    "baseline_latency_ms": 1257.22,
+    "transformation_latency_ms": 502.95,
+    "transformed_retrieval_latency_ms": 1168.41,
+    "error": null,
+    "retrieval_queries": [
+      "How to set default value for optional query parameter in FastAPI"
+    ]
+  },
+  {
+    "query": "How do I limit the maximum length of a query string?",
+    "strategy_mode": "decompose",
+    "strategy": "decompose",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.647939623894138
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.7380396325465056
+    },
+    "baseline_latency_ms": 1189.87,
+    "transformation_latency_ms": 816.73,
+    "transformed_retrieval_latency_ms": 1126.89,
+    "error": null,
+    "retrieval_queries": [
+      "Limiting maximum length of a query string in FastAPI"
+    ]
+  },
+  {
+    "query": "How do I declare a path parameter with a type like int?",
+    "strategy_mode": "decompose",
+    "strategy": "decompose",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.3903800499921017
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.7979719524871096
+    },
+    "baseline_latency_ms": 1317.39,
+    "transformation_latency_ms": 425.69,
+    "transformed_retrieval_latency_ms": 1177.44,
+    "error": null,
+    "retrieval_queries": [
+      "Declare a path parameter with type int in FastAPI"
+    ]
+  },
+  {
+    "query": "How do I share logic between several endpoints?",
+    "strategy_mode": "decompose",
+    "strategy": "decompose",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 0.0,
+      "hit@20": 0.0,
+      "mrr@20": 0.0,
+      "ndcg@10": 0.0
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 0.0,
+      "hit@20": 0.0,
+      "mrr@20": 0.0,
+      "ndcg@10": 0.0
+    },
+    "baseline_latency_ms": 1193.81,
+    "transformation_latency_ms": 1143.47,
+    "transformed_retrieval_latency_ms": 1078.32,
+    "error": null,
+    "retrieval_queries": [
+      "How to share logic between multiple FastAPI endpoints"
+    ]
+  },
+  {
+    "query": "How do I return an error with a specific status code to the client?",
+    "strategy_mode": "decompose",
+    "strategy": "decompose",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.16666666666666666,
+      "ndcg@10": 0.08372491399919348
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.125,
+      "ndcg@10": 0.07414861528507456
+    },
+    "baseline_latency_ms": 1463.01,
+    "transformation_latency_ms": 1269.06,
+    "transformed_retrieval_latency_ms": 1108.21,
+    "error": null,
+    "retrieval_queries": [
+      "Returning error with a specific status code in FastAPI"
+    ]
+  },
+  {
+    "query": "How do I allow requests from another website's frontend?",
+    "strategy_mode": "decompose",
+    "strategy": "decompose",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.5616927747727312
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.6013124342022591
+    },
+    "baseline_latency_ms": 1176.17,
+    "transformation_latency_ms": 798.58,
+    "transformed_retrieval_latency_ms": 1317.37,
+    "error": null,
+    "retrieval_queries": [
+      "How to enable CORS in FastAPI to allow requests from another website's frontend?"
+    ]
+  },
+  {
+    "query": "How do I run a task after sending the response, like sending an email?",
+    "strategy_mode": "decompose",
+    "strategy": "decompose",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.25,
+      "ndcg@10": 0.3708968600712502
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.25,
+      "ndcg@10": 0.33799121034149754
+    },
+    "baseline_latency_ms": 1577.6,
+    "transformation_latency_ms": 1045.17,
+    "transformed_retrieval_latency_ms": 1023.16,
+    "error": null,
+    "retrieval_queries": [
+      "FastAPI background tasks after response"
+    ]
+  },
+  {
+    "query": "How do I split a large app into multiple files?",
+    "strategy_mode": "decompose",
+    "strategy": "decompose",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.13886244387355454
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.3333333333333333,
+      "ndcg@10": 0.35623158861460086
+    },
+    "baseline_latency_ms": 1162.89,
+    "transformation_latency_ms": 798.82,
+    "transformed_retrieval_latency_ms": 1188.67,
+    "error": null,
+    "retrieval_queries": [
+      "How do I split a large FastAPI app into multiple files?"
+    ]
+  },
+  {
+    "query": "How do I write automated tests for my API?",
+    "strategy_mode": "decompose",
+    "strategy": "decompose",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.1,
+      "ndcg@10": 0.11284514134893527
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.24630238874073
+    },
+    "baseline_latency_ms": 1129.42,
+    "transformation_latency_ms": 504.44,
+    "transformed_retrieval_latency_ms": 1100.08,
+    "error": null,
+    "retrieval_queries": [
+      "Automated testing FastAPI endpoints"
+    ]
+  }
+]

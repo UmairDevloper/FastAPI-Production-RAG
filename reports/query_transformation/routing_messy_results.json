@@ -1,0 +1,182 @@
+[
+  {
+    "query": "how fastapi depnd injction wrks n how use it",
+    "category": "typos",
+    "expected_strategy": "rewrite",
+    "actual_strategy": "direct",
+    "correct": false,
+    "reason": "The question is clear and directly asks about FastAPI dependency injection and its usage, which is covered in the FastAPI documentation.",
+    "search_query": "FastAPI dependency injection how it works and how to use it",
+    "needs_clarification": false
+  },
+  {
+    "query": "fastapi req body not coming proper how fix",
+    "category": "informal",
+    "expected_strategy": "rewrite",
+    "actual_strategy": "direct",
+    "correct": false,
+    "reason": "The question is clear and focused on a FastAPI request body issue, suitable for direct retrieval.",
+    "search_query": "FastAPI request body not coming properly fix",
+    "needs_clarification": false
+  },
+  {
+    "query": "whats diff betwen async def and def in fast api",
+    "category": "typos",
+    "expected_strategy": "rewrite",
+    "actual_strategy": "direct",
+    "correct": false,
+    "reason": "The question is clear, focused, and directly asks about the difference between using async def and def in FastAPI, which is a well-documented topic.",
+    "search_query": "FastAPI async def vs def difference",
+    "needs_clarification": false
+  },
+  {
+    "query": "how do i stop user frm accesing endpoint without login",
+    "category": "informal",
+    "expected_strategy": "rewrite",
+    "actual_strategy": "direct",
+    "correct": false,
+    "reason": "The question is clear and focused on preventing unauthenticated access to a FastAPI endpoint, which can be answered directly from the documentation.",
+    "search_query": "FastAPI prevent unauthenticated access to endpoint",
+    "needs_clarification": false
+  },
+  {
+    "query": "pydantic schema response_model thing not validating why",
+    "category": "fragment",
+    "expected_strategy": "rewrite",
+    "actual_strategy": "direct",
+    "correct": false,
+    "reason": "The question is clear and focused on a specific FastAPI feature (response_model validation).",
+    "search_query": "FastAPI response_model not validating pydantic schema",
+    "needs_clarification": false
+  },
+  {
+    "query": "how does fastapi inject dependencies into endpoints",
+    "category": "terminology",
+    "expected_strategy": "multi_query",
+    "actual_strategy": "direct",
+    "correct": false,
+    "reason": "The question is clear, focused, and directly pertains to FastAPI's dependency injection mechanism, making it suitable for straightforward retrieval.",
+    "search_query": "FastAPI dependency injection endpoints",
+    "needs_clarification": false
+  },
+  {
+    "query": "ways to handle errors exceptions and failed requests in fastapi",
+    "category": "terminology",
+    "expected_strategy": "multi_query",
+    "actual_strategy": "direct",
+    "correct": false,
+    "reason": "The question is clear and directly asks about error handling in FastAPI, which is covered in the documentation.",
+    "search_query": "FastAPI error handling exceptions failed requests",
+    "needs_clarification": false
+  },
+  {
+    "query": "how can i run startup and shutdown tasks when app begins or stops",
+    "category": "terminology",
+    "expected_strategy": "multi_query",
+    "actual_strategy": "direct",
+    "correct": false,
+    "reason": "The question is clear and directly asks about FastAPI startup and shutdown tasks, which can be answered by retrieving relevant documentation.",
+    "search_query": "FastAPI startup event shutdown event",
+    "needs_clarification": false
+  },
+  {
+    "query": "how do i configure middleware, implement oauth2 authentication, and write tests for endpoints",
+    "category": "multi_part",
+    "expected_strategy": "decompose",
+    "actual_strategy": "multi_query",
+    "correct": false,
+    "reason": "The user asks about three distinct FastAPI topics: configuring middleware, implementing OAuth2 authentication, and writing tests for endpoints. Each requires separate documentation references.",
+    "search_query": "how do i configure middleware, implement oauth2 authentication, and write tests for endpoints",
+    "needs_clarification": false
+  },
+  {
+    "query": "show me how to define request models, configure database dependencies, and handle validation errors",
+    "category": "multi_part",
+    "expected_strategy": "decompose",
+    "actual_strategy": "decompose",
+    "correct": true,
+    "reason": "The user asks about three distinct topics: defining request models, configuring database dependencies, and handling validation errors. Each can be addressed independently.",
+    "search_query": "FastAPI request models example\nFastAPI database dependencies configuration\nFastAPI validation error handling",
+    "needs_clarification": false
+  },
+  {
+    "query": "how do i upload files, serve static files, and return downloadable responses",
+    "category": "multi_part",
+    "expected_strategy": "decompose",
+    "actual_strategy": "decompose",
+    "correct": true,
+    "reason": "The user’s question covers three independent FastAPI functionalities: uploading files, serving static files, and returning downloadable responses.",
+    "search_query": "how do i upload files, serve static files, and return downloadable responses",
+    "needs_clarification": false
+  },
+  {
+    "query": "it doesnt work in fastapi",
+    "category": "ambiguous",
+    "expected_strategy": "clarify",
+    "actual_strategy": "clarify",
+    "correct": true,
+    "reason": "The user’s statement \"it doesnt work in fastapi\" lacks context and specific details needed to determine what is not working, what error messages are encountered, or which part of FastAPI is involved. Without this information, we cannot formulate a useful search query or provide a helpful answer.",
+    "search_query": "it doesnt work in fastapi",
+    "needs_clarification": true
+  },
+  {
+    "query": "which one should i use",
+    "category": "missing_context",
+    "expected_strategy": "clarify",
+    "actual_strategy": "out_of_scope",
+    "correct": false,
+    "reason": "The question is too vague and does not provide any context related to FastAPI documentation or a specific topic to retrieve information about.",
+    "search_query": "which one should i use",
+    "needs_clarification": true
+  },
+  {
+    "query": "why am i getting this error",
+    "category": "missing_context",
+    "expected_strategy": "clarify",
+    "actual_strategy": "clarify",
+    "correct": true,
+    "reason": "The user did not provide the specific error message or context, making it impossible to determine the cause or provide a relevant answer.",
+    "search_query": "why am i getting this error",
+    "needs_clarification": true
+  },
+  {
+    "query": "who won the last fifa world cup",
+    "category": "out_of_scope",
+    "expected_strategy": "out_of_scope",
+    "actual_strategy": "out_of_scope",
+    "correct": true,
+    "reason": "The question is about the FIFA World Cup, which is unrelated to FastAPI documentation.",
+    "search_query": "who won the last fifa world cup",
+    "needs_clarification": false
+  },
+  {
+    "query": "write me a poem about the moon",
+    "category": "out_of_scope",
+    "expected_strategy": "out_of_scope",
+    "actual_strategy": "out_of_scope",
+    "correct": true,
+    "reason": "The user’s request is unrelated to FastAPI documentation.",
+    "search_query": "write me a poem about the moon",
+    "needs_clarification": false
+  },
+  {
+    "query": "How do I use Depends in FastAPI?",
+    "category": "control_clear",
+    "expected_strategy": "direct",
+    "actual_strategy": "direct",
+    "correct": true,
+    "reason": "The question is clear, focused, and directly asks about using Depends in FastAPI, which is a well-documented topic.",
+    "search_query": "FastAPI Depends usage example",
+    "needs_clarification": false
+  },
+  {
+    "query": "How do I declare a path parameter in FastAPI?",
+    "category": "control_clear",
+    "expected_strategy": "direct",
+    "actual_strategy": "direct",
+    "correct": true,
+    "reason": "The question is clear, focused, and directly asks about declaring a path parameter in FastAPI, which is covered in the documentation.",
+    "search_query": "FastAPI declare path parameter",
+    "needs_clarification": false
+  }
+]

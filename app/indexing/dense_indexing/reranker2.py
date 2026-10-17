@@ -85,10 +85,20 @@ class CrossEncoderCompressor(BaseDocumentCompressor):
         Returns:
             The sentence-transformers ``CrossEncoder``.
         """
+        
         if self._model is None:
-            from sentence_transformers import CrossEncoder   # imported here to keep start-up fast
+            with logfire.span(
+                "reranker.load",
+                model=self.model_name,
+                max_length=self.max_length,
+            ):
+                from sentence_transformers import CrossEncoder
 
-            self._model = CrossEncoder(self.model_name, max_length=self.max_length)
+                self._model = CrossEncoder(
+                    self.model_name,
+                    max_length=self.max_length,
+                )
+
         return self._model
 
     def compress_documents(
@@ -113,7 +123,11 @@ class CrossEncoderCompressor(BaseDocumentCompressor):
             return []
 
         with logfire.span(
-            "rerank", model=self.model_name, candidates=len(docs), top_n=self.top_n
+            "reranker.score",
+            model=self.model_name,
+            candidates=len(docs),
+            batch_size=self.batch_size,
+            max_length=self.max_length,
         ):
             try:
                 scores = self._load().predict(
@@ -181,7 +195,7 @@ class FlashRankCompressor(BaseDocumentCompressor):
             import os
             from pathlib import Path
 
-            from flashrank import Ranker   # imported here to keep start-up fast
+            from flashrank import Ranker  # imported here to keep start-up fast
 
             cache_root = Path(os.environ.get("HF_HOME", Path.home() / ".cache")) / "flashrank"
             self._ranker = Ranker(

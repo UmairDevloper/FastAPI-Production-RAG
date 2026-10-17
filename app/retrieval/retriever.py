@@ -33,6 +33,7 @@ Smoke test (run from the project root)
 """
 
 import logging
+import os
 import sys
 from typing import Any
 
@@ -51,6 +52,10 @@ from app.ingestion.embedding4.models_config import (
     configure_logfire,
     health_check,
     with_retries,
+)
+
+LOG_QUERIES = (
+    os.getenv("RAG_LOG_QUERIES", "false").lower() == "true"
 )
 
 log = logging.getLogger("retrieval.retriever")
@@ -144,34 +149,55 @@ class QdrantDenseRetriever(BaseRetriever):
             Up to ``k`` Documents, best first, each with a ``dense_score``.
         """
         attributes = {"query": query} if LOG_QUERIES else {}
-        with logfire.span("dense retrieval", model=self.model_name, k=self.k, **attributes):
-            vector = self.embeddings.embed_query(query)
 
-            points = with_retries(
-                lambda: self.client.query_points(
-                    collection_name=self.collection,
-                    query=vector,
-                    limit=self.k,
-                    with_payload=True,
-                ).points,
-                "Qdrant search",
-            )
+        with logfire.span(
+            "dense_retrieval",
+            model=self.model_name,
+            k=self.k,
+            **attributes,
+        ):
+            with logfire.span("embedding.query", model=self.model_name):
+                vector = self.embeddings.embed_query(query)
 
-            docs = [
-                Document(
-                    page_content=point.payload["text"],
-                    metadata={
-                        **{key: value for key, value in point.payload.items() if key != "text"},
-                        "dense_score": point.score,
-                    },
+            with logfire.span(
+                "qdrant.search",
+                collection=self.collection,
+                limit=self.k,
+            ):
+                points = with_retries(
+                    lambda: self.client.query_points(
+                        collection_name=self.collection,
+                        query=vector,
+                        limit=self.k,
+                        with_payload=True,
+                    ).points,
+                    "Qdrant search",
                 )
-                for point in points
-            ]
+
+            with logfire.span("retrieval.materialize_documents"):
+                docs = [
+                    Document(
+                        page_content=point.payload["text"],
+                        metadata={
+                            **{
+                                key: value
+                                for key, value in point.payload.items()
+                                if key != "text"
+                            },
+                            "dense_score": point.score,
+                        },
+                    )
+                    for point in points
+                ]
+
             logfire.info(
-                "retrieved {count} chunks",
-                count=len(docs),
-                top_score=docs[0].metadata["dense_score"] if docs else None,
+                "retrieval.completed",
+                retrieved_count=len(docs),
+                top_dense_score=(
+                    docs[0].metadata["dense_score"] if docs else None
+                ),
             )
+
         return docs
 
 

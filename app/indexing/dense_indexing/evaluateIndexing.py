@@ -49,10 +49,10 @@ from llama_index.core.schema import NodeWithScore, TextNode
 from app.ingestion.embedding4.embedder import load_chunks
 from app.ingestion.embedding4.models_config import configure_logfire
 from app.ingestion.evaluate import CASES, OUT_OF_SCOPE, expected_ids   # same questions as the baseline
-from app.retrieval.retriever.pipelineRetriever import RERANKERS, build_pipeline
+from app.indexing.dense_indexing.pipelineIndexing import RERANKERS, build_pipeline
 
 KS = (1, 3, 5, 10, 20)     # cut-offs; 20 is the number of candidates (the ceiling)
-CANDIDATES = 10       # chunks fetched from Qdrant for every configuration
+CANDIDATES = 20       # chunks fetched from Qdrant for every configuration
 METRICS = ["hit_rate", "mrr", "ndcg"]
 
 
@@ -126,14 +126,14 @@ def evaluate_config(label: str, retriever: LangChainRetriever, chunks: list[dict
     Evaluate one retrieval configuration on all questions.
 
     Args:
-        label: Name shown in the report (``dense``, ``dense+bge-base``, ...).
+        label: Name shown in the report (``dense``, ``dense+minilm``, ...).
         retriever: The LangChain retriever to test.
         chunks: All chunks (to derive the expected ids).
 
     Returns:
         A dict with the summary table (chunk and page level), the per-question
-        Hit@5 at chunk level, latency figures and top-1 scores for in-scope
-        and out-of-scope questions.
+        chunk-level hit rate at 5 and at the ceiling (``hit5``, ``hit20``),
+        latency figures, and top-1 scores for in-scope and out-of-scope questions.
     """
     adapter = LangChainAsLlamaRetriever(retriever)
     adapter.retrieve("warm up")        # loads the models; keep this out of the timings
@@ -156,7 +156,7 @@ def evaluate_config(label: str, retriever: LangChainRetriever, chunks: list[dict
                 adapter.top_k = k
                 for level, ids in levels.items():
                     result = evaluator.evaluate(query=case.question, expected_ids=ids)
-                    rows.append({"level": level, "k": k, "question": case.question, **result.metric_vals_dict})
+                    rows.append({"level": level, "k": k, "kind": case.kind, "question": case.question, **result.metric_vals_dict})
 
             adapter.top_k = 1
             in_scores.append(adapter.retrieve(case.question)[0].score)
@@ -175,16 +175,18 @@ def evaluate_config(label: str, retriever: LangChainRetriever, chunks: list[dict
             latency=round(sum(ordered) / len(ordered)),
         )
 
+    chunk_rows = df[df["level"] == "chunk"]
     return {
         "label": label,
         "summary": summary,
-        "hit5": df[(df["level"] == "chunk") & (df["k"] == 5)].set_index("question")["hit_rate"],
+        "hit5": chunk_rows[chunk_rows["k"] == 5].set_index("question")["hit_rate"],
+        "hit20": chunk_rows[chunk_rows["k"] == 20].set_index("question")["hit_rate"],
+        "kind5": chunk_rows[chunk_rows["k"] == 5].groupby("kind")["hit_rate"].agg(["mean", "count"]),
         "latency_avg_ms": sum(ordered) / len(ordered),
         "latency_p95_ms": ordered[int(0.95 * (len(ordered) - 1))],
         "in_scores": in_scores,
         "out_scores": out_scores,
     }
-
 
 # ---------------------------------------------------------------------------
 # Reporting
@@ -192,25 +194,42 @@ def evaluate_config(label: str, retriever: LangChainRetriever, chunks: list[dict
 
 def print_report(results: list[dict]) -> None:
     """
-    Print the comparison table, the fixed/broken questions and the score separation.
+    Print the comparison table, the never-found questions, fixed/broken questions and score separation.
 
     The first result is the baseline (``dense``); every other one is compared with it.
+    ``page H@5`` is the page-level hit rate: if it is high while the chunk-level
+    Hit@5 is low, the right page is found but the answer chunk is ranked down.
 
     Args:
         results: One dict per configuration, as returned by :func:`evaluate_config`.
     """
     print("\n=== Retrieval phase: chunk-level comparison ===")
     header = f"{'config':<20}" + "".join(f"{'Hit@' + str(k):>8}" for k in KS)
-    print(header + f"{'MRR@20':>9}{'NDCG@10':>9}{'avg ms':>9}{'p95 ms':>9}")
+    print(header + f"{'MRR@20':>9}{'NDCG@10':>9}{'page H@5':>10}{'avg ms':>9}{'p95 ms':>9}")
     for r in results:
         chunk = r["summary"].loc["chunk"]
+        page_hit5 = float(r["summary"].loc[("page", 5), "hit_rate"])
         hits = "".join(f"{float(chunk.loc[k, 'hit_rate']):>8.0%}" for k in KS)
         print(f"{r['label']:<20}{hits}{float(chunk.loc[20, 'mrr']):>9.2f}{float(chunk.loc[10, 'ndcg']):>9.2f}"
-              f"{r['latency_avg_ms']:>9.0f}{r['latency_p95_ms']:>9.0f}")
+              f"{page_hit5:>10.0%}{r['latency_avg_ms']:>9.0f}{r['latency_p95_ms']:>9.0f}")
     print(f"\nHit@{max(KS)} is the ceiling: a reranker only reorders the {CANDIDATES} candidates, "
           "so it cannot find what the first search missed.")
+    print("\nChunk-level Hit@5 by question type:")
+    kinds = sorted({kind for r in results for kind in r["kind5"].index})
+    print(f"{'config':<20}" + "".join(f"{kind:>12}" for kind in kinds))
+    for r in results:
+        cells = "".join(f"{float(r['kind5']['mean'].get(kind, float('nan'))):>12.0%}" for kind in kinds)
+        print(f"{r['label']:<20}{cells}")
+    counts = {kind: int(results[0]["kind5"]["count"][kind]) for kind in kinds}
+    print("questions per type: " + ", ".join(f"{kind}={n}" for kind, n in counts.items()))
 
     baseline = results[0]
+    missed = [q for q, value in baseline["hit20"].items() if value == 0]
+    print(f"\nNot found by dense search even with {CANDIDATES} candidates ({len(missed)}). "
+          "Hybrid search or query rewriting can help these, a reranker cannot:")
+    for question in missed:
+        print(f"  - {question}")
+
     for r in results[1:]:
         fixed = [q for q in baseline["hit5"].index if baseline["hit5"][q] == 0 and r["hit5"].get(q, 0) == 1]
         broken = [q for q in baseline["hit5"].index if baseline["hit5"][q] == 1 and r["hit5"].get(q, 0) == 0]
@@ -224,8 +243,8 @@ def print_report(results: list[dict]) -> None:
     for r in results:
         low_in, high_out = min(r["in_scores"]), max(r["out_scores"])
         verdict = "clean gap" if high_out < low_in else "OVERLAP"
-        print(f"{r['label']:<20} in-scope min {low_in:.2f}   out-of-scope max {high_out:.2f}   -> {verdict}")
-
+        note = "   (some answerable questions score about 0: not usable as a threshold)" if low_in < 0.01 else ""
+        print(f"{r['label']:<20} in-scope min {low_in:.4f}   out-of-scope max {high_out:.4f}   -> {verdict}{note}")
 
 # ---------------------------------------------------------------------------
 # Entry point

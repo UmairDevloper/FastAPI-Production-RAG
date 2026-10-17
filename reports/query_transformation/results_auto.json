@@ -1,0 +1,1626 @@
+[
+  {
+    "query": "How do I read JSON data sent by the client in a POST request?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.16666666666666666,
+      "ndcg@10": 0.09791292534996782
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.16666666666666666,
+      "ndcg@10": 0.09791292534996782
+    },
+    "baseline_latency_ms": 2160.87,
+    "transformation_latency_ms": 3227.5,
+    "transformed_retrieval_latency_ms": 1241.19,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I read JSON data sent by the client in a POST request?"
+    ]
+  },
+  {
+    "query": "How can I make a query parameter optional with a default value?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.6625602459390023
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.6625602459390023
+    },
+    "baseline_latency_ms": 1189.3,
+    "transformation_latency_ms": 1016.71,
+    "transformed_retrieval_latency_ms": 1212.54,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How can I make a query parameter optional with a default value?"
+    ]
+  },
+  {
+    "query": "How do I limit the maximum length of a query string?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.647939623894138
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.647939623894138
+    },
+    "baseline_latency_ms": 1241.68,
+    "transformation_latency_ms": 1437.93,
+    "transformed_retrieval_latency_ms": 1234.52,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I limit the maximum length of a query string?"
+    ]
+  },
+  {
+    "query": "How do I declare a path parameter with a type like int?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.3903800499921017
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.3903800499921017
+    },
+    "baseline_latency_ms": 1262.68,
+    "transformation_latency_ms": 496.21,
+    "transformed_retrieval_latency_ms": 1195.64,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I declare a path parameter with a type like int?"
+    ]
+  },
+  {
+    "query": "How do I share logic between several endpoints?",
+    "strategy_mode": "auto",
+    "strategy": "multi_query",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 0.0,
+      "hit@20": 0.0,
+      "mrr@20": 0.0,
+      "ndcg@10": 0.0
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 0.0,
+      "hit@20": 0.0,
+      "mrr@20": 0.0,
+      "ndcg@10": 0.0
+    },
+    "baseline_latency_ms": 1095.4,
+    "transformation_latency_ms": 2113.67,
+    "transformed_retrieval_latency_ms": 4267.67,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I share logic between several endpoints?",
+      "FastAPI share logic between endpoints",
+      "FastAPI dependency injection reusable code across routes",
+      "FastAPI common logic endpoints reusable patterns"
+    ]
+  },
+  {
+    "query": "How do I return an error with a specific status code to the client?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.16666666666666666,
+      "ndcg@10": 0.08372491399919348
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.16666666666666666,
+      "ndcg@10": 0.08372491399919348
+    },
+    "baseline_latency_ms": 1285.34,
+    "transformation_latency_ms": 1149.83,
+    "transformed_retrieval_latency_ms": 1259.07,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I return an error with a specific status code to the client?"
+    ]
+  },
+  {
+    "query": "How do I allow requests from another website's frontend?",
+    "strategy_mode": "auto",
+    "strategy": "multi_query",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.5616927747727312
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.4935232796777482
+    },
+    "baseline_latency_ms": 1161.58,
+    "transformation_latency_ms": 1681.33,
+    "transformed_retrieval_latency_ms": 4388.34,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I allow requests from another website's frontend?",
+      "FastAPI enable CORS for cross-origin requests",
+      "FastAPI CORS middleware configuration",
+      "FastAPI allow cross-site frontend requests"
+    ]
+  },
+  {
+    "query": "How do I run a task after sending the response, like sending an email?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.25,
+      "ndcg@10": 0.3708968600712502
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.25,
+      "ndcg@10": 0.3708968600712502
+    },
+    "baseline_latency_ms": 1293.6,
+    "transformation_latency_ms": 1331.3,
+    "transformed_retrieval_latency_ms": 1279.67,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I run a task after sending the response, like sending an email?"
+    ]
+  },
+  {
+    "query": "How do I split a large app into multiple files?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.13886244387355454
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.13886244387355454
+    },
+    "baseline_latency_ms": 1160.72,
+    "transformation_latency_ms": 1769.52,
+    "transformed_retrieval_latency_ms": 1157.07,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I split a large app into multiple files?"
+    ]
+  },
+  {
+    "query": "How do I write automated tests for my API?",
+    "strategy_mode": "auto",
+    "strategy": "multi_query",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.1,
+      "ndcg@10": 0.11284514134893527
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.3638184934971571
+    },
+    "baseline_latency_ms": 1126.33,
+    "transformation_latency_ms": 3141.82,
+    "transformed_retrieval_latency_ms": 4165.23,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I write automated tests for my API?",
+      "FastAPI automated testing guide",
+      "Testing FastAPI endpoints with pytest",
+      "FastAPI test client examples"
+    ]
+  },
+  {
+    "query": "How do I connect FastAPI to a relational database?",
+    "strategy_mode": "auto",
+    "strategy": "hyde",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.4631896595828492
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.5983950669742498
+    },
+    "baseline_latency_ms": 1177.06,
+    "transformation_latency_ms": 4407.74,
+    "transformed_retrieval_latency_ms": 17772.0,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "**Connecting FastAPI to a Relational Database (Hypothetical Example)**  \n\nFastAPI itself is framework‑agnostic, so you can pair it with any Python ORM or database driver that fits your needs. A common pattern is to use SQLAlchemy (or its async variant) together with a dependency that yields a database session for each request.\n\n1. **Install the required packages**  \n   ```bash\n   pip install fastapi[all] sqlalchemy asyncpg  # asyncpg for PostgreSQL\n   ```\n\n2. **Define the database URL**  \n   ```python\n   DATABASE_URL = \"postgresql+asyncpg://user:password@localhost/mydb\"\n   ```\n\n3. **Create an async engine and a session factory**  \n   ```python\n   from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession\n   from sqlalchemy.orm import sessionmaker\n\n   engine = create_async_engine(DATABASE_URL, echo=True)\n   async_session = sessionmaker(\n       engine, expire_on_commit=False, class_=AsyncSession\n   )\n   ```\n\n4. **Provide a dependency that yields a session**  \n   ```python\n   from fastapi import Depends\n\n   async def get_db() -> AsyncSession:\n       async with async_session() as session:\n           yield session\n   ```\n\n5. **Use the dependency in your routes**  \n   ```python\n   from fastapi import FastAPI, Depends\n   from sqlalchemy import select\n   from models import User  # your SQLAlchemy model\n\n   app = FastAPI()\n\n   @app.get(\"/users/{user_id}\")\n   async def read_user(user_id: int, db: AsyncSession = Depends(get_db)):\n       result = await db.execute(select(User).where(User.id == user_id))\n       user = result.scalar_one_or_none()\n       return user\n   ```\n\n6. **Run the application**  \n   ```bash\n   uvicorn main:app --reload\n   ```\n\n> **Notes**  \n> * The example uses SQLAlchemy 2.0’s async API; if you prefer the classic synchronous API, replace `AsyncSession` with `Session` and remove the `async`/`await` keywords.  \n> * For other ORMs (e.g., Tortoise‑ORM, GINO, or Peewee), the pattern is similar: create a connection pool, expose a dependency that yields a connection or session, and inject it into your path operations.  \n> * Always close the engine on shutdown:  \n>   ```python\n>   @app.on_event(\"shutdown\")\n>   async def shutdown():\n>       await engine.dispose()\n>   ```\n\nThis snippet illustrates the typical workflow for wiring a relational database into a FastAPI application. Adjust the database driver, URL, and ORM to match your project’s requirements."
+    ]
+  },
+  {
+    "query": "How do I accept file uploads?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.7682269253321374
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.7682269253321374
+    },
+    "baseline_latency_ms": 1048.62,
+    "transformation_latency_ms": 1654.79,
+    "transformed_retrieval_latency_ms": 1128.02,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I accept file uploads?"
+    ]
+  },
+  {
+    "query": "How do I serve static files such as images or CSS?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.8065735963827293
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.8065735963827293
+    },
+    "baseline_latency_ms": 1238.9,
+    "transformation_latency_ms": 518.23,
+    "transformed_retrieval_latency_ms": 1245.18,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I serve static files such as images or CSS?"
+    ]
+  },
+  {
+    "query": "How can I hide a field like the password from the response?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.2489083270225946
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.2489083270225946
+    },
+    "baseline_latency_ms": 1310.66,
+    "transformation_latency_ms": 1074.07,
+    "transformed_retrieval_latency_ms": 1222.12,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How can I hide a field like the password from the response?"
+    ]
+  },
+  {
+    "query": "How do I set the HTTP status code for a successful creation?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.4525081529734507
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.4525081529734507
+    },
+    "baseline_latency_ms": 1204.87,
+    "transformation_latency_ms": 986.37,
+    "transformed_retrieval_latency_ms": 1201.14,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I set the HTTP status code for a successful creation?"
+    ]
+  },
+  {
+    "query": "How do I read fields from an HTML form?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.8104089071229301
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.8104089071229301
+    },
+    "baseline_latency_ms": 1119.35,
+    "transformation_latency_ms": 1088.33,
+    "transformed_retrieval_latency_ms": 1133.67,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I read fields from an HTML form?"
+    ]
+  },
+  {
+    "query": "How do I read cookies sent by the browser?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.6005491084563833
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.6005491084563833
+    },
+    "baseline_latency_ms": 1144.33,
+    "transformation_latency_ms": 633.3,
+    "transformed_retrieval_latency_ms": 1121.22,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I read cookies sent by the browser?"
+    ]
+  },
+  {
+    "query": "How do I read a custom request header?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.25,
+      "ndcg@10": 0.14606834984270645
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.25,
+      "ndcg@10": 0.14606834984270645
+    },
+    "baseline_latency_ms": 1094.85,
+    "transformation_latency_ms": 879.0,
+    "transformed_retrieval_latency_ms": 1098.2,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I read a custom request header?"
+    ]
+  },
+  {
+    "query": "How do I protect endpoints with a username and password flow?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.43231813227099475
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.43231813227099475
+    },
+    "baseline_latency_ms": 1182.05,
+    "transformation_latency_ms": 776.42,
+    "transformed_retrieval_latency_ms": 1207.74,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I protect endpoints with a username and password flow?"
+    ]
+  },
+  {
+    "query": "How do I create and verify JWT access tokens?",
+    "strategy_mode": "auto",
+    "strategy": "multi_query",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.7967610662472991
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.7849818707050382
+    },
+    "baseline_latency_ms": 1159.36,
+    "transformation_latency_ms": 3624.23,
+    "transformed_retrieval_latency_ms": 4213.64,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I create and verify JWT access tokens?",
+      "FastAPI JWT authentication tutorial",
+      "FastAPI create and verify JWT token",
+      "FastAPI JWT token creation and verification example"
+    ]
+  },
+  {
+    "query": "How do I get the current logged in user inside an endpoint?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.16666666666666666,
+      "ndcg@10": 0.10778915452451095
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.16666666666666666,
+      "ndcg@10": 0.10778915452451095
+    },
+    "baseline_latency_ms": 1248.26,
+    "transformation_latency_ms": 2022.98,
+    "transformed_retrieval_latency_ms": 1208.25,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I get the current logged in user inside an endpoint?"
+    ]
+  },
+  {
+    "query": "How do I run code when the application starts and stops?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.6012628110727576
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.6012628110727576
+    },
+    "baseline_latency_ms": 1183.67,
+    "transformation_latency_ms": 694.91,
+    "transformed_retrieval_latency_ms": 1186.25,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I run code when the application starts and stops?"
+    ]
+  },
+  {
+    "query": "How do I build a WebSocket endpoint?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.7975167679274937
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.7975167679274937
+    },
+    "baseline_latency_ms": 1069.82,
+    "transformation_latency_ms": 1149.28,
+    "transformed_retrieval_latency_ms": 1069.71,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I build a WebSocket endpoint?"
+    ]
+  },
+  {
+    "query": "How do I return HTML instead of JSON?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.1111111111111111,
+      "ndcg@10": 0.10209739512291163
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.1111111111111111,
+      "ndcg@10": 0.10209739512291163
+    },
+    "baseline_latency_ms": 1093.9,
+    "transformation_latency_ms": 365.03,
+    "transformed_retrieval_latency_ms": 1095.01,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I return HTML instead of JSON?"
+    ]
+  },
+  {
+    "query": "How do I load configuration from environment variables?",
+    "strategy_mode": "auto",
+    "strategy": "multi_query",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.8521705090845474
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.6207622843987102
+    },
+    "baseline_latency_ms": 1112.39,
+    "transformation_latency_ms": 1900.89,
+    "transformed_retrieval_latency_ms": 4393.13,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I load configuration from environment variables?",
+      "FastAPI load configuration from environment variables",
+      "FastAPI environment variable configuration settings",
+      "FastAPI Pydantic settings from env vars"
+    ]
+  },
+  {
+    "query": "How do I package my app in a Docker container?",
+    "strategy_mode": "auto",
+    "strategy": "multi_query",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.41748832019487603
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.5579957246028069
+    },
+    "baseline_latency_ms": 1155.2,
+    "transformation_latency_ms": 4714.45,
+    "transformed_retrieval_latency_ms": 5136.3,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I package my app in a Docker container?",
+      "FastAPI Dockerfile example",
+      "FastAPI Docker container deployment",
+      "FastAPI Docker uvicorn configuration"
+    ]
+  },
+  {
+    "query": "When should I use async def instead of def?",
+    "strategy_mode": "auto",
+    "strategy": "multi_query",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.9888009031441519
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.8816172070446371
+    },
+    "baseline_latency_ms": 1177.41,
+    "transformation_latency_ms": 2399.86,
+    "transformed_retrieval_latency_ms": 4744.2,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "When should I use async def instead of def?",
+      "FastAPI async def vs def usage guidelines",
+      "When to use async def in FastAPI endpoints",
+      "FastAPI best practices for async def versus sync def"
+    ]
+  },
+  {
+    "query": "How do I add custom code that runs for every request?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.5580107938044674
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.5580107938044674
+    },
+    "baseline_latency_ms": 1525.72,
+    "transformation_latency_ms": 1186.06,
+    "transformed_retrieval_latency_ms": 1187.31,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I add custom code that runs for every request?"
+    ]
+  },
+  {
+    "query": "How do I run cleanup code after a dependency finishes?",
+    "strategy_mode": "auto",
+    "strategy": "multi_query",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.55206785919664
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.42257499837058643
+    },
+    "baseline_latency_ms": 1163.95,
+    "transformation_latency_ms": 1858.04,
+    "transformed_retrieval_latency_ms": 4778.23,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I run cleanup code after a dependency finishes?",
+      "FastAPI dependency cleanup after request",
+      "FastAPI dependency teardown after dependency finishes",
+      "FastAPI dependency cleanup code after dependency injection"
+    ]
+  },
+  {
+    "query": "How do I set a title and version for the generated API docs?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.36159016140841066
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.36159016140841066
+    },
+    "baseline_latency_ms": 1254.63,
+    "transformation_latency_ms": 1240.14,
+    "transformed_retrieval_latency_ms": 1249.93,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I set a title and version for the generated API docs?"
+    ]
+  },
+  {
+    "query": "How do I declare a nested Pydantic model inside a request body?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.34954491927658526
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.34954491927658526
+    },
+    "baseline_latency_ms": 1277.77,
+    "transformation_latency_ms": 616.73,
+    "transformed_retrieval_latency_ms": 1277.65,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I declare a nested Pydantic model inside a request body?"
+    ]
+  },
+  {
+    "query": "How do I add validation rules like a minimum value to a model field?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 0.0,
+      "hit@20": 0.0,
+      "mrr@20": 0.0,
+      "ndcg@10": 0.0
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 0.0,
+      "hit@20": 0.0,
+      "mrr@20": 0.0,
+      "ndcg@10": 0.0
+    },
+    "baseline_latency_ms": 1269.9,
+    "transformation_latency_ms": 1944.35,
+    "transformed_retrieval_latency_ms": 1248.59,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I add validation rules like a minimum value to a model field?"
+    ]
+  },
+  {
+    "query": "What does Depends do?",
+    "strategy_mode": "auto",
+    "strategy": "hyde",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.32730659600126993
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.3499667779514209
+    },
+    "baseline_latency_ms": 984.3,
+    "transformation_latency_ms": 1536.48,
+    "transformed_retrieval_latency_ms": 6576.15,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "**Hypothetical FastAPI documentation excerpt**\n\n> **What does `Depends` do?**  \n> `Depends` is a helper that tells FastAPI that a particular function parameter should be supplied by the framework rather than by the caller. When you declare a parameter as `param: SomeType = Depends(some_dependency)`, FastAPI will:\n> \n> 1. Call `some_dependency` (or any callable you provide) to obtain a value.  \n> 2. Resolve any dependencies that `some_dependency` itself declares, recursively.  \n> 3. Pass the resulting value into the parameter `param`.  \n> \n> This mechanism enables *dependency injection*: you can factor out common logic (e.g., database sessions, authentication checks, configuration values) into reusable callables and have FastAPI automatically provide them to your path operation functions, routers, or other dependencies."
+    ]
+  },
+  {
+    "query": "How do I raise HTTPException with custom headers?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.5316182403381249
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.5316182403381249
+    },
+    "baseline_latency_ms": 1147.68,
+    "transformation_latency_ms": 1148.26,
+    "transformed_retrieval_latency_ms": 1116.13,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I raise HTTPException with custom headers?"
+    ]
+  },
+  {
+    "query": "CORSMiddleware allow_origins configuration",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.38685280723454163
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.38685280723454163
+    },
+    "baseline_latency_ms": 1118.99,
+    "transformation_latency_ms": 523.58,
+    "transformed_retrieval_latency_ms": 1108.66,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "CORSMiddleware allow_origins configuration"
+    ]
+  },
+  {
+    "query": "What is dependency_overrides used for?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.3333333333333333,
+      "ndcg@10": 0.5833416105149332
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.3333333333333333,
+      "ndcg@10": 0.5833416105149332
+    },
+    "baseline_latency_ms": 1481.77,
+    "transformation_latency_ms": 838.31,
+    "transformed_retrieval_latency_ms": 1086.92,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "What is dependency_overrides used for?"
+    ]
+  },
+  {
+    "query": "How does response_model_exclude_unset work?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.9325210919548239
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.9325210919548239
+    },
+    "baseline_latency_ms": 1078.14,
+    "transformation_latency_ms": 729.01,
+    "transformed_retrieval_latency_ms": 1220.22,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How does response_model_exclude_unset work?"
+    ]
+  },
+  {
+    "query": "How do I use OAuth2PasswordRequestForm?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.13886244387355454
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.13886244387355454
+    },
+    "baseline_latency_ms": 1143.77,
+    "transformation_latency_ms": 1355.63,
+    "transformed_retrieval_latency_ms": 1129.88,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I use OAuth2PasswordRequestForm?"
+    ]
+  },
+  {
+    "query": "How do I pass lifespan to FastAPI?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.3333333333333333,
+      "ndcg@10": 0.12647135138382856
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.3333333333333333,
+      "ndcg@10": 0.12647135138382856
+    },
+    "baseline_latency_ms": 1096.5,
+    "transformation_latency_ms": 1181.78,
+    "transformed_retrieval_latency_ms": 1103.0,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I pass lifespan to FastAPI?"
+    ]
+  },
+  {
+    "query": "How do I use include_router with a prefix?",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.25,
+      "ndcg@10": 0.1731866333482261
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.25,
+      "ndcg@10": 0.1731866333482261
+    },
+    "baseline_latency_ms": 1140.48,
+    "transformation_latency_ms": 1547.45,
+    "transformed_retrieval_latency_ms": 1133.03,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "How do I use include_router with a prefix?"
+    ]
+  },
+  {
+    "query": "status.HTTP_201_CREATED",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 0.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.09090909090909091,
+      "ndcg@10": 0.0
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 0.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.09090909090909091,
+      "ndcg@10": 0.0
+    },
+    "baseline_latency_ms": 1118.39,
+    "transformation_latency_ms": 619.95,
+    "transformed_retrieval_latency_ms": 1048.59,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "status.HTTP_201_CREATED"
+    ]
+  },
+  {
+    "query": "RequestValidationError exception handler",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.8789901909062586
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.8789901909062586
+    },
+    "baseline_latency_ms": 1059.58,
+    "transformation_latency_ms": 1690.87,
+    "transformed_retrieval_latency_ms": 962.41,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "RequestValidationError exception handler"
+    ]
+  },
+  {
+    "query": "Annotated[str, Query(max_length=50)]",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.5435228269698196
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.5435228269698196
+    },
+    "baseline_latency_ms": 1287.4,
+    "transformation_latency_ms": 688.11,
+    "transformed_retrieval_latency_ms": 1163.25,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "Annotated[str, Query(max_length=50)]"
+    ]
+  },
+  {
+    "query": "Path(gt=0, le=1000)",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.7613569414627896
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.7613569414627896
+    },
+    "baseline_latency_ms": 1193.54,
+    "transformation_latency_ms": 2188.98,
+    "transformed_retrieval_latency_ms": 1173.45,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "Path(gt=0, le=1000)"
+    ]
+  },
+  {
+    "query": "CORSMiddleware allow_credentials",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.8175295903539445
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.8175295903539445
+    },
+    "baseline_latency_ms": 999.37,
+    "transformation_latency_ms": 732.02,
+    "transformed_retrieval_latency_ms": 1004.8,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "CORSMiddleware allow_credentials"
+    ]
+  },
+  {
+    "query": "@app.on_event(\"startup\")",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.6131471927654584
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.6131471927654584
+    },
+    "baseline_latency_ms": 1126.64,
+    "transformation_latency_ms": 1403.76,
+    "transformed_retrieval_latency_ms": 1029.83,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "@app.on_event(\"startup\")"
+    ]
+  },
+  {
+    "query": "HTTPBasic HTTPBasicCredentials",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.25,
+      "ndcg@10": 0.14606834984270645
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.25,
+      "ndcg@10": 0.14606834984270645
+    },
+    "baseline_latency_ms": 990.67,
+    "transformation_latency_ms": 1500.24,
+    "transformed_retrieval_latency_ms": 1005.7,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "HTTPBasic HTTPBasicCredentials"
+    ]
+  },
+  {
+    "query": "OAuth2PasswordBearer(tokenUrl=\"token\")",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.16666666666666666,
+      "ndcg@10": 0.227804435066758
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.16666666666666666,
+      "ndcg@10": 0.227804435066758
+    },
+    "baseline_latency_ms": 1103.58,
+    "transformation_latency_ms": 2413.81,
+    "transformed_retrieval_latency_ms": 1105.21,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "OAuth2PasswordBearer(tokenUrl=\"token\")"
+    ]
+  },
+  {
+    "query": "SECRET_KEY ALGORITHM ACCESS_TOKEN_EXPIRE_MINUTES",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 0.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.05555555555555555,
+      "ndcg@10": 0.0
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 0.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.05555555555555555,
+      "ndcg@10": 0.0
+    },
+    "baseline_latency_ms": 1137.0,
+    "transformation_latency_ms": 853.25,
+    "transformed_retrieval_latency_ms": 1135.33,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "SECRET_KEY ALGORITHM ACCESS_TOKEN_EXPIRE_MINUTES"
+    ]
+  },
+  {
+    "query": "response_model_exclude_none",
+    "strategy_mode": "auto",
+    "strategy": "direct",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 1.0
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 1.0
+    },
+    "baseline_latency_ms": 961.94,
+    "transformation_latency_ms": 881.38,
+    "transformed_retrieval_latency_ms": 962.72,
+    "error": null,
+    "orchestration_latency_ms": null,
+    "orchestration_diagnostics": {},
+    "retrieval_queries": [
+      "response_model_exclude_none"
+    ]
+  }
+]

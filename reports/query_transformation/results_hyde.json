@@ -1,0 +1,299 @@
+[
+  {
+    "query": "How do I read JSON data sent by the client in a POST request?",
+    "strategy_mode": "hyde",
+    "strategy": "hyde",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.16666666666666666,
+      "ndcg@10": 0.09791292534996782
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.3333333333333333,
+      "ndcg@10": 0.13743816645714543
+    },
+    "baseline_latency_ms": 3290.97,
+    "transformation_latency_ms": 3071.17,
+    "transformed_retrieval_latency_ms": 11693.21,
+    "error": null,
+    "retrieval_queries": [
+      "**Hypothetical FastAPI‑style note**\n\nWhen a client sends a JSON payload in a `POST` request, FastAPI will automatically parse that payload for you.  \nYou can either:\n\n1. **Declare a Pydantic model** that matches the expected JSON structure.  \n   FastAPI will validate the data and give you an instance of that model.\n\n   ```python\n   from fastapi import FastAPI\n   from pydantic import BaseModel\n\n   app = FastAPI()\n\n   class Item(BaseModel):\n       name: str\n       price: float\n       tags: list[str] | None = None\n\n   @app.post(\"/items/\")\n   async def create_item(item: Item):\n       # `item` is already a validated Item instance\n       return {\"name\": item.name, \"price\": item.price}\n   ```\n\n2. **Accept a plain dictionary** if you don’t need validation.\n\n   ```python\n   @app.post(\"/raw/\")\n   async def raw_json(data: dict):\n       # `data` is the raw JSON decoded into a Python dict\n       return data\n   ```\n\n3. **Read the raw body** (e.g., when you need to inspect the raw bytes or handle non‑JSON content).\n\n   ```python\n   from fastapi import Request\n\n   @app.post(\"/raw-body/\")\n   async def raw_body(request: Request):\n       raw_bytes = await request.body()\n       # `raw_bytes` contains the raw request payload\n       return {\"length\": len(raw_bytes)}\n   ```\n\nIn all cases, FastAPI handles the `Content‑Type: application/json` header automatically and raises a 422 error if the JSON is malformed or does not match the declared model."
+    ]
+  },
+  {
+    "query": "How can I make a query parameter optional with a default value?",
+    "strategy_mode": "hyde",
+    "strategy": "hyde",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.6625602459390023
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.45390362024822023
+    },
+    "baseline_latency_ms": 1272.62,
+    "transformation_latency_ms": 1177.21,
+    "transformed_retrieval_latency_ms": 8419.1,
+    "error": null,
+    "retrieval_queries": [
+      "**Optional query parameters with defaults**\n\nIn FastAPI you can give a query parameter a default value by simply assigning it in the function signature. The parameter will then be optional for the client, and FastAPI will use the default when the query string is omitted.\n\n```python\nfrom fastapi import FastAPI, Query\n\napp = FastAPI()\n\n@app.get(\"/items/\")\nasync def read_items(\n    q: str | None = None,          # optional, defaults to None\n    limit: int = 10,               # optional, defaults to 10\n    offset: int = Query(0, alias=\"skip\")  # optional, defaults to 0\n):\n    ...\n```\n\n* `q` is declared as `str | None` with a default of `None`.  \n* `limit` is a plain integer with a default of `10`.  \n* `offset` uses `Query` to provide a default of `0` and an alias (`skip`) for the query key.\n\nWhen a client calls `/items/` without any query parameters, FastAPI will automatically supply these defaults. If the client includes a value, that value will override the default."
+    ]
+  },
+  {
+    "query": "How do I limit the maximum length of a query string?",
+    "strategy_mode": "hyde",
+    "strategy": "hyde",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.647939623894138
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.8358912271816661
+    },
+    "baseline_latency_ms": 1172.78,
+    "transformation_latency_ms": 2582.45,
+    "transformed_retrieval_latency_ms": 17802.37,
+    "error": null,
+    "retrieval_queries": [
+      "**Hypothetical FastAPI‑style guidance**\n\nFastAPI itself does not expose a built‑in setting for “maximum query‑string length”.  \nInstead you can enforce a limit in two common ways:\n\n| What you want to limit | Typical approach | Example |\n|------------------------|------------------|---------|\n| **Individual query parameters** | Use Pydantic validation via `fastapi.Query` (or `Depends`) | `q: str = Query(..., max_length=100)` |\n| **Entire query string** | Add a small middleware that checks `request.url.query` before the request reaches your path operation | See the code snippet below |\n\n```python\nfrom fastapi import FastAPI, Request, HTTPException\nfrom starlette.middleware.base import BaseHTTPMiddleware\n\napp = FastAPI()\n\n# 1. Limit the *whole* query string to 2 048 characters\nMAX_QUERY_LENGTH = 2048\n\nclass QueryLengthLimiter(BaseHTTPMiddleware):\n    async def dispatch(self, request: Request, call_next):\n        # request.url.query is a string containing the raw query part\n        if len(request.url.query) > MAX_QUERY_LENGTH:\n            raise HTTPException(\n                status_code=400,\n                detail=f\"Query string exceeds {MAX_QUERY_LENGTH} characters\"\n            )\n        return await call_next(request)\n\napp.add_middleware(QueryLengthLimiter)\n\n# 2. Example of per‑parameter length validation\n@app.get(\"/items\")\nasync def read_items(\n    q: str = Query(..., max_length=100),          # individual param limit\n    page: int = Query(1, ge=1, le=100)            # other validation\n):\n    return {\"q\": q, \"page\": page}\n```\n\n**Key points**\n\n1. **Per‑parameter limits** – `Query(..., max_length=…)` (or `min_length`, `regex`, etc.) validates each individual query argument.\n2. **Whole‑query limits** – FastAPI/Starlette don’t provide a dedicated setting, so a custom middleware is the idiomatic solution.  \n   * The middleware inspects `request.url.query` (the raw query string) and can raise an `HTTPException` if the length is too large.\n3. **Alternative** – If you prefer a dependency instead of middleware, you can write a function that receives `request: Request` and performs the same check, then include it with `Depends` on the routes that need the restriction.\n\nThis pattern keeps the validation logic separate from your business code while giving you fine‑grained control over how large a query string can be."
+    ]
+  },
+  {
+    "query": "How do I declare a path parameter with a type like int?",
+    "strategy_mode": "hyde",
+    "strategy": "hyde",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.3903800499921017
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 1.0
+    },
+    "baseline_latency_ms": 1268.58,
+    "transformation_latency_ms": 1495.71,
+    "transformed_retrieval_latency_ms": 10715.38,
+    "error": null,
+    "retrieval_queries": [
+      "Below is a short, illustrative example that shows how you might declare a path parameter with a specific type (e.g., `int`) in a FastAPI‑style application.  It is written in the style of a documentation snippet, but it is not an official excerpt from the FastAPI docs.\n\n```python\nfrom fastapi import FastAPI\n\napp = FastAPI()\n\n@app.get(\"/items/{item_id}\")\nasync def read_item(item_id: int):\n    \"\"\"\n    Retrieve an item by its numeric ID.\n\n    Parameters\n    ----------\n    item_id : int\n        The unique identifier for the item. FastAPI will automatically\n        convert the path segment to an integer and will return a 422\n        Unprocessable Entity response if the conversion fails.\n    \"\"\"\n    return {\"item_id\": item_id, \"name\": \"Example Item\"}\n```\n\n**Key points illustrated by the snippet**\n\n1. **Path declaration** – The `{item_id}` placeholder in the route path tells FastAPI that the segment of the URL should be captured and passed to the handler.\n2. **Type hint** – By annotating the function parameter with `int`, FastAPI knows to cast the incoming string to an integer. If the client supplies a non‑numeric value, FastAPI will automatically return a validation error.\n3. **Automatic validation** – FastAPI uses the type hint to perform the conversion and validation; no extra code is required for this basic case.\n\nFeel free to adapt the example to your own routes and parameter names."
+    ]
+  },
+  {
+    "query": "How do I share logic between several endpoints?",
+    "strategy_mode": "hyde",
+    "strategy": "hyde",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 0.0,
+      "hit@20": 0.0,
+      "mrr@20": 0.0,
+      "ndcg@10": 0.0
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.21222636597291458
+    },
+    "baseline_latency_ms": 1130.7,
+    "transformation_latency_ms": 2222.73,
+    "transformed_retrieval_latency_ms": 12176.84,
+    "error": null,
+    "retrieval_queries": [
+      "**Sharing logic between endpoints**\n\nFastAPI encourages you to keep endpoint functions small and to extract reusable behaviour into *dependencies*.  \nA dependency can be a plain function, a class with a `__call__` method, or any callable that FastAPI can inject.  \nWhen you declare a dependency with `Depends`, FastAPI will execute it once per request and pass its return value to every endpoint that lists it.\n\n```python\n# shared_logic.py\ndef get_current_user(token: str = Depends(oauth2_scheme)):\n    # validate the token, fetch the user, etc.\n    return User(id=1, name=\"Alice\")\n\n# endpoints.py\n@app.get(\"/items\")\nasync def read_items(user: User = Depends(get_current_user)):\n    return {\"user\": user.name, \"items\": []}\n\n@app.post(\"/items\")\nasync def create_item(item: Item, user: User = Depends(get_current_user)):\n    # use the same user logic here\n    return {\"user\": user.name, \"item\": item}\n```\n\nIf you have several routers that all need the same logic, you can attach the dependency to the router itself:\n\n```python\nrouter = APIRouter(dependencies=[Depends(get_current_user)])\n\n@router.get(\"/orders\")\nasync def list_orders():\n    ...\n\n@router.post(\"/orders\")\nasync def create_order():\n    ...\n```\n\nBecause the dependency is declared on the router, every endpoint inside that router automatically receives the shared logic.  \nYou can also combine multiple dependencies, use `Depends` inside other dependencies, or even return a context manager that cleans up resources after the request. This pattern keeps your code DRY while still benefiting from FastAPI’s dependency‑injection system."
+    ]
+  },
+  {
+    "query": "How do I return an error with a specific status code to the client?",
+    "strategy_mode": "hyde",
+    "strategy": "hyde",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.16666666666666666,
+      "ndcg@10": 0.08372491399919348
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.7294948446972259
+    },
+    "baseline_latency_ms": 1330.42,
+    "transformation_latency_ms": 1416.63,
+    "transformed_retrieval_latency_ms": 10873.2,
+    "error": null,
+    "retrieval_queries": [
+      "**Returning a Custom Error Response**\n\nIn FastAPI you can signal an error condition by raising an `HTTPException`.  \nThe exception takes a `status_code` and an optional `detail` payload that will be\nserialized to JSON and sent back to the client.\n\n```python\nfrom fastapi import FastAPI, HTTPException, status\n\napp = FastAPI()\n\n@app.get(\"/items/{item_id}\")\nasync def read_item(item_id: int):\n    # Pretend we only have items 1–10\n    if item_id > 10:\n        raise HTTPException(\n            status_code=status.HTTP_404_NOT_FOUND,\n            detail=f\"Item {item_id} not found\"\n        )\n    return {\"item_id\": item_id, \"name\": f\"Item {item_id}\"}\n```\n\nWhen the exception is raised, FastAPI automatically:\n\n1. Stops further processing of the request.\n2. Returns a JSON body like `{\"detail\":\"Item 11 not found\"}`.\n3. Sets the HTTP status code to the value you supplied (e.g., `404`).\n\nYou can use any status code defined in the `starlette.status` module or a\ncustom integer. For more complex error handling, you can also create a custom\nexception class and add a global exception handler with `app.add_exception_handler`."
+    ]
+  },
+  {
+    "query": "How do I allow requests from another website's frontend?",
+    "strategy_mode": "hyde",
+    "strategy": "hyde",
+    "baseline": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.5616927747727312
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.5889837127672155
+    },
+    "baseline_latency_ms": 1520.23,
+    "transformation_latency_ms": 1602.17,
+    "transformed_retrieval_latency_ms": 9908.62,
+    "error": null,
+    "retrieval_queries": [
+      "**Enabling Cross‑Origin Requests in FastAPI**\n\nIf you want a frontend hosted on a different domain (e.g., `https://frontend.example.com`) to be able to call your FastAPI endpoints, you need to enable Cross‑Origin Resource Sharing (CORS). FastAPI provides a convenient middleware for this purpose.\n\n```python\n# main.py\nfrom fastapi import FastAPI\nfrom fastapi.middleware.cors import CORSMiddleware\n\napp = FastAPI()\n\n# Allow requests from a specific origin\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"https://frontend.example.com\"],  # or [\"*\"] for all origins\n    allow_credentials=True,\n    allow_methods=[\"GET\", \"POST\", \"PUT\", \"DELETE\"],\n    allow_headers=[\"*\"],\n)\n```\n\n* `allow_origins` – list of origins that are permitted to make requests.  \n* `allow_methods` – HTTP methods that the frontend is allowed to use.  \n* `allow_headers` – headers that can be sent with the request.  \n* `allow_credentials` – whether cookies or authentication headers can be included.\n\nAfter adding this middleware, browsers will send the appropriate `Access‑Control‑Allow-*` headers, and the frontend will be able to interact with your API without encountering the same‑origin policy restrictions."
+    ]
+  },
+  {
+    "query": "How do I run a task after sending the response, like sending an email?",
+    "strategy_mode": "hyde",
+    "strategy": "hyde",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.25,
+      "ndcg@10": 0.3708968600712502
+    },
+    "transformed": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 0.0,
+      "hit@20": 0.0,
+      "mrr@20": 0.0,
+      "ndcg@10": 0.0
+    },
+    "baseline_latency_ms": 1370.8,
+    "transformation_latency_ms": 0.0,
+    "transformed_retrieval_latency_ms": 0.0,
+    "error": "RuntimeError: LLM returned an empty response."
+  },
+  {
+    "query": "How do I split a large app into multiple files?",
+    "strategy_mode": "hyde",
+    "strategy": "hyde",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.5,
+      "ndcg@10": 0.13886244387355454
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.7849818707050382
+    },
+    "baseline_latency_ms": 1246.24,
+    "transformation_latency_ms": 1024.57,
+    "transformed_retrieval_latency_ms": 17237.99,
+    "error": null,
+    "retrieval_queries": [
+      "**Splitting a Large FastAPI Application into Multiple Files**\n\nWhen an application grows, keeping all routes, models, and logic in a single file becomes unwieldy. A common pattern is to organize the code into *routers* (or *sub‑applications*) that live in separate modules and then include them in the main `FastAPI` instance. This keeps the codebase modular, easier to test, and more maintainable.\n\nBelow is a minimal, illustrative example of how you might structure such a project. The snippets are meant to convey the idea; you should adapt the imports and names to your own codebase.\n\n```\n# app/main.py\nfrom fastapi import FastAPI\n\n# Import routers from other modules\nfrom app.routers.users import router as users_router\nfrom app.routers.items import router as items_router\n\napp = FastAPI(title=\"My Modular API\")\n\n# Include the routers under a common prefix\napp.include_router(users_router, prefix=\"/users\", tags=[\"users\"])\napp.include_router(items_router, prefix=\"/items\", tags=[\"items\"])\n```\n\n```\n# app/routers/users.py\nfrom fastapi import APIRouter, Depends\n\nrouter = APIRouter()\n\n@router.get(\"/\")\nasync def read_users():\n    return [{\"username\": \"alice\"}, {\"username\": \"bob\"}]\n```\n\n```\n# app/routers/items.py\nfrom fastapi import APIRouter\n\nrouter = APIRouter()\n\n@router.get(\"/\")\nasync def read_items():\n    return [{\"item_id\": 1, \"name\": \"Foo\"}, {\"item_id\": 2, \"name\": \"Bar\"}]\n```\n\n### Tips for a Clean Split\n\n1. **Keep routers focused** – each router should represent a logical grouping of endpoints (e.g., users, items, auth).\n2. **Use `prefix` and `tags`** – this automatically namespaces the routes and improves the generated OpenAPI docs.\n3. **Centralize dependencies** – if you have common dependencies (e.g., database sessions), define them in a separate module and import them where needed.\n4. **Avoid circular imports** – keep the router modules independent; only import the `router` object into `main.py`.\n5. **Testing** – you can test each router in isolation by creating a `TestClient` with a temporary `FastAPI` instance that includes only that router.\n\nBy following this pattern, you can keep a large FastAPI project organized, making it easier to navigate, test, and extend."
+    ]
+  },
+  {
+    "query": "How do I write automated tests for my API?",
+    "strategy_mode": "hyde",
+    "strategy": "hyde",
+    "baseline": {
+      "hit@1": 0.0,
+      "hit@3": 0.0,
+      "hit@5": 0.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 0.1,
+      "ndcg@10": 0.11284514134893527
+    },
+    "transformed": {
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "hit@10": 1.0,
+      "hit@20": 1.0,
+      "mrr@20": 1.0,
+      "ndcg@10": 0.5135312443624667
+    },
+    "baseline_latency_ms": 1272.74,
+    "transformation_latency_ms": 1685.42,
+    "transformed_retrieval_latency_ms": 21461.99,
+    "error": null,
+    "retrieval_queries": [
+      "**Hypothetical FastAPI Testing Guide**\n\nBelow is a concise illustration of how you might write automated tests for a FastAPI application.  It is meant to resemble the style of FastAPI’s own documentation, but it is not an official excerpt.\n\n---\n\n### 1. Install the testing dependencies\n\n```bash\npip install pytest httpx\n```\n\n`httpx` provides an async HTTP client that works well with FastAPI’s `TestClient`.\n\n---\n\n### 2. Create a test module\n\n```python\n# tests/test_main.py\nimport pytest\nfrom fastapi.testclient import TestClient\nfrom myapp.main import app  # your FastAPI instance\n\nclient = TestClient(app)\n\ndef test_read_root():\n    response = client.get(\"/\")\n    assert response.status_code == 200\n    assert response.json() == {\"message\": \"Hello, world!\"}\n```\n\n---\n\n### 3. Use fixtures for shared setup\n\n```python\n# tests/conftest.py\nimport pytest\nfrom fastapi.testclient import TestClient\nfrom myapp.main import app\n\n@pytest.fixture\ndef client():\n    return TestClient(app)\n```\n\nNow tests can simply accept `client` as an argument:\n\n```python\ndef test_create_item(client):\n    payload = {\"name\": \"widget\", \"price\": 9.99}\n    response = client.post(\"/items/\", json=payload)\n    assert response.status_code == 201\n    assert response.json()[\"name\"] == \"widget\"\n```\n\n---\n\n### 4. Test async endpoints\n\nIf your routes are async, you can still use `TestClient` (it runs the event loop internally). For more fine‑grained async control, use `httpx.AsyncClient` with `pytest.mark.asyncio`:\n\n```python\nimport httpx\nimport pytest\n\n@pytest.mark.asyncio\nasync def test_async_endpoint():\n    async with httpx.AsyncClient(app=app, base_url=\"http://test\") as ac:\n        response = await ac.get(\"/async-route\")\n    assert response.status_code == 200\n```\n\n---\n\n### 5. Verify database state\n\nWhen your API interacts with a database, you can use a test database and a fixture that rolls back after each test:\n\n```python\n@pytest.fixture(scope=\"function\")\ndef db_session():\n    # create a new session connected to a test DB\n    session = SessionLocal()\n    yield session\n    session.rollback()\n    session.close()\n```\n\nInject `db_session` into your route handlers via dependency injection, and then assert on the session in your tests.\n\n---\n\n### 6. Run the tests\n\n```bash\npytest tests/\n```\n\n---\n\n**Key takeaways**\n\n- Use `fastapi.testclient.TestClient` for synchronous tests.\n- For async routes, `httpx.AsyncClient` with `pytest.mark.asyncio` works well.\n- Leverage `pytest` fixtures for shared setup (client, database, authentication tokens, etc.).\n- Keep tests isolated: use a test database and rollback changes after each test.\n\nFeel free to adapt this pattern to your own project structure and testing needs."
+    ]
+  }
+]

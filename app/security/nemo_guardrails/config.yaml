@@ -1,0 +1,13 @@
+
+models:
+  - type: main
+    engine: openai
+    model: rag-generation
+    parameters:
+      base_url: http://localhost:4000/v1
+      api_key: ${LITELLM_MASTER_KEY}
+
+rails:
+  input:
+    flows:
+      - jailbreak detection heuristics

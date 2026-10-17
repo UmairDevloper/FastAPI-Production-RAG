@@ -29,10 +29,10 @@ from langchain_classic.retrievers.contextual_compression import ContextualCompre
 from langchain_core.documents import Document
 from langchain_core.retrievers import BaseRetriever
 # a) the import
-from app.retrieval.retriever.reranker2 import CrossEncoderCompressor, FlashRankCompressor
+from app.indexing.dense_indexing.reranker2 import CrossEncoderCompressor, FlashRankCompressor
 from app.ingestion.embedding4.models_config import configure_logfire
-from app.retrieval.retriever.reranker2 import CrossEncoderCompressor
-from app.retrieval.retriever.retriever1 import build_dense_retriever
+from app.indexing.dense_indexing.reranker2 import CrossEncoderCompressor
+from app.indexing.dense_indexing.indexing1 import build_dense_retriever
 
 RERANKERS = {
     "bge-base": "BAAI/bge-reranker-base",
@@ -41,9 +41,9 @@ RERANKERS = {
     "flashrank": "flashrank:ms-marco-MiniLM-L-12-v2",
 }
 
-DEFAULT_RERANKER = "bge-base"
-DEFAULT_CANDIDATES = 10   # chunks fetched from Qdrant
-DEFAULT_TOP_N = 5         # chunks kept after reranking (what the LLM will later receive)
+DEFAULT_RERANKER = "minilm"
+DEFAULT_CANDIDATES = 10  # chunks fetched from Qdrant (the reranker later keeps the best few)
+DEFAULT_TOP_N = 5       # chunks kept after reranking (what the LLM will later receive)
 
 
 def build_pipeline(
