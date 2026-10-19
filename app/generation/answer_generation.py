@@ -1,12 +1,11 @@
-import logging
 import re
-
-logger = logging.getLogger(__name__)
-
+import time
 from dataclasses import dataclass
 
+import logfire
+
 from app.generation.prompts import ANSWER_SYSTEM_PROMPT
-from app.llm_gateway.client import complete  # Change to the actual module path.
+from app.llm_gateway.client import complete
 from app.retrieval.context_assembly import AssembledContext
 
 CITATION_PATTERN = re.compile(r"\[((?:chunk_id:)?[A-Za-z0-9][A-Za-z0-9:_-]*-\d{3,})\]")
@@ -35,113 +34,144 @@ async def generate_answer(
 ) -> GeneratedAnswer:
     """Generate an answer using assembled evidence from the RAG pipeline."""
 
-    if not question.strip():
-        raise ValueError("question must not be empty.")
-
+    started_at = time.perf_counter()
     evidence = assembled_context.evidence
 
-    if not evidence:
-        return GeneratedAnswer(
-            answer=(
-                "I could not find sufficient relevant documentation "
-                "to answer this question."
-            ),
-            citations=[],
-            insufficient_evidence=True,
+    with logfire.span(
+        "rag.answer_generation",
+        model=model,
+        evidence_count=len(evidence),
+        question_chars=len(question),
+        context_chars=len(assembled_context.context),
+    ):
+        if not question.strip():
+            logfire.warn("Answer generation rejected an empty question")
+            raise ValueError("question must not be empty.")
+
+        if not evidence:
+            logfire.info(
+                "Answer generation skipped: no evidence supplied",
+                model=model,
+            )
+            return GeneratedAnswer(
+                answer=(
+                    "I could not find sufficient relevant documentation "
+                    "to answer this question."
+                ),
+                citations=[],
+                insufficient_evidence=True,
+            )
+
+        user_prompt = (
+            f"User question:\n{question.strip()}\n\n"
+            "Documentation context:\n"
+            f"<context>\n{assembled_context.context}\n</context>\n\n"
+            "Answer the question using the supplied evidence. "
+            "Cite sources using their exact evidence identifiers."
         )
 
-    user_prompt = (
-        f"User question:\n{question.strip()}\n\n"
-        "Documentation context:\n"
-        f"<context>\n{assembled_context.context}\n</context>\n\n"
-        "Answer the question using the supplied evidence. "
-        "Cite sources using their exact evidence identifiers."
-    )
+        generation_started = time.perf_counter()
 
-    answer = await complete(
-        model=model,
-        system=ANSWER_SYSTEM_PROMPT,
-        user=user_prompt,
-        temperature=0,
-        max_tokens=512,
-    )
+        with logfire.span(
+            "rag.llm_completion",
+            model=model,
+            temperature=0,
+            max_tokens=512,
+            evidence_count=len(evidence),
+        ):
+            answer = await complete(
+                model=model,
+                system=ANSWER_SYSTEM_PROMPT,
+                user=user_prompt,
+                temperature=0,
+                max_tokens=512,
+            )
 
-    # Build a lookup from the evidence supplied to the LLM.
-    evidence_by_id = {item.evidence_id: item for item in evidence}
+        generation_ms = (time.perf_counter() - generation_started) * 1000
 
-    # Extract bracketed references, accepting either the exact evidence ID
-    # or its raw metadata value (e.g. [chunk_id:test-001] or [test-001]).
-    cited_ids = []
+        logfire.info(
+            "LLM completion finished",
+            model=model,
+            generation_ms=round(generation_ms, 2),
+            answer_chars=len(answer),
+        )
 
-    # Build a lookup from the evidence supplied to the LLM.
-    evidence_by_id = {item.evidence_id: item for item in evidence}
+        with logfire.span(
+            "rag.citation_validation",
+            evidence_count=len(evidence),
+        ):
+            evidence_by_id = {item.evidence_id: item for item in evidence}
+            cited_ids: list[str] = []
+            raw_citation_ids = CITATION_PATTERN.findall(answer)
 
-    # Accept canonical IDs and unprefixed IDs only when they uniquely match
-    # supplied evidence. Reject unknown or ambiguous references.
-    cited_ids = []
-    for raw_id in CITATION_PATTERN.findall(answer):
-        if raw_id in evidence_by_id:
-            evidence_id = raw_id
-        else:
-            matches = [
+            for raw_id in raw_citation_ids:
+                if raw_id in evidence_by_id:
+                    evidence_id = raw_id
+                else:
+                    matches = [
+                        supplied_id
+                        for supplied_id in evidence_by_id
+                        if supplied_id.rsplit(":", 1)[-1] == raw_id
+                    ]
+
+                    if len(matches) != 1:
+                        logfire.error(
+                            "Generated citation is unknown or ambiguous",
+                            raw_citation_id=raw_id,
+                            available_evidence_ids=list(evidence_by_id),
+                        )
+                        raise ValueError(
+                            "Generated answer contains unknown or ambiguous "
+                            f"citation ID: {raw_id}"
+                        )
+
+                    evidence_id = matches[0]
+
+                if evidence_id not in cited_ids:
+                    cited_ids.append(evidence_id)
+
+            invalid_ids = [
                 evidence_id
-                for evidence_id in evidence_by_id
-                if evidence_id.rsplit(":", 1)[-1] == raw_id
+                for evidence_id in cited_ids
+                if evidence_id not in evidence_by_id
             ]
-            if len(matches) != 1:
-                logger.error(
-                    "Invalid citation ID generated: %s; available IDs: %s",
-                    raw_id,
-                    list(evidence_by_id),
+
+            if invalid_ids:
+                logfire.error(
+                    "Generated answer contains invalid citation IDs",
+                    invalid_ids=invalid_ids,
+                    available_evidence_ids=list(evidence_by_id),
                 )
                 raise ValueError(
-                    f"Generated answer contains unknown or ambiguous "
-                    f"citation ID: {raw_id}"
+                    f"Generated answer contains unknown citation IDs: {invalid_ids}"
                 )
-            evidence_id = matches[0]
 
-        if evidence_id not in cited_ids:
-            cited_ids.append(evidence_id)
-        else:
-            matches = [
-                evidence_id
-                for evidence_id in evidence_by_id
-                if evidence_id.rsplit(":", 1)[-1] == raw_id
+            citations = [
+                Citation(
+                    evidence_id=evidence_id,
+                    source_url=evidence_by_id[evidence_id].source_url,
+                    page_title=evidence_by_id[evidence_id].page_title,
+                    heading_path=evidence_by_id[evidence_id].heading_path,
+                )
+                for evidence_id in cited_ids
             ]
-            if len(matches) != 1:
-                continue
-            evidence_id = matches[0]
 
-        if evidence_id not in cited_ids:
-            cited_ids.append(evidence_id)
-    # Reject citations that were not present in the supplied evidence.
-    invalid_ids = [
-        evidence_id for evidence_id in cited_ids if evidence_id not in evidence_by_id
-    ]
+        total_ms = (time.perf_counter() - started_at) * 1000
 
-    if invalid_ids:
-        logger.error(
-            "Invalid citation IDs generated. invalid_ids=%s available_evidence_ids=%s",
-            invalid_ids,
-            list(evidence_by_id.keys()),
-        )
-        raise ValueError(
-            f"Generated answer contains unknown citation IDs: {invalid_ids}"
+        logfire.info(
+            "Answer generation completed",
+            model=model,
+            evidence_count=len(evidence),
+            citations_found=len(raw_citation_ids),
+            unique_citations=len(citations),
+            answer_chars=len(answer),
+            generation_ms=round(generation_ms, 2),
+            total_ms=round(total_ms, 2),
+            insufficient_evidence=False,
         )
 
-    # Return metadata only for evidence actually cited.
-    citations = [
-        Citation(
-            evidence_id=evidence_id,
-            source_url=evidence_by_id[evidence_id].source_url,
-            page_title=evidence_by_id[evidence_id].page_title,
-            heading_path=evidence_by_id[evidence_id].heading_path,
+        return GeneratedAnswer(
+            answer=answer,
+            citations=citations,
+            insufficient_evidence=False,
         )
-        for evidence_id in cited_ids
-    ]
-
-    return GeneratedAnswer(
-        answer=answer,
-        citations=citations,
-        insufficient_evidence=False,
-    )

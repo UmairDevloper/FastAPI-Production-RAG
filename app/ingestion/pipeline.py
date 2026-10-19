@@ -52,15 +52,11 @@ from typing import Any, Callable
 
 import logfire
 
-from app.ingestion.crawler1 import web_crawler as crawler
 from app.ingestion.chunking3 import get_chunk as chunking
+from app.ingestion.crawler1 import web_crawler as crawler
 from app.ingestion.data_parsing2 import parsing as parse_docs
 from app.ingestion.embedding4 import embedder
-from app.ingestion.embedding4.models_config import MODELS
-from app.ingestion.embedding4.models_config import configure_logfire
-
-
-
+from app.ingestion.embedding4.models_config import MODELS, configure_logfire
 
 log = logging.getLogger("pipeline")
 

@@ -46,10 +46,14 @@ from llama_index.core.evaluation import RetrieverEvaluator
 from llama_index.core.retrievers import BaseRetriever as LlamaRetriever
 from llama_index.core.schema import NodeWithScore, TextNode
 
+from app.indexing.dense_indexing.pipelineIndexing import RERANKERS, build_pipeline
 from app.ingestion.embedding4.embedder import load_chunks
 from app.ingestion.embedding4.models_config import configure_logfire
-from app.ingestion.evaluate import CASES, OUT_OF_SCOPE, expected_ids   # same questions as the baseline
-from app.indexing.dense_indexing.pipelineIndexing import RERANKERS, build_pipeline
+from app.ingestion.evaluate import (  # same questions as the baseline
+    CASES,
+    OUT_OF_SCOPE,
+    expected_ids,
+)
 
 KS = (1, 3, 5, 10, 20)     # cut-offs; 20 is the number of candidates (the ceiling)
 CANDIDATES = 20       # chunks fetched from Qdrant for every configuration

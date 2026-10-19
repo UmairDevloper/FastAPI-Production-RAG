@@ -25,14 +25,20 @@ import argparse
 import logging
 
 import logfire
-from langchain_classic.retrievers.contextual_compression import ContextualCompressionRetriever
+from langchain_classic.retrievers.contextual_compression import (
+    ContextualCompressionRetriever,
+)
 from langchain_core.documents import Document
 from langchain_core.retrievers import BaseRetriever
-# a) the import
-from app.indexing.dense_indexing.reranker2 import CrossEncoderCompressor, FlashRankCompressor
-from app.ingestion.embedding4.models_config import configure_logfire
-from app.indexing.dense_indexing.reranker2 import CrossEncoderCompressor
+
 from app.indexing.dense_indexing.indexing1 import build_dense_retriever
+
+# a) the import
+from app.indexing.dense_indexing.reranker2 import (
+    CrossEncoderCompressor,
+    FlashRankCompressor,
+)
+from app.ingestion.embedding4.models_config import configure_logfire
 
 RERANKERS = {
     "bge-base": "BAAI/bge-reranker-base",

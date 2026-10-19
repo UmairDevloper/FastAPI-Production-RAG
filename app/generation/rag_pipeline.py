@@ -3,7 +3,10 @@ from __future__ import annotations
 import asyncio
 import logging
 import time
+import uuid
 from dataclasses import dataclass
+
+import logfire
 
 from app.generation.answer_generation import (
     Citation,
@@ -52,194 +55,382 @@ class RAGPipeline:
         self.max_context_tokens = max_context_tokens
         self.max_context_documents = max_context_documents
 
+        logfire.info(
+            "RAG pipeline initialized",
+            generation_model=generation_model,
+            max_context_tokens=max_context_tokens,
+            max_context_documents=max_context_documents,
+        )
+
     async def answer(self, question: str) -> RAGResponse:
-        question = question.strip()
-        if not question:
-            raise ValueError("Question cannot be empty.")
-
-        
-        timings: dict[str, float] = {}
+        request_id = uuid.uuid4().hex[:12]
         total_started = time.perf_counter()
+        timings: dict[str, float] = {}
+        current_stage = "input_validation"
 
-        empty_context = AssembledContext(
-            context="",
-            evidence=[],
-            estimated_tokens=0,
-            omitted_documents=0,
-        )
+        question = question.strip()
 
-        security_started = time.perf_counter()
-        decision = validate_input(question)
-        timings["security"] = round(
-            (time.perf_counter() - security_started) * 1000, 2
-        )
-
-        if not decision.allowed:
-            logger.warning(
-                "Request blocked by input security: reason=%s",
-                decision.reason,
-            )
-            timings["total"] = round(
-                (time.perf_counter() - total_started) * 1000, 2
+        # Do not record the question itself: it may contain sensitive data.
+        with logfire.span(
+            "rag.request",
+            request_id=request_id,
+            question_chars=len(question),
+            generation_model=self.generation_model,
+        ):
+            logfire.info(
+                "RAG request started",
+                request_id=request_id,
+                question_chars=len(question),
             )
 
-            return RAGResponse(
-                question=question,
-                answer="Your request was blocked by the input security policy.",
-                citations=[],
-                insufficient_evidence=True,
-                retrieval=None,
-                context=empty_context,
-                latency_ms=timings,
+            empty_context = AssembledContext(
+                context="",
+                evidence=[],
+                estimated_tokens=0,
+                omitted_documents=0,
             )
 
-        # Second layer: NeMo jailbreak detection.
-        nemo_started = time.perf_counter()
-        nemo_allowed = await check_nemo_input(question)
-        timings["nemo_security"] = round((time.perf_counter() - nemo_started) * 1000, 2)
+            def elapsed_ms(started: float) -> float:
+                return round((time.perf_counter() - started) * 1000, 2)
 
-        if not nemo_allowed:
-            logger.warning("Request blocked by NeMo input security.")
-            timings["total"] = round((time.perf_counter() - total_started) * 1000, 2)
+            def record_timing(stage: str, started: float) -> None:
+                timings[stage] = elapsed_ms(started)
 
-            return RAGResponse(
-                question=question,
-                answer="Your request was blocked by the input security policy.",
-                citations=[],
-                insufficient_evidence=True,
-                retrieval=None,
-                context=empty_context,
-                latency_ms=timings,
-            )
-            
-        # 1. Query transformation + retrieval + fusion.
-        started = time.perf_counter()
-        retrieval = await self.orchestrator.retrieve(question)
-        timings["retrieval"] = round((time.perf_counter() - started) * 1000, 2)
+            def finish_early(
+                *,
+                answer_text: str,
+                retrieval: object,
+                reason: str,
+            ) -> RAGResponse:
+                timings["total"] = elapsed_ms(total_started)
 
+                logfire.info(
+                    "RAG request completed early",
+                    request_id=request_id,
+                    reason=reason,
+                    total_ms=timings["total"],
+                    timings_ms=timings,
+                )
 
-        # 2. Handle requests that should not reach the LLM.
-        if retrieval.diagnostics.strategy == "clarify":
-            return RAGResponse(
-                question=question,
-                answer=(
-                    "Could you clarify your question so I can identify "
-                    "the relevant FastAPI documentation?"
-                ),
-                citations=[],
-                insufficient_evidence=True,
-                retrieval=retrieval,
-                context=empty_context,
-                latency_ms={
-                    **timings,
-                    "total": round((time.perf_counter() - total_started) * 1000, 2),
-                },
-            )
+                return RAGResponse(
+                    question=question,
+                    answer=answer_text,
+                    citations=[],
+                    insufficient_evidence=True,
+                    retrieval=retrieval,
+                    context=empty_context,
+                    latency_ms=dict(timings),
+                )
 
-        if retrieval.diagnostics.strategy == "out_of_scope":
-            return RAGResponse(
-                question=question,
-                answer=(
-                    "I can help with questions about FastAPI "
-                    "documentation. This question appears to be outside "
-                    "that scope."
-                ),
-                citations=[],
-                insufficient_evidence=True,
-                retrieval=retrieval,
-                context=empty_context,
-                latency_ms={
-                    **timings,
-                    "total": round((time.perf_counter() - total_started) * 1000, 2),
-                },
-            )
+            try:
+                if not question:
+                    logfire.warn(
+                        "Empty question rejected",
+                        request_id=request_id,
+                    )
+                    raise ValueError("Question cannot be empty.")
 
-        # 3. Rerank candidates. Run synchronous model inference off-loop.
-        started = time.perf_counter()
-        if retrieval.candidates:
-            reranked = await asyncio.to_thread(
-                self.reranker.compress_documents,
-                retrieval.candidates,
-                question,
-            )
-        else:
-            reranked = []
+                # 1. Input guardrails.
+                current_stage = "input_security"
+                started = time.perf_counter()
 
-        timings["reranking"] = round((time.perf_counter() - started) * 1000, 2)
+                with logfire.span(
+                    "rag.input_security",
+                    request_id=request_id,
+                ):
+                    decision = validate_input(question)
 
-        # 4. Assemble context exactly once, after reranking.
-        started = time.perf_counter()
-        assembled = assemble_context(
-            list(reranked),
-            max_tokens=self.max_context_tokens,
-            max_documents=self.max_context_documents,
-        )
-        timings["context_assembly"] = round((time.perf_counter() - started) * 1000, 2)
+                record_timing(current_stage, started)
 
-        # 5. Generate an answer grounded in the assembled evidence.
-        started = time.perf_counter()
-        generated: GeneratedAnswer = await generate_answer(
-            question=question,
-            assembled_context=assembled,
-            model=self.generation_model,
-        )
+                logfire.info(
+                    "Input security completed",
+                    request_id=request_id,
+                    allowed=decision.allowed,
+                    duration_ms=timings[current_stage],
+                )
 
-        timings["generation"] = round((time.perf_counter() - started) * 1000, 2)
+                if not decision.allowed:
+                    logfire.warn(
+                        "Request blocked by input security",
+                        request_id=request_id,
+                        reason=str(decision.reason),
+                    )
+                    return finish_early(
+                        answer_text=(
+                            "Your request was blocked by the input security policy."
+                        ),
+                        retrieval=None,
+                        reason="input_security_blocked",
+                    )
 
-        # 6. Validate generated output before returning it.
-        output_decision = validate_output(generated.answer)
+                # 2. NeMo jailbreak detection.
+                current_stage = "nemo_security"
+                started = time.perf_counter()
 
-        answer = generated.answer
-        citations = generated.citations
-        insufficient_evidence = generated.insufficient_evidence
+                with logfire.span(
+                    "rag.nemo_security",
+                    request_id=request_id,
+                ):
+                    nemo_allowed = await check_nemo_input(question)
 
-        if not output_decision.allowed:
-            logger.warning(
-                "Generated answer blocked by output security: reason=%s",
-                output_decision.reason,
-            )
-            answer = "The generated answer was withheld by the output security policy."
-            citations = []
-            insufficient_evidence = True
+                record_timing(current_stage, started)
 
-        timings["total"] = round((time.perf_counter() - total_started) * 1000, 2)
+                logfire.info(
+                    "NeMo input security completed",
+                    request_id=request_id,
+                    allowed=nemo_allowed,
+                    duration_ms=timings[current_stage],
+                )
 
-        logger.info(
-            "RAG request completed | strategy=%s | candidates=%d | "
-            "context_documents=%d | context_tokens=%d | latency_ms=%s",
-            retrieval.diagnostics.strategy,
-            len(retrieval.candidates),
-            len(assembled.evidence),
-            assembled.estimated_tokens,
-            timings,
-        )
+                if not nemo_allowed:
+                    logfire.warn(
+                        "Request blocked by NeMo input security",
+                        request_id=request_id,
+                    )
+                    return finish_early(
+                        answer_text=(
+                            "Your request was blocked by the input security policy."
+                        ),
+                        retrieval=None,
+                        reason="nemo_security_blocked",
+                    )
 
-        return RAGResponse(
-            question=question,
-            answer=answer,
-            citations=citations,
-            insufficient_evidence=insufficient_evidence,
-            retrieval=retrieval,
-            context=assembled,
-            latency_ms=timings,
-        )
+                # 3. Query transformation, retrieval, and fusion.
+                current_stage = "retrieval"
+                started = time.perf_counter()
+
+                with logfire.span(
+                    "rag.retrieval",
+                    request_id=request_id,
+                ):
+                    retrieval = await self.orchestrator.retrieve(question)
+
+                record_timing(current_stage, started)
+
+                strategy = retrieval.diagnostics.strategy
+                candidate_count = len(retrieval.candidates)
+
+                logfire.info(
+                    "Retrieval completed",
+                    request_id=request_id,
+                    strategy=strategy,
+                    candidates=candidate_count,
+                    duration_ms=timings[current_stage],
+                )
+
+                # 4. Requests that should not reach the LLM.
+                if strategy == "clarify":
+                    return finish_early(
+                        answer_text=(
+                            "Could you clarify your question so I can identify "
+                            "the relevant FastAPI documentation?"
+                        ),
+                        retrieval=retrieval,
+                        reason="clarification_required",
+                    )
+
+                if strategy == "out_of_scope":
+                    return finish_early(
+                        answer_text=(
+                            "I can help with questions about FastAPI "
+                            "documentation. This question appears to be outside "
+                            "that scope."
+                        ),
+                        retrieval=retrieval,
+                        reason="out_of_scope",
+                    )
+
+                # 5. Rerank candidates without blocking the event loop.
+                current_stage = "reranking"
+                started = time.perf_counter()
+
+                with logfire.span(
+                    "rag.reranking",
+                    request_id=request_id,
+                    input_documents=candidate_count,
+                ):
+                    if retrieval.candidates:
+                        reranked = await asyncio.to_thread(
+                            self.reranker.compress_documents,
+                            retrieval.candidates,
+                            question,
+                        )
+                    else:
+                        reranked = []
+
+                record_timing(current_stage, started)
+
+                logfire.info(
+                    "Reranking completed",
+                    request_id=request_id,
+                    input_documents=candidate_count,
+                    output_documents=len(reranked),
+                    duration_ms=timings[current_stage],
+                )
+
+                # 6. Assemble context after reranking.
+                current_stage = "context_assembly"
+                started = time.perf_counter()
+
+                with logfire.span(
+                    "rag.context_assembly",
+                    request_id=request_id,
+                    max_tokens=self.max_context_tokens,
+                    max_documents=self.max_context_documents,
+                ):
+                    assembled = assemble_context(
+                        list(reranked),
+                        max_tokens=self.max_context_tokens,
+                        max_documents=self.max_context_documents,
+                    )
+
+                record_timing(current_stage, started)
+
+                logfire.info(
+                    "RAG context assembled",
+                    request_id=request_id,
+                    estimated_tokens=assembled.estimated_tokens,
+                    documents=len(assembled.evidence),
+                    omitted_documents=assembled.omitted_documents,
+                    context_chars=len(assembled.context),
+                    duration_ms=timings[current_stage],
+                )
+
+                # 7. Generate an answer grounded in the assembled evidence.
+                current_stage = "generation"
+                started = time.perf_counter()
+
+                with logfire.span(
+                    "rag.generation",
+                    request_id=request_id,
+                    model=self.generation_model,
+                    context_tokens=assembled.estimated_tokens,
+                    context_documents=len(assembled.evidence),
+                ):
+                    generated: GeneratedAnswer = await generate_answer(
+                        question=question,
+                        assembled_context=assembled,
+                        model=self.generation_model,
+                    )
+
+                record_timing(current_stage, started)
+
+                logfire.info(
+                    "Answer generation completed",
+                    request_id=request_id,
+                    model=self.generation_model,
+                    answer_chars=len(generated.answer),
+                    citations=len(generated.citations),
+                    insufficient_evidence=generated.insufficient_evidence,
+                    duration_ms=timings[current_stage],
+                )
+
+                # 8. Validate generated output.
+                current_stage = "output_security"
+                started = time.perf_counter()
+
+                with logfire.span(
+                    "rag.output_security",
+                    request_id=request_id,
+                ):
+                    output_decision = validate_output(generated.answer)
+
+                record_timing(current_stage, started)
+
+                logfire.info(
+                    "Output security completed",
+                    request_id=request_id,
+                    allowed=output_decision.allowed,
+                    duration_ms=timings[current_stage],
+                )
+
+                answer = generated.answer
+                citations = generated.citations
+                insufficient_evidence = generated.insufficient_evidence
+
+                if not output_decision.allowed:
+                    logfire.warn(
+                        "Generated answer blocked by output security",
+                        request_id=request_id,
+                        reason=str(output_decision.reason),
+                    )
+                    answer = (
+                        "The generated answer was withheld by the output "
+                        "security policy."
+                    )
+                    citations = []
+                    insufficient_evidence = True
+
+                timings["total"] = elapsed_ms(total_started)
+
+                logfire.info(
+                    "RAG request completed",
+                    request_id=request_id,
+                    strategy=strategy,
+                    candidates=candidate_count,
+                    reranked_documents=len(reranked),
+                    context_documents=len(assembled.evidence),
+                    context_tokens=assembled.estimated_tokens,
+                    citations=len(citations),
+                    insufficient_evidence=insufficient_evidence,
+                    total_ms=timings["total"],
+                    timings_ms=timings,
+                )
+
+                return RAGResponse(
+                    question=question,
+                    answer=answer,
+                    citations=citations,
+                    insufficient_evidence=insufficient_evidence,
+                    retrieval=retrieval,
+                    context=assembled,
+                    latency_ms=dict(timings),
+                )
+
+            except Exception:
+                timings["total"] = elapsed_ms(total_started)
+
+                # Logfire records this exception on the active request span.
+                logfire.error(
+                    "RAG request failed",
+                    request_id=request_id,
+                    stage=current_stage,
+                    total_ms=timings["total"],
+                    timings_ms=timings,
+                    exc_info=True,
+                )
+                raise
 
 
 def build_rag_pipeline() -> RAGPipeline:
-    orchestrator = build_retrieval_orchestrator(k=20)
+    with logfire.span("rag.build_pipeline"):
+        logfire.info("Building RAG pipeline dependencies")
 
-    reranker = CrossEncoderCompressor(
-        model_name="cross-encoder/ms-marco-MiniLM-L-6-v2",
-        top_n=8,
-        batch_size=16,
-        max_length=512,
-        fail_open=True,
-    )
+        try:
+            orchestrator = build_retrieval_orchestrator(k=20)
 
-    return RAGPipeline(
-        orchestrator=orchestrator,
-        reranker=reranker,
-        generation_model="rag-generation",
-        max_context_tokens=4000,
-        max_context_documents=8,
-    )
+            reranker = CrossEncoderCompressor(
+                model_name="cross-encoder/ms-marco-MiniLM-L-6-v2",
+                top_n=8,
+                batch_size=16,
+                max_length=512,
+                fail_open=True,
+            )
+
+            pipeline = RAGPipeline(
+                orchestrator=orchestrator,
+                reranker=reranker,
+                generation_model="rag-generation",
+                max_context_tokens=4000,
+                max_context_documents=8,
+            )
+
+            logfire.info("RAG pipeline dependencies built successfully")
+            return pipeline
+
+        except Exception:
+            logfire.error(
+                "Failed to build RAG pipeline dependencies",
+                exc_info=True,
+            )
+            raise

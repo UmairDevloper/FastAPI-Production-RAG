@@ -1,0 +1,25 @@
+services:
+  litellm:
+    image: docker.litellm.ai/berriai/litellm:latest
+    container_name: litellm-proxy
+    restart: unless-stopped
+    command: ["--config", "/app/config.yaml", "--port", "4000"]
+    env_file: .env
+    volumes:
+      - ./app/docker/litellm/litellm_config.prod.yaml:/app/config.yaml:ro
+
+  api:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      LITELLM_BASE_URL: http://litellm:4000/v1
+    ports:
+      - "8000:8000"
+    volumes:
+      - hf_cache:/root/.cache/huggingface
+    depends_on:
+      - litellm
+
+volumes:
+  hf_cache:

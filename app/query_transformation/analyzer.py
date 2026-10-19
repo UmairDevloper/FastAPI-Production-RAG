@@ -1,5 +1,7 @@
-
 import json
+import time
+
+import logfire
 
 from app.llm_gateway.client import complete
 from app.query_transformation.schemas import QueryAnalysis
@@ -45,44 +47,76 @@ ALLOWED_STRATEGIES = {
 
 
 async def analyze_query(query: str) -> QueryAnalysis:
-    try:
-        raw = await complete(
-            model="rag-query-transform",
-            system=SYSTEM_PROMPT,
-            user=f"User question:\n{query}",
-        )
+    started = time.perf_counter()
 
-        data = json.loads(raw)
+    with logfire.span(
+        "query.analyzer",
+        query_chars=len(query),
+        model="rag-query-transform",
+    ):
+        try:
+            with logfire.span("query.analyzer.llm_call"):
+                raw = await complete(
+                    model="rag-query-transform",
+                    system=SYSTEM_PROMPT,
+                    user=f"User question:\n{query}",
+                )
 
-        if not isinstance(data, dict):
-            raise ValueError("Analyzer output was not a JSON object")  # noqa: TRY004
+            logfire.info(
+                "Query analyzer response received",
+                response_chars=len(raw),
+                elapsed_ms=round((time.perf_counter() - started) * 1000, 2),
+            )
 
-        strategy = data.get("strategy")
+            with logfire.span("query.analyzer.parse_json"):
+                data = json.loads(raw)
 
-        if strategy not in ALLOWED_STRATEGIES:
-            raise ValueError("Unknown strategy")
+            if not isinstance(data, dict):
+                raise ValueError("Analyzer output was not a JSON object")
 
-        search_query = data.get("search_query", query)
+            with logfire.span("query.analyzer.validate_strategy"):
+                strategy = data.get("strategy")
 
-        if not isinstance(search_query, str) or not search_query.strip():
-            search_query = query
+                if strategy not in ALLOWED_STRATEGIES:
+                    raise ValueError("Unknown strategy")
 
-        needs_clarification = data.get("needs_clarification", False)
+                search_query = data.get("search_query", query)
 
-        if not isinstance(needs_clarification, bool):
-            needs_clarification = strategy == "clarify"
+                if not isinstance(search_query, str) or not search_query.strip():
+                    search_query = query
 
-        return QueryAnalysis(
-            strategy=strategy,
-            reason=str(data.get("reason", "")),
-            search_query=search_query.strip(),
-            needs_clarification=needs_clarification,
-        )
+                needs_clarification = data.get("needs_clarification", False)
 
-    except (ValueError, TypeError, KeyError):
-        return QueryAnalysis(
-            strategy="direct",
-            reason="Analyzer output was invalid; using original query.",
-            search_query=query,
-            needs_clarification=False,
-        )
+                if not isinstance(needs_clarification, bool):
+                    needs_clarification = strategy == "clarify"
+
+                result = QueryAnalysis(
+                    strategy=strategy,
+                    reason=str(data.get("reason", "")),
+                    search_query=search_query.strip(),
+                    needs_clarification=needs_clarification,
+                )
+
+            logfire.info(
+                "Query analyzer completed",
+                strategy=result.strategy,
+                needs_clarification=result.needs_clarification,
+                search_query_chars=len(result.search_query),
+                elapsed_ms=round((time.perf_counter() - started) * 1000, 2),
+            )
+
+            return result
+
+        except (ValueError, TypeError, KeyError) as exc:
+            logfire.warn(
+                "Query analyzer output invalid; using direct strategy",
+                error_type=type(exc).__name__,
+                elapsed_ms=round((time.perf_counter() - started) * 1000, 2),
+            )
+
+            return QueryAnalysis(
+                strategy="direct",
+                reason="Analyzer output was invalid; using original query.",
+                search_query=query,
+                needs_clarification=False,
+            )

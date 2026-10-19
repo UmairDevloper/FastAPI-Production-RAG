@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import time
 from dataclasses import dataclass
 from typing import Any
 
+import logfire
 from langchain_core.documents import Document
 
 from app.retrieval.deduplication import (
@@ -84,58 +86,111 @@ def assemble_context(
     if max_documents < 1:
         raise ValueError("max_documents must be at least 1.")
 
-    unique_documents = deduplicate_documents(documents)
-    selected: list[Evidence] = []
-    formatted_blocks: list[str] = []
-    estimated_tokens = 0
-    omitted_documents = 0
+    started = time.perf_counter()
 
-    for doc in unique_documents:
-        content = doc.page_content.strip()
+    with logfire.span(
+        "retrieval.context_assembly",
+        input_document_count=len(documents),
+        max_tokens=max_tokens,
+        max_documents=max_documents,
+    ) as span:
+        unique_documents = deduplicate_documents(documents)
 
-        if not content:
-            omitted_documents += 1
-            continue
+        selected: list[Evidence] = []
+        formatted_blocks: list[str] = []
+        estimated_tokens = 0
+        omitted_documents = 0
+        empty_documents = 0
+        token_budget_omissions = 0
+        document_limit_omissions = 0
 
-        metadata = doc.metadata
-        evidence = Evidence(
-            evidence_id=get_document_id(doc),
-            content=content,
-            source_url=_optional_string(
-                metadata.get("section_url") or metadata.get("url")
-            ),
-            page_title=_optional_string(metadata.get("page_title")),
-            heading_path=_optional_string(metadata.get("heading_path")),
-            score=(
-                float(metadata["fusion_score"])
-                if metadata.get("fusion_score") is not None
-                else (
-                    float(metadata["dense_score"])
-                    if metadata.get("dense_score") is not None
-                    else None
-                )
-            ),
+        for doc in unique_documents:
+            content = doc.page_content.strip()
+
+            if not content:
+                omitted_documents += 1
+                empty_documents += 1
+                continue
+
+            metadata = doc.metadata
+            evidence = Evidence(
+                evidence_id=get_document_id(doc),
+                content=content,
+                source_url=_optional_string(
+                    metadata.get("section_url") or metadata.get("url")
+                ),
+                page_title=_optional_string(metadata.get("page_title")),
+                heading_path=_optional_string(metadata.get("heading_path")),
+                score=(
+                    float(metadata["fusion_score"])
+                    if metadata.get("fusion_score") is not None
+                    else (
+                        float(metadata["dense_score"])
+                        if metadata.get("dense_score") is not None
+                        else None
+                    )
+                ),
+            )
+
+            block = _format_evidence(evidence)
+            separator = "\n\n---\n\n" if formatted_blocks else ""
+            block_tokens = estimate_tokens(separator + block)
+
+            if len(selected) >= max_documents:
+                omitted_documents += 1
+                document_limit_omissions += 1
+                continue
+
+            if estimated_tokens + block_tokens > max_tokens:
+                omitted_documents += 1
+                token_budget_omissions += 1
+                continue
+
+            selected.append(evidence)
+            formatted_blocks.append(block)
+            estimated_tokens += block_tokens
+
+        context = "\n\n---\n\n".join(formatted_blocks)
+        latency_ms = round(
+            (time.perf_counter() - started) * 1000,
+            2,
         )
 
-        block = _format_evidence(evidence)
-        separator = "\n\n---\n\n" if formatted_blocks else ""
-        block_tokens = estimate_tokens(separator + block)
+        span.set_attribute(
+            "context.unique_document_count",
+            len(unique_documents),
+        )
+        span.set_attribute("context.selected_count", len(selected))
+        span.set_attribute("context.estimated_tokens", estimated_tokens)
+        span.set_attribute("context.omitted_count", omitted_documents)
+        span.set_attribute("context.empty_document_count", empty_documents)
+        span.set_attribute(
+            "context.token_budget_omissions",
+            token_budget_omissions,
+        )
+        span.set_attribute(
+            "context.document_limit_omissions",
+            document_limit_omissions,
+        )
+        span.set_attribute("context.latency_ms", latency_ms)
 
-        if len(selected) >= max_documents:
-            omitted_documents += 1
-            continue
+        logfire.info(
+            "retrieval.context_assembly_completed",
+            input_count=len(documents),
+            unique_count=len(unique_documents),
+            selected_count=len(selected),
+            estimated_tokens=estimated_tokens,
+            max_tokens=max_tokens,
+            omitted_count=omitted_documents,
+            empty_document_count=empty_documents,
+            token_budget_omissions=token_budget_omissions,
+            document_limit_omissions=document_limit_omissions,
+            latency_ms=latency_ms,
+        )
 
-        if estimated_tokens + block_tokens > max_tokens:
-            omitted_documents += 1
-            continue
-
-        selected.append(evidence)
-        formatted_blocks.append(block)
-        estimated_tokens += block_tokens
-
-    return AssembledContext(
-        context="\n\n---\n\n".join(formatted_blocks),
-        evidence=selected,
-        estimated_tokens=estimated_tokens,
-        omitted_documents=omitted_documents,
-    )
+        return AssembledContext(
+            context=context,
+            evidence=selected,
+            estimated_tokens=estimated_tokens,
+            omitted_documents=omitted_documents,
+        )

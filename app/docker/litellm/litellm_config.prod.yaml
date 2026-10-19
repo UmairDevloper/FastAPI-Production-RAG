@@ -1,0 +1,53 @@
+model_list:
+  - model_name: rag-generation
+    litellm_params:
+      model: groq/openai/gpt-oss-20b
+      api_key: os.environ/GROQ_API_KEY
+      reasoning_effort: low
+  - model_name: rag-generation-fallback
+    litellm_params:
+      model: groq/llama-3.1-8b-instant
+      api_key: os.environ/GROQ_API_KEY
+
+  - model_name: rag-answer-generation
+    litellm_params:
+      model: groq/openai/gpt-oss-20b
+      api_key: os.environ/GROQ_API_KEY
+      reasoning_effort: low
+  - model_name: rag-answer-generation-fallback
+    litellm_params:
+      model: groq/llama-3.1-8b-instant
+      api_key: os.environ/GROQ_API_KEY
+
+  - model_name: rag-query-transform
+    litellm_params:
+      model: groq/openai/gpt-oss-20b
+      api_key: os.environ/GROQ_API_KEY
+      reasoning_effort: low
+  - model_name: rag-query-transform-fallback
+    litellm_params:
+      model: groq/llama-3.1-8b-instant
+      api_key: os.environ/GROQ_API_KEY
+
+  - model_name: rag-hyde
+    litellm_params:
+      model: groq/openai/gpt-oss-20b
+      api_key: os.environ/GROQ_API_KEY
+      reasoning_effort: low
+  - model_name: rag-hyde-fallback
+    litellm_params:
+      model: groq/llama-3.1-8b-instant
+      api_key: os.environ/GROQ_API_KEY
+
+litellm_settings:
+  fallbacks:
+    - { "rag-generation": ["rag-generation-fallback"] }
+    - { "rag-answer-generation": ["rag-answer-generation-fallback"] }
+    - { "rag-query-transform": ["rag-query-transform-fallback"] }
+    - { "rag-hyde": ["rag-hyde-fallback"] }
+  num_retries: 0
+  request_timeout: 45
+  drop_params: true
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY

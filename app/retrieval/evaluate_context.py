@@ -8,6 +8,7 @@ import time
 from pathlib import Path
 from typing import Any
 
+import logfire
 from langchain_core.documents import Document
 
 from app.indexing.dense_indexing.reranker2 import CrossEncoderCompressor
@@ -93,32 +94,12 @@ async def evaluate_case(
     chunks: list[Any],
     orchestrator: RetrievalOrchestrator,
     reranker: CrossEncoderCompressor,
+    *,
+    case_index: int = 0,
 ) -> dict[str, Any]:
     query = get_query(case)
     relevant_ids = set(expected_ids(case, chunks, require_keyword=True))
 
-    print("\n--- RELEVANCE ID DEBUG ---")
-    print("Query:", query)
-    print("Relevant IDs:", list(relevant_ids)[:5])
-
-    debug_retrieval = await orchestrator.retrieve(query)
-
-    print("Retrieved document IDs:")
-    for doc in debug_retrieval.candidates[:5]:
-        print(
-            get_document_id(doc),
-            "| metadata:",
-            {
-                key: doc.metadata.get(key)
-                for key in ("chunk_id", "point_id", "id")
-            },
-        )
-
-    print("Relevant IDs type:", {
-        type(value).__name__ for value in relevant_ids
-    })
-    print("--- END DEBUG ---\n")
-    
     result: dict[str, Any] = {
         "query": query,
         "relevant_id_count": len(relevant_ids),
@@ -138,90 +119,203 @@ async def evaluate_case(
         "error": None,
     }
 
-    try:
-        # Retrieve candidates.
-        started = time.perf_counter()
-        retrieval = await orchestrator.retrieve(query)
-
-        result["retrieval_latency_ms"] = round(
-            (time.perf_counter() - started) * 1000,
-            2,
-        )
-
-        candidates = retrieval.candidates
-        result["retrieved_count"] = len(candidates)
-
-        result["retrieved_hit@20"] = relevant_hit(
-            candidates[:20],
-            relevant_ids,
-        )
-
-        # Rerank candidates.
-        started = time.perf_counter()
-        reranked = reranker.compress_documents(
-            candidates,
-            query=query,
-        )
-
-        result["reranking_latency_ms"] = round(
-            (time.perf_counter() - started) * 1000,
-            2,
-        )
-
-        result["reranked_count"] = len(reranked)
-
-        result["reranked_hit@8"] = relevant_hit(
-            reranked[:8],
-            relevant_ids,
-        )
-
-        # Count repeated document IDs before context assembly.
-        candidate_ids = [get_document_id(doc) for doc in reranked]
-
-        result["duplicate_evidence"] = len(candidate_ids) - len(set(candidate_ids))
-
-        # Assemble final context.
-        started = time.perf_counter()
-        assembled = assemble_context(
-            list(reranked),
-            max_tokens=MAX_CONTEXT_TOKENS,
-            max_documents=MAX_CONTEXT_DOCUMENTS,
-        )
-
-        result["assembly_latency_ms"] = round(
-            (time.perf_counter() - started) * 1000,
-            2,
-        )
-
-        result["selected_count"] = len(assembled.evidence)
-        result["context_tokens"] = assembled.estimated_tokens
-        result["omitted_documents"] = assembled.omitted_documents
-
-        
-        context_documents = [
-            Document(
-                page_content=item.content,
-                metadata={"chunk_id": item.evidence_id.removeprefix("chunk_id:")},
+    with logfire.span(
+        "evaluation.context_assembly_case",
+        case_index=case_index,
+        query_chars=len(query),
+        relevant_id_count=len(relevant_ids),
+    ) as case_span:
+        try:
+            logfire.info(
+                "evaluation.case_started",
+                case_index=case_index,
+                query_chars=len(query),
+                relevant_id_count=len(relevant_ids),
             )
-            for item in assembled.evidence
-        ]
 
-        result["context_hit@8"] = relevant_hit(
-            context_documents,
-            relevant_ids,
-        )
+            # Retrieve candidates.
+            started = time.perf_counter()
 
-        result["context_hit@5"] = relevant_hit(
-            context_documents[:5],
-            relevant_ids,
-        )
+            with logfire.span(
+                "evaluation.retrieval",
+                case_index=case_index,
+                retrieval_k=RETRIEVAL_K,
+            ):
+                retrieval = await orchestrator.retrieve(query)
 
-        result["strategy"] = retrieval.diagnostics.strategy
-        result["retrieval_errors"] = retrieval.diagnostics.errors
+            result["retrieval_latency_ms"] = round(
+                (time.perf_counter() - started) * 1000,
+                2,
+            )
 
-    except Exception as exc:
-        result["error"] = f"{type(exc).__name__}: {exc}"
-        logger.exception("Failed to evaluate query: %s", query)
+            candidates = retrieval.candidates
+            result["retrieved_count"] = len(candidates)
+
+            result["retrieved_hit@20"] = relevant_hit(
+                candidates[:20],
+                relevant_ids,
+            )
+
+            # Retain useful ID diagnostics, using the actual retrieval.
+            print("\n--- RELEVANCE ID DEBUG ---")
+            print("Query:", query)
+            print("Relevant IDs:", list(relevant_ids)[:5])
+            print("Retrieved document IDs:")
+
+            for doc in candidates[:5]:
+                print(
+                    get_document_id(doc),
+                    "| metadata:",
+                    {
+                        key: doc.metadata.get(key)
+                        for key in ("chunk_id", "point_id", "id")
+                    },
+                )
+
+            print(
+                "Relevant IDs type:",
+                {type(value).__name__ for value in relevant_ids},
+            )
+            print("--- END DEBUG ---\n")
+
+            # Rerank candidates.
+            started = time.perf_counter()
+
+            with logfire.span(
+                "evaluation.reranking",
+                candidate_count=len(candidates),
+                rerank_top_n=RERANK_TOP_N,
+            ):
+                reranked = reranker.compress_documents(
+                    candidates,
+                    query=query,
+                )
+
+            result["reranking_latency_ms"] = round(
+                (time.perf_counter() - started) * 1000,
+                2,
+            )
+
+            result["reranked_count"] = len(reranked)
+
+            result["reranked_hit@8"] = relevant_hit(
+                reranked[:8],
+                relevant_ids,
+            )
+
+            # Count repeated document IDs before context assembly.
+            candidate_ids = [get_document_id(doc) for doc in reranked]
+
+            result["duplicate_evidence"] = len(candidate_ids) - len(set(candidate_ids))
+
+            # Assemble final context.
+            started = time.perf_counter()
+
+            with logfire.span(
+                "evaluation.context_assembly",
+                reranked_count=len(reranked),
+                max_context_tokens=MAX_CONTEXT_TOKENS,
+                max_context_documents=MAX_CONTEXT_DOCUMENTS,
+            ):
+                assembled = assemble_context(
+                    list(reranked),
+                    max_tokens=MAX_CONTEXT_TOKENS,
+                    max_documents=MAX_CONTEXT_DOCUMENTS,
+                )
+
+            result["assembly_latency_ms"] = round(
+                (time.perf_counter() - started) * 1000,
+                2,
+            )
+
+            result["selected_count"] = len(assembled.evidence)
+            result["context_tokens"] = assembled.estimated_tokens
+            result["omitted_documents"] = assembled.omitted_documents
+
+            context_documents = [
+                Document(
+                    page_content=item.content,
+                    metadata={"chunk_id": item.evidence_id.removeprefix("chunk_id:")},
+                )
+                for item in assembled.evidence
+            ]
+
+            result["context_hit@8"] = relevant_hit(
+                context_documents,
+                relevant_ids,
+            )
+
+            result["context_hit@5"] = relevant_hit(
+                context_documents[:5],
+                relevant_ids,
+            )
+
+            result["strategy"] = retrieval.diagnostics.strategy
+            result["retrieval_errors"] = retrieval.diagnostics.errors
+
+            case_span.set_attribute(
+                "evaluation.retrieved_count",
+                result["retrieved_count"],
+            )
+            case_span.set_attribute(
+                "evaluation.reranked_count",
+                result["reranked_count"],
+            )
+            case_span.set_attribute(
+                "evaluation.selected_count",
+                result["selected_count"],
+            )
+            case_span.set_attribute(
+                "evaluation.context_tokens",
+                result["context_tokens"],
+            )
+            case_span.set_attribute(
+                "evaluation.retrieved_hit_at_20",
+                result["retrieved_hit@20"],
+            )
+            case_span.set_attribute(
+                "evaluation.reranked_hit_at_8",
+                result["reranked_hit@8"],
+            )
+            case_span.set_attribute(
+                "evaluation.context_hit_at_8",
+                result["context_hit@8"],
+            )
+
+            logfire.info(
+                "evaluation.case_completed",
+                case_index=case_index,
+                strategy=result["strategy"],
+                retrieved_count=result["retrieved_count"],
+                reranked_count=result["reranked_count"],
+                selected_count=result["selected_count"],
+                context_tokens=result["context_tokens"],
+                omitted_documents=result["omitted_documents"],
+                duplicate_evidence=result["duplicate_evidence"],
+                retrieved_hit_at_20=result["retrieved_hit@20"],
+                reranked_hit_at_8=result["reranked_hit@8"],
+                context_hit_at_8=result["context_hit@8"],
+                context_hit_at_5=result["context_hit@5"],
+                retrieval_latency_ms=result["retrieval_latency_ms"],
+                reranking_latency_ms=result["reranking_latency_ms"],
+                assembly_latency_ms=result["assembly_latency_ms"],
+                retrieval_error_count=len(result["retrieval_errors"]),
+            )
+
+        except Exception as exc:
+            result["error"] = f"{type(exc).__name__}: {exc}"
+
+            logger.exception(
+                "Failed to evaluate query: %s",
+                query,
+            )
+
+            logfire.error(
+                "evaluation.case_failed",
+                case_index=case_index,
+                error_type=type(exc).__name__,
+                query_chars=len(query),
+            )
 
     return result
 
@@ -234,9 +328,17 @@ def summarize(results: list[dict[str, Any]]) -> None:
 
     logger.info("Queries evaluated: %d", len(results))
     logger.info("Successful queries: %d", len(successful))
-    logger.info("Failed queries: %d", len(results) - len(successful))
+    logger.info(
+        "Failed queries: %d",
+        len(results) - len(successful),
+    )
 
     if not successful:
+        logfire.warning(
+            "evaluation.no_successful_cases",
+            evaluated_count=len(results),
+            failed_count=len(results),
+        )
         return
 
     total = len(successful)
@@ -248,13 +350,22 @@ def summarize(results: list[dict[str, Any]]) -> None:
         "context_hit@5",
     ):
         hits = sum(bool(item[key]) for item in successful)
+        rate = hits / total
 
         logger.info(
             "%-20s %.3f (%d/%d)",
             key,
-            hits / total,
+            rate,
             hits,
             total,
+        )
+
+        logfire.info(
+            "evaluation.metric",
+            metric=key,
+            hits=hits,
+            total=total,
+            rate=round(rate, 4),
         )
 
     for key in (
@@ -269,11 +380,19 @@ def summarize(results: list[dict[str, Any]]) -> None:
         "assembly_latency_ms",
     ):
         values = [float(item[key]) for item in successful]
+        mean_value = sum(values) / len(values)
 
         logger.info(
             "%-24s mean=%.2f",
             key,
-            sum(values) / len(values),
+            mean_value,
+        )
+
+        logfire.info(
+            "evaluation.metric",
+            metric=f"mean_{key}",
+            value=round(mean_value, 2),
+            successful_count=total,
         )
 
     over_budget = sum(
@@ -286,6 +405,13 @@ def summarize(results: list[dict[str, Any]]) -> None:
         total,
     )
 
+    logfire.info(
+        "evaluation.context_budget",
+        over_budget_count=over_budget,
+        evaluated_count=total,
+        max_context_tokens=MAX_CONTEXT_TOKENS,
+    )
+
     errors = [item for item in results if item["error"]]
 
     for item in errors:
@@ -295,6 +421,13 @@ def summarize(results: list[dict[str, Any]]) -> None:
             item["error"],
         )
 
+    logfire.info(
+        "evaluation.summary",
+        evaluated_count=len(results),
+        successful_count=len(successful),
+        failed_count=len(results) - len(successful),
+    )
+
 
 # Main
 
@@ -302,75 +435,105 @@ def summarize(results: list[dict[str, Any]]) -> None:
 async def main(limit: int) -> None:
     configure_logfire()
 
-    chunks = load_chunks()
-    cases = list(CASES)
+    with logfire.span(
+        "evaluation.context_assembly_run",
+        requested_limit=limit,
+        retrieval_k=RETRIEVAL_K,
+        rerank_top_n=RERANK_TOP_N,
+        max_context_tokens=MAX_CONTEXT_TOKENS,
+        max_context_documents=MAX_CONTEXT_DOCUMENTS,
+    ):
+        chunks = load_chunks()
+        cases = list(CASES)
 
-    if limit > 0:
-        cases = cases[:limit]
-
-    logger.info(
-        "Loaded %d chunks and %d cases",
-        len(chunks),
-        len(cases),
-    )
-
-    retriever = build_dense_retriever(k=RETRIEVAL_K)
-
-    orchestrator = RetrievalOrchestrator(
-        retriever,
-        rrf_k=60,
-        max_concurrency=4,
-    )
-
-    reranker = CrossEncoderCompressor(
-        model_name="cross-encoder/ms-marco-MiniLM-L-6-v2",
-        top_n=RERANK_TOP_N,
-        batch_size=16,
-        max_length=512,
-        fail_open=False,
-    )
-
-    results: list[dict[str, Any]] = []
-
-    for index, case in enumerate(cases, start=1):
-        query = get_query(case)
+        if limit > 0:
+            cases = cases[:limit]
 
         logger.info(
-            "[%d/%d] %s",
-            index,
+            "Loaded %d chunks and %d cases",
+            len(chunks),
             len(cases),
-            query,
         )
 
-        result = await evaluate_case(
-            case=case,
-            chunks=chunks,
-            orchestrator=orchestrator,
-            reranker=reranker,
+        logfire.info(
+            "evaluation.dataset_loaded",
+            chunk_count=len(chunks),
+            case_count=len(cases),
         )
 
-        results.append(result)
+        retriever = build_dense_retriever(k=RETRIEVAL_K)
 
-        logger.info(
-            "  retrieved@20=%s | reranked@8=%s | context@8=%s | tokens=%s",
-            result["retrieved_hit@20"],
-            result["reranked_hit@8"],
-            result["context_hit@8"],
-            result["context_tokens"],
+        orchestrator = RetrievalOrchestrator(
+            retriever,
+            rrf_k=60,
+            max_concurrency=4,
         )
 
-    summarize(results)
-
-    with RESULT_FILE.open("w", encoding="utf-8") as file:
-        json.dump(
-            results,
-            file,
-            indent=2,
-            ensure_ascii=False,
+        reranker = CrossEncoderCompressor(
+            model_name="cross-encoder/ms-marco-MiniLM-L-6-v2",
+            top_n=RERANK_TOP_N,
+            batch_size=16,
+            max_length=512,
+            fail_open=False,
         )
 
-    logger.info("Results saved to %s", RESULT_FILE)
-    logger.info("Logs saved to %s", LOG_FILE)
+        results: list[dict[str, Any]] = []
+
+        for index, case in enumerate(cases, start=1):
+            query = get_query(case)
+
+            logger.info(
+                "[%d/%d] %s",
+                index,
+                len(cases),
+                query,
+            )
+
+            result = await evaluate_case(
+                case=case,
+                chunks=chunks,
+                orchestrator=orchestrator,
+                reranker=reranker,
+                case_index=index,
+            )
+
+            results.append(result)
+
+            logger.info(
+                "  retrieved@20=%s | reranked@8=%s | context@8=%s | tokens=%s",
+                result["retrieved_hit@20"],
+                result["reranked_hit@8"],
+                result["context_hit@8"],
+                result["context_tokens"],
+            )
+
+        with logfire.span(
+            "evaluation.summarize",
+            result_count=len(results),
+        ):
+            summarize(results)
+
+        with logfire.span(
+            "evaluation.save_results",
+            result_count=len(results),
+        ):
+            with RESULT_FILE.open("w", encoding="utf-8") as file:
+                json.dump(
+                    results,
+                    file,
+                    indent=2,
+                    ensure_ascii=False,
+                )
+
+        logger.info("Results saved to %s", RESULT_FILE)
+        logger.info("Logs saved to %s", LOG_FILE)
+
+        logfire.info(
+            "evaluation.results_saved",
+            result_count=len(results),
+            result_file=str(RESULT_FILE),
+            log_file=str(LOG_FILE),
+        )
 
 
 if __name__ == "__main__":
